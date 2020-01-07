@@ -1,0 +1,36 @@
+action: py36, msg: installpkg
+cwd: /Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel
+cmd: /Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel/.tox/py36/bin/python -m pip install --exists-action w .tox/.tmp/package/1/biosim-0.0.0.zip
+Processing ./.tox/.tmp/package/1/biosim-0.0.0.zip
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+    Preparing wheel metadata: started
+    Preparing wheel metadata: finished with status 'done'
+Collecting numpy (from biosim==0.0.0)
+  Using cached https://files.pythonhosted.org/packages/82/63/eee643cc97f2bd22da87420f28fb6cd4b940c25f6eff6c4d2ca2e24a7022/numpy-1.18.1-cp36-cp36m-macosx_10_9_x86_64.whl
+Collecting matplotlib (from biosim==0.0.0)
+  Using cached https://files.pythonhosted.org/packages/23/38/cb55064c883dfa6f49ccbf635ca725e862736c86de99984bd556ac144002/matplotlib-3.1.2-cp36-cp36m-macosx_10_9_x86_64.whl
+Collecting pandas (from biosim==0.0.0)
+  Using cached https://files.pythonhosted.org/packages/32/37/b0abb12e1e387ec63adfb5c7bb7bcbc05a7e1ae22a3604b03843d7b04e0b/pandas-0.25.3-cp36-cp36m-macosx_10_9_x86_64.whl
+Collecting kiwisolver>=1.0.1 (from matplotlib->biosim==0.0.0)
+  Using cached https://files.pythonhosted.org/packages/49/5d/d1726d2a2fd471a69ef5014ca42812e1ccb8a13085c42bfcb238a5611f39/kiwisolver-1.1.0-cp36-cp36m-macosx_10_6_intel.macosx_10_9_intel.macosx_10_9_x86_64.macosx_10_10_intel.macosx_10_10_x86_64.whl
+Collecting python-dateutil>=2.1 (from matplotlib->biosim==0.0.0)
+  Using cached https://files.pythonhosted.org/packages/d4/70/d60450c3dd48ef87586924207ae8907090de0b306af2bce5d134d78615cb/python_dateutil-2.8.1-py2.py3-none-any.whl
+Collecting cycler>=0.10 (from matplotlib->biosim==0.0.0)
+  Using cached https://files.pythonhosted.org/packages/f7/d2/e07d3ebb2bd7af696440ce7e754c59dd546ffe1bbe732c8ab68b9c834e61/cycler-0.10.0-py2.py3-none-any.whl
+Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1 in ./.tox/py36/lib/python3.6/site-packages (from matplotlib->biosim==0.0.0) (2.4.6)
+Collecting pytz>=2017.2 (from pandas->biosim==0.0.0)
+  Using cached https://files.pythonhosted.org/packages/e7/f9/f0b53f88060247251bf481fa6ea62cd0d25bf1b11a87888e53ce5b7c8ad2/pytz-2019.3-py2.py3-none-any.whl
+Requirement already satisfied: setuptools in ./.tox/py36/lib/python3.6/site-packages (from kiwisolver>=1.0.1->matplotlib->biosim==0.0.0) (41.0.1)
+Requirement already satisfied: six>=1.5 in ./.tox/py36/lib/python3.6/site-packages (from python-dateutil>=2.1->matplotlib->biosim==0.0.0) (1.13.0)
+Building wheels for collected packages: biosim
+  Building wheel for biosim (PEP 517): started
+  Building wheel for biosim (PEP 517): finished with status 'done'
+  Stored in directory: /Users/michaellindberg/Library/Caches/pip/wheels/12/76/d1/5b8bc3a76235dfcfca72f7230bd291812385859befd1322bc2
+Successfully built biosim
+Installing collected packages: numpy, kiwisolver, python-dateutil, cycler, matplotlib, pytz, pandas, biosim
+Successfully installed biosim-0.0.0 cycler-0.10.0 kiwisolver-1.1.0 matplotlib-3.1.2 numpy-1.18.1 pandas-0.25.3 python-dateutil-2.8.1 pytz-2019.3
+WARNING: You are using pip version 19.1.1, however version 19.3.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.

@@ -1,0 +1,50 @@
+action: GLOB, msg: packaging
+cwd: /Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel
+cmd: /Users/michaellindberg/anaconda3/bin/python setup.py sdist --formats=zip --dist-dir /Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel/.tox/dist
+running sdist
+running egg_info
+writing src/biosim.egg-info/PKG-INFO
+writing dependency_links to src/biosim.egg-info/dependency_links.txt
+writing requirements to src/biosim.egg-info/requires.txt
+writing top-level names to src/biosim.egg-info/top_level.txt
+reading manifest file 'src/biosim.egg-info/SOURCES.txt'
+writing manifest file 'src/biosim.egg-info/SOURCES.txt'
+running check
+warning: Check: missing required meta-data: url
+
+creating biosim-0.0.0
+creating biosim-0.0.0/src
+creating biosim-0.0.0/src/biosim
+creating biosim-0.0.0/src/biosim.egg-info
+copying files to biosim-0.0.0...
+copying README.md -> biosim-0.0.0
+copying pyproject.toml -> biosim-0.0.0
+copying setup.cfg -> biosim-0.0.0
+copying setup.py -> biosim-0.0.0
+copying src/biosim/__init__.py -> biosim-0.0.0/src/biosim
+copying src/biosim/simulation.py -> biosim-0.0.0/src/biosim
+copying src/biosim.egg-info/PKG-INFO -> biosim-0.0.0/src/biosim.egg-info
+copying src/biosim.egg-info/SOURCES.txt -> biosim-0.0.0/src/biosim.egg-info
+copying src/biosim.egg-info/dependency_links.txt -> biosim-0.0.0/src/biosim.egg-info
+copying src/biosim.egg-info/requires.txt -> biosim-0.0.0/src/biosim.egg-info
+copying src/biosim.egg-info/top_level.txt -> biosim-0.0.0/src/biosim.egg-info
+Writing biosim-0.0.0/setup.cfg
+creating /Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel/.tox/dist
+creating '/Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel/.tox/dist/biosim-0.0.0.zip' and adding 'biosim-0.0.0' to it
+adding 'biosim-0.0.0'
+adding 'biosim-0.0.0/src'
+adding 'biosim-0.0.0/PKG-INFO'
+adding 'biosim-0.0.0/pyproject.toml'
+adding 'biosim-0.0.0/README.md'
+adding 'biosim-0.0.0/setup.py'
+adding 'biosim-0.0.0/setup.cfg'
+adding 'biosim-0.0.0/src/biosim.egg-info'
+adding 'biosim-0.0.0/src/biosim'
+adding 'biosim-0.0.0/src/biosim.egg-info/PKG-INFO'
+adding 'biosim-0.0.0/src/biosim.egg-info/SOURCES.txt'
+adding 'biosim-0.0.0/src/biosim.egg-info/requires.txt'
+adding 'biosim-0.0.0/src/biosim.egg-info/top_level.txt'
+adding 'biosim-0.0.0/src/biosim.egg-info/dependency_links.txt'
+adding 'biosim-0.0.0/src/biosim/simulation.py'
+adding 'biosim-0.0.0/src/biosim/__init__.py'
+removing 'biosim-0.0.0' (and everything under it)
