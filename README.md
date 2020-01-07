@@ -6,3 +6,5 @@ This is a change.
 =======
 this is a test change 
 >>>>>>> master
+
+Round 2 change, this will be a conflict.
