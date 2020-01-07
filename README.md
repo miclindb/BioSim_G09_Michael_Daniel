@@ -13,4 +13,8 @@ Round 2 change, this will be a conflict.
 a change in round 2
 >>>>>>> master
 
+<<<<<<< HEAD
 Master branch change
+=======
+Branch changes test
+>>>>>>> localBranch
