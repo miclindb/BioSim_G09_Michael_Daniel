@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< Updated upstream
-    <list default="true" id="1358aceb-c2f4-4361-9127-89c2a322f92c" name="Default Changelist" comment="" />
-=======
     <list default="true" id="8bfbf3d6-163c-4e99-b906-c0c1357a8b90" name="Default Changelist" comment="" />
->>>>>>> Stashed changes
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,13 +11,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-<<<<<<< Updated upstream
-  <component name="ProjectId" id="1W1PceIccV5N995cLJYClr24U3Y" />
-  <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
-=======
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
       <set>
@@ -34,7 +23,6 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Python" />
->>>>>>> Stashed changes
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -53,21 +41,12 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-<<<<<<< Updated upstream
-      <changelist id="1358aceb-c2f4-4361-9127-89c2a322f92c" name="Default Changelist" comment="" />
-      <created>1578314208676</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1578314208676</updated>
-      <workItem from="1578314210418" duration="161000" />
-=======
       <changelist id="8bfbf3d6-163c-4e99-b906-c0c1357a8b90" name="Default Changelist" comment="" />
       <created>1578314240150</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1578314240150</updated>
-      <workItem from="1578314244002" duration="537000" />
->>>>>>> Stashed changes
+      <workItem from="1578314244002" duration="913000" />
     </task>
     <servers />
   </component>
