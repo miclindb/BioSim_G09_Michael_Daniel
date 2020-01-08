@@ -103,6 +103,7 @@ Animal species specific:
 
 class Carnivore(Animals):
     parameters here?
+    Don't need this for initial simulation
 
 class methods
 
