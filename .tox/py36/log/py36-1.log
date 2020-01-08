@@ -1,7 +1,0 @@
-action: py36, msg: getenv
-cwd: /Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel
-cmd: /Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel/.tox/py36/bin/python -m pip install pytest pytest-randomly
-Collecting pytest
-ERROR: Operation cancelled by user
-WARNING: You are using pip version 19.2.3, however version 19.3.1 is available.
-You should consider upgrading via the 'pip install --upgrade pip' command.

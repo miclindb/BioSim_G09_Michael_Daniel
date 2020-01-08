@@ -1,8 +1,0 @@
-action: py36, msg: getenv
-cwd: /Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel/.tox
-cmd: /Users/michaellindberg/anaconda3/bin/python -m virtualenv --no-download --python /Users/michaellindberg/anaconda3/bin/python py36
-Already using interpreter /Users/michaellindberg/anaconda3/bin/python
-Using base prefix '/Users/michaellindberg/anaconda3'
-New python executable in /Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel/.tox/py36/bin/python
-Installing setuptools, pip, wheel...
-done.
