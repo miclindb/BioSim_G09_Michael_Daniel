@@ -1,0 +1,44 @@
+LANDSCAPE CLASS
+
+"A draft for the landscape class"
+
+"Landscape types may be subclasses"
+
+class Landscape:
+
+	def __init__(self)
+
+	def oceans(self, )
+		- no enter
+		- passive in simulation
+
+	def mountains(self, )
+		- no enter
+		- passive in simulation
+
+	def desert(self, )
+		- no food for herbivores
+		- carnivores can prey on herbivores
+
+	def savannah(self, f(i,j), f(sav_max), )
+		- fodder for herbivores in limited quantity
+		- each cell has a certain amount f(i,j) of fodder
+		- herbivores eat and tries to consume a certain amount F of fodder
+
+		if F <= f(i,j)
+			animal eats F
+			f(i,j) = f(i,j)-F
+
+		if 0 <= f(i,j) < F
+			animal eats f(i,j)
+			f(i,j) = 0
+
+		if f(i,j) = 0
+			animal eats 0
+
+		- carnivores can prey herbicores
+		- every year a fodder grows f(i,j) = f(i,j) + α * (f(sav_max) - f(i,j))
+
+	def jungle(self, f(jungle_max), )
+		- as savannah but every year a fixed amount of fodder, f(i,j) = f(jungle_max)
+		- carnivores can prey herbivores

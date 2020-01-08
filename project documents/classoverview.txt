@@ -1,0 +1,36 @@
+CLASS OVERVIEW
+
+"An overview for different classes to be implemented"
+
+Landscape
+	- ocean
+	- mountain
+	- desert
+	- savannah
+	- jungle
+
+Animals / Fauna
+	- age
+	- weight
+	- fitness
+	- migration
+	- birth
+	- death
+
+	subclasses
+		- herbivores
+		- carnivores
+
+Annual cycle / Ecosystem
+	- feeding
+	- procreation
+	- migration
+	- aging
+	- loss of weight
+	- death
+
+BioSim / simulation (properties)
+	- year
+	- total number of animals
+	- total number of animals by species
+	- per-cell animal count
