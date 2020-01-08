@@ -1,0 +1,31 @@
+action: py36, msg: getenv
+cwd: /Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel
+cmd: /Users/michaellindberg/Desktop/BioSim_G09_Michael_Daniel/.tox/py36/bin/python -m pip install pytest pytest-randomly
+Collecting pytest
+  Using cached https://files.pythonhosted.org/packages/19/cf/711f1d887cb92c5155c9a1eb338f1b5d2411b50e4492a3b20e4a188a22b2/pytest-5.3.2-py3-none-any.whl
+Collecting pytest-randomly
+  Using cached https://files.pythonhosted.org/packages/20/94/8c0bf4d13c8a83877488db062e97619909e6e42c7af30b0540ab01cfe319/pytest_randomly-3.2.0-py3-none-any.whl
+Collecting more-itertools>=4.0.0 (from pytest)
+  Using cached https://files.pythonhosted.org/packages/68/03/0604cec1ea13c9f063dd50f900d1a36160334dd3cfb01fd0e638f61b46ba/more_itertools-8.0.2-py3-none-any.whl
+Collecting packaging (from pytest)
+  Using cached https://files.pythonhosted.org/packages/d8/5b/3098db49a61ccc8583ffead6aedc226f08ff56dc03106b6ec54451e27a30/packaging-20.0-py2.py3-none-any.whl
+Collecting wcwidth (from pytest)
+  Using cached https://files.pythonhosted.org/packages/58/b4/4850a0ccc6f567cc0ebe7060d20ffd4258b8210efadc259da62dc6ed9c65/wcwidth-0.1.8-py2.py3-none-any.whl
+Collecting pluggy<1.0,>=0.12 (from pytest)
+  Using cached https://files.pythonhosted.org/packages/a0/28/85c7aa31b80d150b772fbe4a229487bc6644da9ccb7e427dd8cc60cb8a62/pluggy-0.13.1-py2.py3-none-any.whl
+Collecting attrs>=17.4.0 (from pytest)
+  Using cached https://files.pythonhosted.org/packages/a2/db/4313ab3be961f7a763066401fb77f7748373b6094076ae2bda2806988af6/attrs-19.3.0-py2.py3-none-any.whl
+Collecting py>=1.5.0 (from pytest)
+  Using cached https://files.pythonhosted.org/packages/99/8d/21e1767c009211a62a8e3067280bfce76e89c9f876180308515942304d2d/py-1.8.1-py2.py3-none-any.whl
+Collecting importlib-metadata>=0.12; python_version < "3.8" (from pytest)
+  Using cached https://files.pythonhosted.org/packages/e9/71/1a1e0ed0981bb6a67bce55a210f168126b7ebd2065958673797ea66489ca/importlib_metadata-1.3.0-py2.py3-none-any.whl
+Collecting pyparsing>=2.0.2 (from packaging->pytest)
+  Using cached https://files.pythonhosted.org/packages/5d/bc/1e58593167fade7b544bfe9502a26dc860940a79ab306e651e7f13be68c2/pyparsing-2.4.6-py2.py3-none-any.whl
+Collecting six (from packaging->pytest)
+  Using cached https://files.pythonhosted.org/packages/65/26/32b8464df2a97e6dd1b656ed26b2c194606c16fe163c695a992b36c11cdf/six-1.13.0-py2.py3-none-any.whl
+Collecting zipp>=0.5 (from importlib-metadata>=0.12; python_version < "3.8"->pytest)
+  Using cached https://files.pythonhosted.org/packages/74/3d/1ee25a26411ba0401b43c6376d2316a71addcc72ef8690b101b4ea56d76a/zipp-0.6.0-py2.py3-none-any.whl
+Installing collected packages: more-itertools, pyparsing, six, packaging, wcwidth, zipp, importlib-metadata, pluggy, attrs, py, pytest, pytest-randomly
+Successfully installed attrs-19.3.0 importlib-metadata-1.3.0 more-itertools-8.0.2 packaging-20.0 pluggy-0.13.1 py-1.8.1 pyparsing-2.4.6 pytest-5.3.2 pytest-randomly-3.2.0 six-1.13.0 wcwidth-0.1.8 zipp-0.6.0
+WARNING: You are using pip version 19.1.1, however version 19.3.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
