@@ -1,0 +1,141 @@
+class Fauna
+    Uses a general class for all types of animals.
+    Parameters: (constants)
+    THESE are different for each animal type
+    w_birth =
+    sigma_birth =
+    beta =
+    eta =
+
+
+class attributes: from initializer
+self.age = 0
+    """
+    Should be default value 0, as newborn animals will be age 0.
+    When inserting animals into the simulation manually,
+    we should be able to set their age.
+
+    For each animal, age is updated to 'age += 1'
+    each new year in the simulation
+
+    Use "property" decorator to get the age value.
+    """
+
+self.weight =
+    """
+    The weight of a animal is randomly drawn from a gaussian
+    distribution. Where mean and standard deviation are pre-defined in parameters.
+
+
+
+    For each animal, weight is updated each new year in the simulation.
+    An animal experiences change of weight whenever it gives birth of eats
+    (or lack thereof). Here we can use (decorator) weight setter.
+
+    Use "property" decorator to get the weight value.
+    """
+
+self.fitness =
+    """
+    Calculates the fitness of the animal. Uses input from age and weight.
+    Fitness plays a role in Migration, Birth and Death.
+    Updates yearly.
+
+    Use "property" decorator to get the fitness value.
+    """
+
+
+    if weight > 0:
+        some formula
+    else:
+        0
+
+     "At all times: 0 <= fitness <= 1"
+
+class methods
+
+death =
+    """
+    Determines when an animal dies (not eaten).
+    Reduce animal count. Checks and updates yearly.
+    """
+
+    if animal.fitness = 0:
+        death = True
+        Reduce animal counter. Delete this object
+    elif:
+        "Probability of death:" omega*(1-animal.fitness)
+        death = True
+        Reduce animal counter. Delete this object
+    else:
+        pass
+
+migration(not for first simulation) =
+    """
+    Require cell information of neighboring cells. (Fodder and type)
+
+
+    ""
+birth =
+    """
+    Class method for birth.
+
+    A offspring will be produced with the probability:
+    min(1, gamma * animal.fitness * (number_of_same_animals_in cell - 1))
+    No need for a check if there are more than 1 animal of same species in
+    the cell, because the expression would return 0 if there are less than 2.
+
+    We need, however, to perform a check if animal.weight < zeta (w_birth + sigma_birth).
+        if yes, no offspring will be produced.
+
+    Need a pregnant = True check? An animal cannot be pregnant several times.
+    At the start of the new year, the offspring is born.
+
+    The mother loses xi * weight_of_baby after the offspring is born.
+
+    Gender plays no role in mating.
+
+    This happens every year.
+    """
+
+
+Animal species specific:
+
+class Carnivore(Animals):
+    parameters here?
+
+class methods
+
+kill/feed =
+    """
+    Animal with the highest fitness eats first.
+    Carnivores tries to eat a herbivore in the same cell with the lowest fitness value.
+    Then it attempts to eat the next highest.
+
+    Carnivores attempt to feed until total weight >= F, or whenever there
+    are no more herbivores in the cell.
+
+    After killing a herbivore, the carnivore's weight is increased by
+    beta*w_herbivore, then the fitness of the carnivore is re-evaluated before
+    it potentially kills again.
+
+    This happens every year.
+    """
+
+class Herbivore(Animals):
+    parameters here?
+
+feed =
+    """
+    Animal with the highest fitness eats first.
+    Each animal (herbivore) continues to eat until they are full.
+    i. e. F of fodder in that cell. If there is no more available fodder in
+    the cell, the herbivore stops eating.
+
+    After eating, the herbivore's weight is increased by beta * amount_eaten
+
+    This happens every year.
+    """
+
+
+
