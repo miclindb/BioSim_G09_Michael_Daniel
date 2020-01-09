@@ -42,6 +42,8 @@ class BioSim:
         img_base should contain a path and beginning of a file name.
         """
 
+        self.island_map = island_map
+
     def set_animal_parameters(self, species, params):
         """
         Set parameters for animal species.
@@ -94,3 +96,14 @@ class BioSim:
 
     def make_movie(self):
         """Create MPEG4 movie from visualization images saved."""
+
+
+
+
+
+
+
+
+
+
+
