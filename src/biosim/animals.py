@@ -5,9 +5,12 @@ import numpy as np
 
 
 class Animals:
-    def __init__(self):
-        self.age = 0
-        self.weight = self.calculate_weight()
+    def __init__(self, age=0, weight=None):
+        self.age = age
+        if weight is None:
+            self.weight = self.calculate_weight()
+        else:
+            self.weight = weight
         self.fitness = self.calculate_fitness(self.age, self.weight)
 
     @classmethod
@@ -76,13 +79,13 @@ class Herbivore(Animals):
         'gamma': 0.2,
         'zeta': 3.5,
         'xi': 1.2,
-        'F': 10,
+        'F': 10.0,
         'eta': 0.05,
         'DeltaPhiMax': None
     }
 
-    def __init__(self):
-        super(Herbivore, self).__init__()
+    def __init__(self, age=0, weight=None):
+        super(Herbivore, self).__init__(age, weight)
 
     def feed(self):
         """
@@ -124,8 +127,8 @@ class Carnivore(Animals):
         'DeltaPhiMax': 10.0
     }
 
-    def __init__(self):
-        super(Carnivore, self).__init__()
+    def __init__(self, age=0, weight=None):
+        super(Carnivore, self).__init__(age, weight)
 
     def kill(self, nearby_herbivore):
         pass
