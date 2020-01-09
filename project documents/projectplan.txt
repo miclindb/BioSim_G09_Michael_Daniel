@@ -10,3 +10,5 @@ feed, birth, death
 Map info for one cell
 
 A simulation class
+
+- use sphinx for creating documentation
