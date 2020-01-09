@@ -13,7 +13,7 @@ class AnnualCycle:
     def island_constructor(self, island_map):
         self.island_map = island_map
         cell = [landscape_dict[map]]
-        animal_objects = [Herbivore() for i in range(10)]
+        animal_objects = [Herbivore() for i in range(4)]
         cell.append(animal_objects)
         self.island_map = pd.DataFrame([[cell]])
 
@@ -36,6 +36,7 @@ class AnnualCycle:
                 for animal in self.island_map[x][y][1]:
                     animal.age += 1
 
+<<<<<<< Updated upstream
     def loss_of_weight(self):
         for x in range(self.island_map.shape[0]):
             for y in range(self.island_map.shape[1]):
@@ -48,6 +49,9 @@ class AnnualCycle:
             for y in range(self.island_map.shape[1]):
                 for animal in self.island_map[x][y][1]:
                     animal.fitness = animal.calculate_fitness()
+=======
+
+>>>>>>> Stashed changes
 
     def death(self):
         for x in range(self.island_map.shape[0]):
