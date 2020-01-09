@@ -1,28 +1,25 @@
 import numpy as np
-from biosim import landscape as ls# how to do this?
+
+
+# from biosim import landscape as ls# how to do this?
 
 
 class Animals:
-    def __init__(self, age=None):
-        if age is None:
-            self.age = 0
+    def __init__(self):
+        self.age = 0
         self.weight = self.calculate_weight()
-        self.fitness = self.calculate_fitness()
-
+        self.fitness = self.calculate_fitness(self.age, self.weight)
 
     @classmethod
     def calculate_weight(cls):
         return np.random.normal(cls.parameters['w_birth'],
-                                       cls.parameters['sigma_birth'])
+                                cls.parameters['sigma_birth'])
 
     @classmethod
-    def calculate_fitness(cls):
-        return ((1 / (1 + np.exp(cls.parameters['phi_age'] * (cls.age - cls.parameters['a_half'])))) * \
-                       (1 / (1 + np.exp(
-                           cls.parameters['phi_weight'] * (cls.weight - cls.parameters['w_half'])))))
+    def calculate_fitness(cls, age, weight):
+        return (1 / (1 + np.exp(cls.parameters['phi_age'] * (age - cls.parameters['a_half'])))) * (1 / (1 + np.exp(cls.parameters['phi_weight'] * (weight - cls.parameters['w_half']))))
 
-
-    def death(self):#Question for TA, about random uniform
+    def death(self):  # Question for TA, about random uniform
         """
         Class method for death. Used to determine whether an animal dies each year.
         Returns True if animals dies and False otherwise.
@@ -32,7 +29,8 @@ class Animals:
         """
         if self.fitness == 0:
             return True
-        elif np.random.uniform(0, 1) <= self.parameters['omega'] * (1 - self.fitness):
+        elif np.random.uniform(0, 1) <= self.parameters['omega'] * (
+                1 - self.fitness):
             return True
         else:
             return False
