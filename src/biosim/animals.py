@@ -2,19 +2,24 @@ import numpy as np
 
 
 class Animals:
-    """
+    def __init__(self, age=None):
+        if age is None:
+            self.age = 0
+        self.weight = self.calculate_weight()
+        self.fitness = self.calculate_fitness()
 
-    """
-    def __init__(self):
-        self.age = 0
-        self.weight = np.random.normal(self.parameters['w_birth'],
-                                       self.parameters['sigma_birth'])#staticmethod?
-        if self.weight <= 0:
-            self.fitness = 0
-        else:#Question for TA, staticmethod?
-            self.fitness = (1 / (1 + np.exp(self.parameters['phi_age'] * (self.age - self.parameters['a_half'])))) * \
-                           (1 / (1 + np.exp(
-                               self.parameters['phi_weight'] * (self.weight - self.parameters['w_half']))))
+
+    @classmethod
+    def calculate_weight(cls):
+        return np.random.normal(cls.parameters['w_birth'],
+                                       cls.parameters['sigma_birth'])
+
+    @classmethod
+    def calculate_fitness(cls):
+        return ((1 / (1 + np.exp(cls.parameters['phi_age'] * (cls.age - cls.parameters['a_half'])))) * \
+                       (1 / (1 + np.exp(
+                           cls.parameters['phi_weight'] * (cls.weight - cls.parameters['w_half'])))))
+
 
     def death(self):#Question for TA, about random uniform
         """
@@ -39,15 +44,18 @@ class Animals:
         :return:
         Bool
         """
+        pass
+        """
         prob_birth = min(1, self.parameters['gamma'] * self.fitness * (N - 1))
         if np.random.uniform(0, 1) <= prob_birth:
             if self.weight < self.parameters['zeta'] *\
                 (self.parameters['w_birth'] + self.parameters['sigma_birth']):
+                
                 self.weight -= self.parameters['xi'] *#birthweight
                 return True
             else:
                 return False
-
+        """
 
     def migration(self):
 
@@ -80,12 +88,15 @@ class Herbivore(Animals):
         Class method for Herbivore feeding.
         :return: None
         """
-        f_eaten = 0
-        fodder = #cell_info
-        while not f_eaten != self.parameters['F']:
-            #eat
-            #Update cell info
-        self.weight += self.parameters['beta'] * f_eaten
+        if cell.info.fodder < self.parameters['F']:
+            eaten = differanse
+        elif cell.info.fodder == 0
+            eaten = 0
+        else:
+            eaten self.parameters['F']
+        cell.update.fodder(-eaten)
+        weight.update(eaten * beta)
+
 
 class Carnivore(Animals):
     """
@@ -117,6 +128,8 @@ class Carnivore(Animals):
             z = ((self.fitness - nearby_herbivore.fitness)/self.parameters['DeltaPhiMax'])
         else:
             z = 1
+
+def add_animal(number=1, species= )
 
 
 
