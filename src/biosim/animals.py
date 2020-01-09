@@ -1,4 +1,5 @@
 import numpy as np
+from biosim import landscape as ls# how to do this?
 
 
 class Animals:
@@ -58,6 +59,7 @@ class Animals:
         """
 
     def migration(self):
+        pass
 
 
 class Herbivore(Animals):
@@ -88,7 +90,10 @@ class Herbivore(Animals):
         Class method for Herbivore feeding.
         :return: None
         """
-        if cell.info.fodder < self.parameters['F']:
+        pass
+        """
+        location =
+        if ls.cell.info.fodder < self.parameters['F']:
             eaten = differanse
         elif cell.info.fodder == 0
             eaten = 0
@@ -96,6 +101,7 @@ class Herbivore(Animals):
             eaten self.parameters['F']
         cell.update.fodder(-eaten)
         weight.update(eaten * beta)
+        """
 
 
 class Carnivore(Animals):
@@ -113,23 +119,22 @@ class Carnivore(Animals):
         'omega': 0.9,
         'gamma': 0.8,
         'zeta': 3.5,
-        'xi': 1.1
-        'F': 50.0
+        'xi': 1.1,
+        'F': 50.0,
         'DeltaPhiMax': 10.0
     }
 
     def __init__(self):
         super(Carnivore, self).__init__()
 
-    def kill(self, nearby_herbivore):#Staticmethod/classmethod?
+    def kill(self, nearby_herbivore):
+        pass
+
+        """
         if self.fitness <= nearby_herbivore.fitness:
             z = 0
         elif 0 < self.fitness - nearby_herbivore.fitness < self.parameters['DeltaPhiMax']:
             z = ((self.fitness - nearby_herbivore.fitness)/self.parameters['DeltaPhiMax'])
         else:
             z = 1
-
-def add_animal(number=1, species= )
-
-
-
+            """
