@@ -49,8 +49,6 @@ class Animals:
                 return False
 
 
-
-
     def migration(self):
 
 
@@ -69,8 +67,9 @@ class Herbivore(Animals):
         'omega': 0.4,
         'gamma': 0.2,
         'zeta': 3.5,
-        'xi': 1.2
-        'F': 10
+        'xi': 1.2,
+        'F': 10,
+        'DeltaPhiMax': None
     }
 
     def __init__(self):
@@ -78,7 +77,7 @@ class Herbivore(Animals):
 
     def feed(self):
         """
-        Class method for Herbivore feeding
+        Class method for Herbivore feeding.
         :return: None
         """
         f_eaten = 0
@@ -105,11 +104,19 @@ class Carnivore(Animals):
         'zeta': 3.5,
         'xi': 1.1
         'F': 50.0
+        'DeltaPhiMax': 10.0
     }
 
     def __init__(self):
         super(Carnivore, self).__init__()
 
-    def kill(self):
+    def kill(self, nearby_herbivore):#Staticmethod/classmethod?
+        if self.fitness <= nearby_herbivore.fitness:
+            z = 0
+        elif 0 < self.fitness - nearby_herbivore.fitness < self.parameters['DeltaPhiMax']:
+            z = ((self.fitness - nearby_herbivore.fitness)/self.parameters['DeltaPhiMax'])
+        else:
+            z = 1
+
 
 
