@@ -5,7 +5,24 @@ import numpy as np
 
 
 class Animals:
+    """
+    Superclass for Herbivores and Carnivores.
+
+    """
     def __init__(self, age=0, weight=None):
+        """
+        Class constructor for Animals.
+        Creates an animal with age, weight and fitness as attributes.
+
+        Parameters
+        ----------
+        age: int
+            Age of the animal. Default value is 0
+        weight: float
+            Weight of the animal. If no value is specified, the weight assigned
+            is drawn from a gaussian distribution. Calculated in class method
+            'calculate_weight'.
+        """
         self.age = age
         if weight is None:
             self.weight = self.calculate_weight()
@@ -20,15 +37,28 @@ class Animals:
 
     @classmethod
     def calculate_fitness(cls, age, weight):
-        return (1 / (1 + np.exp(cls.parameters['phi_age'] * (age - cls.parameters['a_half'])))) * (1 / (1 + np.exp(cls.parameters['phi_weight'] * (weight - cls.parameters['w_half']))))
+        return (1 / (1 + np.exp(
+            cls.parameters['phi_age'] * (age - cls.parameters['a_half'])))) * (
+                       1 / (1 + np.exp(cls.parameters['phi_weight'] * (weight - cls.parameters['w_half']))))
 
-    def death(self):  # Question for TA, about random uniform
+    @property
+    def get_fitness(self):
+        return self.fitness
+
+    @get_fitness.setter
+    def get_fitness(self, value):
+        self.fitness = value
+
+    def death(self):
         """
-        Class method for death. Used to determine whether an animal dies each year.
-        Returns True if animals dies and False otherwise.
+        Class method used to determine whether an animal dies.
+        The animal dies if the fitness of the animal is 0. The animal also has
+        a fixed probability of dying each year.
 
-        :return:
-        bool
+        Returns: Bool
+            'True' is the animal dies and 'False' otherwise.
+        -------
+
         """
         if self.fitness == 0:
             return True
@@ -65,7 +95,7 @@ class Animals:
 
 class Herbivore(Animals):
     """
-
+    Subclass of Animals.
     """
     parameters = {
         'w_birth': 8.0,
@@ -108,7 +138,7 @@ class Herbivore(Animals):
 
 class Carnivore(Animals):
     """
-    Test what parameters are used. Carnivore or Herbivore?
+    Subclass of Animals.
     """
     parameters = {
         'w_birth': 6.0,
