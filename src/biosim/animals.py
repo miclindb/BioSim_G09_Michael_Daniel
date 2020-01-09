@@ -77,6 +77,7 @@ class Herbivore(Animals):
         'zeta': 3.5,
         'xi': 1.2,
         'F': 10,
+        'eta': 0.05,
         'DeltaPhiMax': None
     }
 
@@ -119,6 +120,7 @@ class Carnivore(Animals):
         'zeta': 3.5,
         'xi': 1.1,
         'F': 50.0,
+        'eta': 0.125,
         'DeltaPhiMax': 10.0
     }
 
