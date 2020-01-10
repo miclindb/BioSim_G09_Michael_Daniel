@@ -6,6 +6,7 @@ class Animals:
     Superclass for Herbivores and Carnivores.
 
     """
+
     def __init__(self, age=0, weight=None):
         """
         Class constructor for Animals.
@@ -25,23 +26,27 @@ class Animals:
             self.weight = self.calculate_weight()
         else:
             self.weight = weight
-        self.fitness = self.calculate_fitness(self.age, self.weight)
+        self.fitness = self.calculate_fitness()  # self.age, self.weight)
 
-    @classmethod
-    def calculate_weight(cls):
-        return np.random.normal(cls.parameters['w_birth'],
-                                cls.parameters['sigma_birth'])
+    def calculate_weight(self):
+        return np.random.normal(self.parameters['w_birth'],
+                                self.parameters['sigma_birth'])
 
-    @classmethod
-    def calculate_fitness(cls, age, weight):
+    def calculate_fitness(self):
         return (1 / (1 + np.exp(
-            cls.parameters['phi_age'] * (age - cls.parameters['a_half'])))) * (
-                       1 / (1 + np.exp(cls.parameters['phi_weight'] * (weight - cls.parameters['w_half']))))
+            self.parameters['phi_age'] * (
+                    self.age - self.parameters['a_half'])))) * (
+                       1 / (1 + np.exp(self.parameters['phi_weight'] * (
+                       self.weight - self.parameters['w_half']))))
 
     def update_fitness(self):
         self.fitness = (1 / (1 + np.exp(
-            self.parameters['phi_age'] * (self.age - self.parameters['a_half'])))) * (
-                       1 / (1 + np.exp(self.parameters['phi_weight'] * (self.weight - self.parameters['w_half']))))
+            self.parameters['phi_age'] * (
+                    self.age - self.parameters['a_half'])))) * (
+                               1 / (1 + np.exp(
+                           self.parameters['phi_weight'] * (
+                                   self.weight - self.parameters[
+                               'w_half']))))
 
     @classmethod
     def update_weight(cls, eaten):
@@ -101,7 +106,8 @@ class Animals:
                 (self.parameters['w_birth'] + self.parameters['sigma_birth']):
             return False
         else:
-            prob_birth = min(1, self.parameters['gamma'] * self.fitness * (n - 1))
+            prob_birth = min(1,
+                             self.parameters['gamma'] * self.fitness * (n - 1))
             if np.random.uniform(0, 1) <= prob_birth:
                 if animal_object.__class__.__name__ == 'Herbivore':
                     new_born_animal = Herbivore()
