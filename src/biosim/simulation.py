@@ -115,7 +115,8 @@ class BioSim:
                 df[x][y].population.append(Carniovore(age=animal['age'], weight=animal['weight']))
 
         for year in range(num_years):
-            cycle.annual_cycle(df[x][y], len(df[x][y].population))
+            for animal_object in df[x][y].population:
+                cycle.annual_cycle(animal_object, n=len(df[x][y].population))
 
 
 
