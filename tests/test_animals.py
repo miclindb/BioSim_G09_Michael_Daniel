@@ -1,17 +1,11 @@
 from src.biosim.animals import Herbivore, Carnivore
-
-"""
-@pytest.fixture
-def make_test_animals(self):
-    self.
-"""
+from pytest import approx
 
 
 def test_herbivore_default_class_initializer():
     """
     Tests that the class initializer for herbivore runs and uses default
     values when no inputs are provided
-
     """
     herbivore = Herbivore()
     assert herbivore.age == 0
@@ -22,9 +16,8 @@ def test_herbivore_default_class_initializer():
 
 def test_carnivore_default_class_initializer():
     """
-    Tests that the class initializer for herbivore runs and uses default
+    Tests that the class initializer for carnivore runs and uses default
     values when no inputs are provided
-
     """
     carnivore = Carnivore()
     assert carnivore.age == 0
@@ -34,31 +27,54 @@ def test_carnivore_default_class_initializer():
 
 
 def test_herbivore_manual_input():
+    """
+    Tests that the class initializer for herbivore runs and uses inputs
+    provided.
+    """
     herbivore = Herbivore(10, 8)
     assert herbivore.age == 10
     assert herbivore.weight == 8
 
 
 def test_carnivore_manual_input():
+    """
+    Tests that the class initializer for herbivore runs and uses inputs
+    provided.
+    """
     carnivore = Herbivore(10, 8)
     assert carnivore.age == 10
     assert carnivore.weight == 8
 
 
 def test_calculate_weight():
-    pass
+    """
+    Tests that 'calculate_weight' properly calculates the animal's weight.
+    """
+    # Need statistical tests
 
 
 def test_calculate_fitness():
-    pass
+    """
+    Tests that 'calculate_fitness' properly calculates the animal's fitness.
+    Tested with weight as input in the initializer.
+    """
+    herbivore = Herbivore(weight=10)
+    assert herbivore.fitness == approx(0.499832)
 
 
 def test_getter_decorator():
+    """
+    Tests that the fitness getter returns the fitness value of the animal.
+    """
     herbivore = Herbivore()
     assert herbivore.fitness == herbivore.get_fitness
 
 
 def test_setter_decorator():
+    """
+    Tests that the fitness setter successfully updates the fitness of the
+    animal.
+    """
     herbivore = Herbivore()
     herbivore.get_fitness = 0.8
     assert herbivore.fitness == 0.8
@@ -66,7 +82,7 @@ def test_setter_decorator():
 
 def test_death_by_zero_fitness():
     """
-    Tests if the animal dies upon reaching fitness = 0
+    Tests that the animal dies upon reaching fitness = 0
     """
     herbivore = Herbivore()
     herbivore.get_fitness = 0
@@ -75,6 +91,29 @@ def test_death_by_zero_fitness():
 
 def test_probability_of_death():
     pass
+
+
+def test_gives_birth_returns_false():
+    """
+    Tests that gives_birth returns False if a baby is not successfully born.
+    """
+    herbivore = Herbivore(weight=3)
+    assert herbivore.weight < herbivore.parameters['zeta'] * \
+           (herbivore.parameters['w_birth'] + herbivore.parameters[
+               'sigma_birth'])
+    assert bool(herbivore.gives_birth(n=2, animal_object=herbivore)) is False
+
+
+def test_gives_birth_returns_newborn():
+    """
+    Tests that gives_birth returns a new object of correct species when a baby
+    is successfully born.
+    """
+    herbivore = Herbivore(weight=50)
+    assert herbivore.weight >= herbivore.parameters['zeta'] * \
+           (herbivore.parameters['w_birth'] + herbivore.parameters[
+               'sigma_birth'])
+    # How to test for probability
 
 
 def test_herbivore_feeding_max_fodder():

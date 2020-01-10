@@ -1,10 +1,6 @@
 import numpy as np
 
 
-# from biosim import landscape as ls# how to do this?
-# Test change.
-
-
 class Animals:
     """
     Superclass for Herbivores and Carnivores.
@@ -92,6 +88,10 @@ class Animals:
         Bool
         """
 
+        """
+        Can we remove 'animal_object' from input and use self instead?
+        """
+
         if self.weight < self.parameters['zeta'] * \
                 (self.parameters['w_birth'] + self.parameters['sigma_birth']):
             print("was too light")
@@ -104,7 +104,7 @@ class Animals:
                 elif animal_object.__class__.__name__ == 'Carnivore':
                     new_born_animal = Carnivore()
                 else:
-                    pass # may add more species
+                    pass  # may add more species
                 self.weight -= self.parameters['xi'] * new_born_animal.weight
                 print('A baby is born')
                 return new_born_animal

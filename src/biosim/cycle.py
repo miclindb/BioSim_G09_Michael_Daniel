@@ -33,7 +33,21 @@ def feeding(animal_object):
 
 
 def procreate(animal_object):
-    pass
+    """
+    Annual birth.
+
+    Parameters
+    ----------
+    animal_object: class object
+        Object of the animal
+
+    Returns: Bool or class object
+        False if birth is unsuccessful
+        class object if a new baby is successfully born.
+    -------
+
+    """
+    animal_object.gives_birth()
 
 
 def migrate(animal_object):
@@ -45,19 +59,34 @@ def aging(animal_object):
 
 
 def loss_of_weight(animal_object):
-    animal_object.weight -= (animal_object.weight * animal_object.parameters['eta'])
+    animal_object.weight -= (
+            animal_object.weight * animal_object.parameters['eta']
+    )
     animal_object.fitness = animal_object.calculate_fitness()
 
 
 def death(animal_object):
+    """
+    Checks if an animal dies.
+
+    Parameters
+    ----------
+    animal_object: class object
+        Object for animal
+
+    Returns: Bool
+        'True' is the animal dies and 'False' otherwise.
+    -------
+
+    """
     return animal_object.death()
 
 
-def annual_cycle(animal_object, animal_species):
+def annual_cycle(animal_object):
     """
     Performs operations related to the annual cycle for one cell.
     """
-    feeding(animal_object, animal_species)  # Each animal feeds
+    feeding(animal_object)  # Each animal feeds
     procreate(animal_object)  # Checks for birth for all animals
     migrate(animal_object)  # Each animal moves
     aging(animal_object)  # Updates age for all animals
