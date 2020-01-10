@@ -94,7 +94,6 @@ class Animals:
 
         if self.weight < self.parameters['zeta'] * \
                 (self.parameters['w_birth'] + self.parameters['sigma_birth']):
-            print("was too light")
             return False
         else:
             prob_birth = min(1, self.parameters['gamma'] * self.fitness * (n - 1))
@@ -106,7 +105,6 @@ class Animals:
                 else:
                     pass  # may add more species
                 self.weight -= self.parameters['xi'] * new_born_animal.weight
-                print('A baby is born')
                 return new_born_animal
             else:
                 return False
