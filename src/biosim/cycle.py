@@ -4,15 +4,16 @@ import pandas as pd
 
 
 class AnnualCycle:
-    landscape_dict = {'J': Jungle(), 'O': Ocean(), 'M': Mountain()}
+    landscape_dict = {'J': Jungle, 'O': Ocean, 'M': Mountain}
 
     def __init__(self):
         self.year = 0
         self.island_map = None
 
+
     def island_constructor(self, island_map):
         self.island_map = island_map
-        cell = [landscape_dict[map]]
+        cell = [landscape_dict[island_map]()]
         animal_objects = [Herbivore() for i in range(4)]
         cell.append(animal_objects)
         self.island_map = pd.DataFrame([[cell]])

@@ -1,9 +1,9 @@
 
 class Cell:
 
-    def __init__(self):
+    def __init__(self, coordinate=(0, 0)):
 
-        self.location = (1, 1)
+        self.coordinate = coordinate
 
         self.fodder = 0
         self.population = []

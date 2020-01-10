@@ -83,26 +83,28 @@ class Animals:
         else:
             return False
 
-    def gives_birth(self, N=4):
+    def gives_birth(self, n, animal_species=Herbivore):
         """
         Class method for birth.
 
-        :param N: Number of other animals of same species in same cell
+        #:param n: Number of other animals of same species in same cell
         :return:
         Bool
         """
-        pass
-        """
-        prob_birth = min(1, self.parameters['gamma'] * self.fitness * (N - 1))
-        if np.random.uniform(0, 1) <= prob_birth:
-            if self.weight < self.parameters['zeta'] *\
+
+        if self.weight < self.parameters['zeta'] * \
                 (self.parameters['w_birth'] + self.parameters['sigma_birth']):
-                
-                self.weight -= self.parameters['xi'] *#birthweight
-                return True
+            print("was too light")
+            return False
+        else:
+            prob_birth = min(1, self.parameters['gamma'] * self.fitness * (n - 1))
+            if np.random.uniform(0, 1) <= prob_birth:
+                new_born_animal = animal_species() # trouble
+                self.weight -= self.parameters['xi'] * new_born_animal.weight
+                print('A baby is born')
+                return new_born_animal
             else:
                 return False
-        """
 
     def migration(self):
         pass
