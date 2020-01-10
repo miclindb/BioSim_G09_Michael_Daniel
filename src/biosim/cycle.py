@@ -87,7 +87,7 @@ def annual_cycle(animal_object, n):
     """
     Performs operations related to the annual cycle for one cell.
     """
-    feeding(animal_object)      # Each animal feeds
+   # feeding(animal_object)      # Each animal feeds
     procreate(n, animal_object)     # Checks for birth for all animals
     migrate(animal_object)      # Each animal moves
     aging(animal_object)        # Updates age for all animals

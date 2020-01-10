@@ -6,6 +6,27 @@
 __author__ = ""
 __email__ = ""
 
+from src.biosim.animals import Herbivore, Carnivore
+from src.biosim import cycle
+import textwrap
+import pandas as pd
+from src.biosim.landscape import Ocean, Mountain, Jungle, Savannah, Desert
+import numpy as np
+
+geogr = """\
+           J"""
+geogr = textwrap.dedent(geogr)
+
+ini_herbs = [
+    {
+        "loc": (10, 10),
+        "pop": [
+            {"species": "Herbivore", "age": 5, "weight": 20}
+            for _ in range(20)
+        ],
+    }
+]
+
 
 class BioSim:
     def __init__(
@@ -43,6 +64,7 @@ class BioSim:
         """
 
         self.island_map = island_map
+        self.ini_pop = ini_pop
 
     def set_animal_parameters(self, species, params):
         """
@@ -51,6 +73,7 @@ class BioSim:
         :param species: String, name of animal species
         :param params: Dict with valid parameter specification for species
         """
+        pass
 
     def set_landscape_parameters(self, landscape, params):
         """
@@ -59,6 +82,7 @@ class BioSim:
         :param landscape: String, code letter for landscape
         :param params: Dict with valid parameter specification for landscape
         """
+        pass
 
     def simulate(self, num_years, vis_years=1, img_years=None):
         """
@@ -70,6 +94,31 @@ class BioSim:
 
         Image files will be numbered consecutively.
         """
+        num_years = 10
+        ini_pop = ini_herbs
+
+        x = 0 # for testing
+        y = 0 # for testing
+        island_map = 'J' # for testing
+        landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle,
+                          'S': Savannah, 'D': Desert}
+
+        cell = landscape_dict[island_map]()
+
+        # coordinate=ini_pop[0]['loc']
+        df = pd.DataFrame([cell])
+
+        for animal in ini_pop[0]['pop']:
+            if animal['species'] == 'Herbivore':
+                df[x][y].population.append(Herbivore(age=animal['age'], weight=animal['weight']))
+            if animal['species'] == 'Carnivore':
+                df[x][y].population.append(Carniovore(age=animal['age'], weight=animal['weight']))
+
+        for year in range(num_years):
+            cycle.annual_cycle(df[x][y], len(df[x][y].population))
+
+
+
 
     def add_population(self, population):
         """
