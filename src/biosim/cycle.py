@@ -3,7 +3,6 @@ from src.biosim.landscape import Jungle, Ocean, Mountain
 import pandas as pd
 
 """
-
 class AnnualCycle:
     landscape_dict = {'J': Jungle, 'O': Ocean, 'M': Mountain}
 
@@ -32,14 +31,16 @@ def feeding(animal_object):
         pass
 
 
-def procreate(animal_object):
+def procreate(n, animal_object):
     """
     Annual birth.
 
     Parameters
     ----------
+    n: int
+        Number of nearby animals.
     animal_object: class object
-        Object of the animal
+        Object of the animal.
 
     Returns: Bool or class object
         False if birth is unsuccessful
@@ -47,7 +48,7 @@ def procreate(animal_object):
     -------
 
     """
-    animal_object.gives_birth()
+    animal_object.gives_birth(n, animal_object)
 
 
 def migrate(animal_object):
@@ -82,13 +83,13 @@ def death(animal_object):
     return animal_object.death()
 
 
-def annual_cycle(animal_object):
+def annual_cycle(animal_object, n):
     """
     Performs operations related to the annual cycle for one cell.
     """
-    feeding(animal_object)  # Each animal feeds
-    procreate(animal_object)  # Checks for birth for all animals
-    migrate(animal_object)  # Each animal moves
-    aging(animal_object)  # Updates age for all animals
-    loss_of_weight(animal_object)  # Each animal loses weight
-    death(animal_object)  # For each animal, we check if the animal dies
+    feeding(animal_object)      # Each animal feeds
+    procreate(n, animal_object)     # Checks for birth for all animals
+    migrate(animal_object)      # Each animal moves
+    aging(animal_object)        # Updates age for all animals
+    loss_of_weight(animal_object)   # Each animal loses weight
+    death(animal_object)        # For each animal, we check if the animal dies
