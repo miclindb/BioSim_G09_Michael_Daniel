@@ -83,7 +83,7 @@ class Animals:
         else:
             return False
 
-    def gives_birth(self, n, animal_species='Herbivore'):
+    def gives_birth(self, n, animal_object):
         """
         Class method for birth.
 
@@ -99,7 +99,12 @@ class Animals:
         else:
             prob_birth = min(1, self.parameters['gamma'] * self.fitness * (n - 1))
             if np.random.uniform(0, 1) <= prob_birth:
-                new_born_animal = animal_species() # trouble
+                if animal_object.__class__.__name__ == 'Herbivore':
+                    new_born_animal = Herbivore()
+                elif animal_object.__class__.__name__ == 'Carnivore':
+                    new_born_animal = Carnivore()
+                else:
+                    pass # may add more species
                 self.weight -= self.parameters['xi'] * new_born_animal.weight
                 print('A baby is born')
                 return new_born_animal
