@@ -26,7 +26,7 @@ class Animals:
             self.weight = self.calculate_weight()
         else:
             self.weight = weight
-        self.fitness = self.calculate_fitness()  # self.age, self.weight)
+        self.fitness = self.calculate_fitness()
 
     def calculate_weight(self):
         return np.random.normal(self.parameters['w_birth'],
@@ -48,8 +48,7 @@ class Animals:
                                    self.weight - self.parameters[
                                'w_half']))))
 
-    @classmethod
-    def update_weight(cls, eaten):
+    def update_weight(self, eaten):
         """
         Weight update after feeding. Currently only used for herbivore.
         Parameters
@@ -60,15 +59,15 @@ class Animals:
         -------
 
         """
-        return eaten * cls.parameters['beta']
+        return eaten * self.parameters['beta']
 
-    @property
-    def get_fitness(self):
-        return self.fitness
+    #@property
+    #def get_fitness(self):
+    #    return self.fitness
 
-    @get_fitness.setter
-    def get_fitness(self, value):
-        self.fitness = value
+    #@get_fitness.setter
+    #def get_fitness(self, value):
+    #    self.fitness = value
 
     def death(self):
         """
@@ -162,9 +161,11 @@ class Herbivore(Animals):
         if cell_fodder_info < eaten:
             eaten = cell_fodder_info
             self.weight += self.update_weight(eaten)
+            self.update_fitness()
             return eaten
         else:
             self.weight += self.update_weight(eaten)
+            self.update_fitness()
             return eaten
 
 
@@ -192,7 +193,7 @@ class Carnivore(Animals):
     def __init__(self, age=0, weight=None):
         super(Carnivore, self).__init__(age, weight)
 
-    def kill(self, nearby_herbivore):
+    def kill(self, herbivore):
         pass
 
         """

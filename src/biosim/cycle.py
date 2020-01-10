@@ -1,6 +1,7 @@
 from src.biosim.animals import Herbivore, Carnivore
 from src.biosim.landscape import Jungle, Ocean, Mountain
 import pandas as pd
+import numpy as np
 
 """
 class AnnualCycle:
@@ -19,6 +20,11 @@ class AnnualCycle:
 
     Do cell updates in own method.
 """
+
+class AnnualCycle:
+    def __init__(self, animal, n):
+        self.animal = animal
+        self.n = n
 
 
 def feeding(animal_object):
@@ -57,13 +63,14 @@ def migrate(animal_object):
 
 def aging(animal_object):
     animal_object.age += 1
+    animal_object.update_fitness()
 
 
 def loss_of_weight(animal_object):
     animal_object.weight -= (
             animal_object.weight * animal_object.parameters['eta']
     )
-    animal_object.fitness = animal_object.update_fitness()
+    animal_object.update_fitness()
 
 
 def death(animal_object):
@@ -80,16 +87,23 @@ def death(animal_object):
     -------
 
     """
-    return animal_object.death()
+    animal_fitness = float(animal_object.fitness)
+    if animal_fitness == 0:
+        return True
+    elif np.random.uniform(0, 1) <= animal_object.parameters['omega'] * (
+           1.0 - animal_fitness):
+        return True
+    else:
+        return False
 
 
 def annual_cycle(animal_object, n):
     """
     Performs operations related to the annual cycle for one cell.
     """
-   # feeding(animal_object)      # Each animal feeds
+    #feeding(animal_object)      # Each animal feeds
     procreate(n, animal_object)     # Checks for birth for all animals
     migrate(animal_object)      # Each animal moves
     aging(animal_object)        # Updates age for all animals
     loss_of_weight(animal_object)   # Each animal loses weight
-    death(animal_object)        # For each animal, we check if the animal dies
+    #death(animal_object)        # For each animal, we check if the animal dies

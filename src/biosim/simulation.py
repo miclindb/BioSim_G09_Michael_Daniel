@@ -118,9 +118,6 @@ class BioSim:
             for animal_object in df[x][y].population:
                 cycle.annual_cycle(animal_object, n=len(df[x][y].population))
 
-
-
-
     def add_population(self, population):
         """
         Add a population to the island
