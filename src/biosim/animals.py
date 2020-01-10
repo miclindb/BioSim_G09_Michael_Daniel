@@ -83,7 +83,7 @@ class Animals:
         else:
             return False
 
-    def gives_birth(self, n, animal_species=Herbivore):
+    def gives_birth(self, n, animal_species='Herbivore'):
         """
         Class method for birth.
 
