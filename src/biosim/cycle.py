@@ -63,7 +63,7 @@ def loss_of_weight(animal_object):
     animal_object.weight -= (
             animal_object.weight * animal_object.parameters['eta']
     )
-    animal_object.fitness = animal_object.calculate_fitness()
+    animal_object.fitness = animal_object.update_fitness()
 
 
 def death(animal_object):

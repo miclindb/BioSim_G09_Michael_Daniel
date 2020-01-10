@@ -38,6 +38,11 @@ class Animals:
             cls.parameters['phi_age'] * (age - cls.parameters['a_half'])))) * (
                        1 / (1 + np.exp(cls.parameters['phi_weight'] * (weight - cls.parameters['w_half']))))
 
+    def update_fitness(self):
+        self.fitness = (1 / (1 + np.exp(
+            self.parameters['phi_age'] * (self.age - self.parameters['a_half'])))) * (
+                       1 / (1 + np.exp(self.parameters['phi_weight'] * (self.weight - self.parameters['w_half']))))
+
     @classmethod
     def update_weight(cls, eaten):
         """
