@@ -42,6 +42,20 @@ class Animals:
             cls.parameters['phi_age'] * (age - cls.parameters['a_half'])))) * (
                        1 / (1 + np.exp(cls.parameters['phi_weight'] * (weight - cls.parameters['w_half']))))
 
+    @classmethod
+    def update_weight(cls, eaten):
+        """
+        Weight update after feeding. Currently only used for herbivore.
+        Parameters
+        ----------
+        eaten
+
+        Returns
+        -------
+
+        """
+        return eaten * cls.parameters['beta']
+
     @property
     def get_fitness(self):
         return self.fitness
@@ -98,6 +112,9 @@ class Herbivore(Animals):
     """
     Subclass of Animals.
     """
+    """
+    Make sure we are able to change this manually
+    """
     parameters = {
         'w_birth': 8.0,
         'sigma_birth': 1.5,
@@ -118,23 +135,21 @@ class Herbivore(Animals):
     def __init__(self, age=0, weight=None):
         super(Herbivore, self).__init__(age, weight)
 
-    def feed(self):
+    def feed(self, cell_fodder_info):
         """
         Class method for Herbivore feeding.
+        Returns amount of eaten fodder. Used to update cell information.
         :return: None
         """
-        pass
-        """
-        location =
-        if ls.cell.info.fodder < self.parameters['F']:
-            eaten = differanse
-        elif cell.info.fodder == 0
-            eaten = 0
+
+        eaten = self.parameters['F']
+        if cell_fodder_info < eaten:
+            eaten = cell_fodder_info
+            self.weight += self.update_weight(eaten)
+            return eaten
         else:
-            eaten self.parameters['F']
-        cell.update.fodder(-eaten)
-        weight.update(eaten * beta)
-        """
+            self.weight += self.update_weight(eaten)
+            return eaten
 
 
 class Carnivore(Animals):
@@ -165,6 +180,8 @@ class Carnivore(Animals):
         pass
 
         """
+        Try to use the classmethod for update eating.
+        
         if self.fitness <= nearby_herbivore.fitness:
             z = 0
         elif 0 < self.fitness - nearby_herbivore.fitness < self.parameters['DeltaPhiMax']:

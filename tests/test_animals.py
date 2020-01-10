@@ -1,7 +1,3 @@
-"""
-Tests for animals file
-
-"""
 from src.biosim.animals import Herbivore, Carnivore
 
 """
@@ -15,8 +11,6 @@ def test_herbivore_default_class_initializer():
     """
     Tests that the class initializer for herbivore runs and uses default
     values when no inputs are provided
-    Returns
-    -------
 
     """
     herbivore = Herbivore()
@@ -30,8 +24,6 @@ def test_carnivore_default_class_initializer():
     """
     Tests that the class initializer for herbivore runs and uses default
     values when no inputs are provided
-    Returns
-    -------
 
     """
     carnivore = Carnivore()
@@ -74,10 +66,7 @@ def test_setter_decorator():
 
 def test_death_by_zero_fitness():
     """
-    Checks if the animal dies upon reaching fitness = 0
-    Returns
-    -------
-
+    Tests if the animal dies upon reaching fitness = 0
     """
     herbivore = Herbivore()
     herbivore.get_fitness = 0
@@ -86,3 +75,14 @@ def test_death_by_zero_fitness():
 
 def test_probability_of_death():
     pass
+
+
+def test_herbivore_feeding_max_fodder():
+    """
+    Tests that the herbivore can eat and that it's weight is successfully
+    updated.
+    """
+    herbivore = Herbivore(weight=2)
+    cell_info_fodder = 500
+    assert herbivore.feed(cell_info_fodder) == 10
+    assert herbivore.weight == 11
