@@ -82,7 +82,7 @@ class BioSim:
 
         self.df = pd.DataFrame([cell])
 
-        self.landscape_cell = self.df[x][y]
+        self.landscape_cell = self.df[self.x][self.y]
 
         for animal in self.ini_pop[0]['pop']:
             if animal['species'] == 'Herbivore':
@@ -119,11 +119,33 @@ class BioSim:
         Image files will be numbered consecutively.
         """
 
+        #for year in range(num_years):
+         #   for animal_object in self.df[self.x][self.y].population:
+          #      cycle.annual_cycle(self.landscape_cell.population,
+           #                        self.landscape_cell.fodder, animal_object,
+            #                       n=len(self.df[self.x][self.y].population))
+
+        # Have to run one part of cycle for each animal, not the total cycle
+        # for one and one animal.
+
         for year in range(num_years):
             for animal_object in self.df[self.x][self.y].population:
-                cycle.annual_cycle(animal_object, n=len(self.df[self.x][self.y].population), self.landscape_cell.fodder)
-                simulated_cell = self.df[self.x][self.y]
-                return simulated_cell
+                cycle.feeding(animal_object, self.landscape_cell.fodder)
+            for animal_object in self.df[self.x][self.y].population:
+                cycle.procreate(self.landscape_cell.population, animal_object,
+                                n=len(self.landscape_cell.population)
+                                )
+            for animal_object in self.df[self.x][self.y].population:
+                cycle.migrate(animal_object)
+            for animal_object in self.df[self.x][self.y].population:
+                cycle.aging(animal_object)
+            for animal_object in self.df[self.x][self.y].population:
+                cycle.loss_of_weight(animal_object)
+            for animal_object in self.df[self.x][self.y].population:
+                cycle.death(self.landscape_cell.population, animal_object)
+
+        simulated_cell = self.df[self.x][self.y]
+        return simulated_cell
 
     def add_population(self, population):
         """
@@ -166,13 +188,16 @@ if __name__ == '__main__':
         {
             "loc": (0, 0),
             "pop": [
-                {"species": "Herbivore", "age": 10, "weight": 60}
-                for _ in range(20)
+                {"species": "Herbivore", "age": 15, "weight": 40}
+                for _ in range(100)
             ],
         }
     ]
 
     simulation = BioSim(map, ini_herbs, seed=1)
 
-    cell_after_simulation = simulation.simulate(10)
+    cell_after_simulation = simulation.simulate(40)
+
+    # This simulation runs fine now, just run the whole file and edit this
+    # main block for testing.
 

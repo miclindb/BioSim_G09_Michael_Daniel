@@ -88,7 +88,7 @@ class Animals:
         else:
             return False
 
-    def gives_birth(self, n, animal_object):
+    def gives_birth(self, animal_object, n):
         """
         Class method for birth.
 
@@ -103,7 +103,8 @@ class Animals:
 
         if self.weight < self.parameters['zeta'] * \
                 (self.parameters['w_birth'] + self.parameters['sigma_birth']):
-            return False
+            pass
+            # return False
         else:
             prob_birth = min(1,
                              self.parameters['gamma'] * self.fitness * (n - 1))
@@ -115,9 +116,10 @@ class Animals:
                 else:
                     pass  # may add more species
                 self.weight -= self.parameters['xi'] * new_born_animal.weight
-                return new_born_animal
+                return True, new_born_animal
             else:
-                return False
+                pass
+                # return False
 
     def migration(self):
         pass

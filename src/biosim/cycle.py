@@ -38,7 +38,7 @@ def feeding(animal_object, cell_fodder):
         pass
 
 
-def procreate(n, animal_object):
+def procreate(cell_population, animal_object, n):
     """
     Annual birth.
 
@@ -55,12 +55,17 @@ def procreate(n, animal_object):
     -------
 
     """
-    return animal_object.gives_birth(n, animal_object)
+    birth = animal_object.gives_birth(animal_object, n)
+
+    if birth is None:
+        pass
+    elif birth[0] is True:
+        cell_population.append(birth[1])
 
 
 def migrate(animal_object):
     pass
-
+g
 
 def aging(animal_object):
     animal_object.age += 1
@@ -74,7 +79,7 @@ def loss_of_weight(animal_object):
     animal_object.update_fitness()
 
 
-def death(animal_object):
+def death(cell_population, animal_object):
     """
     Checks if an animal dies.
 
@@ -90,21 +95,21 @@ def death(animal_object):
     """
     animal_fitness = float(animal_object.fitness)
     if animal_fitness == 0:
-        return True
+        cell_population.remove(animal_object)
     elif np.random.uniform(0, 1) <= animal_object.parameters['omega'] * (
            1.0 - animal_fitness):
-        return True
+        cell_population.remove(animal_object)
     else:
-        return False
+        pass
 
 
-def annual_cycle(animal_object, n, cell_fodder):
+def annual_cycle(cell_population, cell_fodder, animal_object, n):
     """
     Performs operations related to the annual cycle for one cell.
     """
     feeding(animal_object, cell_fodder)      # Each animal feeds
-    procreate(n, animal_object)     # Checks for birth for all animals
+    procreate(cell_population, animal_object, n)     # Checks for birth for all animals
     migrate(animal_object)      # Each animal moves
     aging(animal_object)        # Updates age for all animals
     loss_of_weight(animal_object)   # Each animal loses weight
-    death(animal_object)        # For each animal, we check if the animal dies
+    death(cell_population, animal_object)        # For each animal, we check if the animal dies
