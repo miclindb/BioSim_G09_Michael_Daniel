@@ -15,11 +15,11 @@ import numpy as np
 
 geogr = """\
            J"""
-geogr = textwrap.dedent(geogr)
+map = textwrap.dedent(geogr)
 
 ini_herbs = [
     {
-        "loc": (10, 10),
+        "loc": (0, 0),
         "pop": [
             {"species": "Herbivore", "age": 5, "weight": 20}
             for _ in range(20)
@@ -27,6 +27,7 @@ ini_herbs = [
     }
 ]
 
+island_map = 'J' # for testing
 
 class BioSim:
     def __init__(
@@ -65,6 +66,29 @@ class BioSim:
 
         self.island_map = island_map
         self.ini_pop = ini_pop
+        self.seed = seed
+
+        # initializing landscape cells in map
+        # This is only for one cell. Another solution needed for more cells.
+
+        #############
+        landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle,
+                          'S': Savannah, 'D': Desert}
+
+        self.x = self.ini_pop[0]['loc'][0] # for testing
+        self.y = self.ini_pop[0]['loc'][1] # for testing
+
+        cell = landscape_dict[self.island_map]() # testing with single string map
+
+        self.df = pd.DataFrame([cell])
+
+        self.landscape_cell = self.df[x][y]
+
+        for animal in self.ini_pop[0]['pop']:
+            if animal['species'] == 'Herbivore':
+                self.df[self.x][self.y].population.append(Herbivore(age=animal['age'], weight=animal['weight']))
+            if animal['species'] == 'Carnivore':
+                self.df[self.x][self.y].population.append(Carniovore(age=animal['age'], weight=animal['weight']))
 
     def set_animal_parameters(self, species, params):
         """
@@ -94,29 +118,12 @@ class BioSim:
 
         Image files will be numbered consecutively.
         """
-        num_years = 10
-        ini_pop = ini_herbs
-
-        x = 0 # for testing
-        y = 0 # for testing
-        island_map = 'J' # for testing
-        landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle,
-                          'S': Savannah, 'D': Desert}
-
-        cell = landscape_dict[island_map]()
-
-        # coordinate=ini_pop[0]['loc']
-        df = pd.DataFrame([cell])
-
-        for animal in ini_pop[0]['pop']:
-            if animal['species'] == 'Herbivore':
-                df[x][y].population.append(Herbivore(age=animal['age'], weight=animal['weight']))
-            if animal['species'] == 'Carnivore':
-                df[x][y].population.append(Carniovore(age=animal['age'], weight=animal['weight']))
 
         for year in range(num_years):
-            for animal_object in df[x][y].population:
-                cycle.annual_cycle(animal_object, n=len(df[x][y].population))
+            for animal_object in self.df[self.x][self.y].population:
+                cycle.annual_cycle(animal_object, n=len(self.df[self.x][self.y].population), self.landscape_cell.fodder)
+                simulated_cell = self.df[self.x][self.y]
+                return simulated_cell
 
     def add_population(self, population):
         """
@@ -146,11 +153,26 @@ class BioSim:
 
 
 
+if __name__ == '__main__':
 
+    # Simulation with Herbivores and one single landscape cell,
+    # a jungle cell in this case.
 
+    geogr = """\
+               J"""
+    map = textwrap.dedent(geogr) # map = 'J'
 
+    ini_herbs = [
+        {
+            "loc": (0, 0),
+            "pop": [
+                {"species": "Herbivore", "age": 10, "weight": 60}
+                for _ in range(20)
+            ],
+        }
+    ]
 
+    simulation = BioSim(map, ini_herbs, seed=1)
 
-
-
+    cell_after_simulation = simulation.simulate(10)
 

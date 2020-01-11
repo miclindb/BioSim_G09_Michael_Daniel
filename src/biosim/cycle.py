@@ -20,17 +20,18 @@ class AnnualCycle:
 
     Do cell updates in own method.
 """
-
+"""
 class AnnualCycle:
     def __init__(self, animal, n):
         self.animal = animal
         self.n = n
+"""
 
 
-def feeding(animal_object):
+def feeding(animal_object, cell_fodder):
     animal_species = animal_object.__class__.__name__
     if animal_species == 'Herbivore':
-        animal_object.feed()
+        animal_object.feed(cell_fodder)
     elif animal_species == 'Carnivore':
         animal_object.kill()
     else:
@@ -54,7 +55,7 @@ def procreate(n, animal_object):
     -------
 
     """
-    animal_object.gives_birth(n, animal_object)
+    return animal_object.gives_birth(n, animal_object)
 
 
 def migrate(animal_object):
@@ -97,13 +98,13 @@ def death(animal_object):
         return False
 
 
-def annual_cycle(animal_object, n):
+def annual_cycle(animal_object, n, cell_fodder):
     """
     Performs operations related to the annual cycle for one cell.
     """
-    #feeding(animal_object)      # Each animal feeds
+    feeding(animal_object, cell_fodder)      # Each animal feeds
     procreate(n, animal_object)     # Checks for birth for all animals
     migrate(animal_object)      # Each animal moves
     aging(animal_object)        # Updates age for all animals
     loss_of_weight(animal_object)   # Each animal loses weight
-    #death(animal_object)        # For each animal, we check if the animal dies
+    death(animal_object)        # For each animal, we check if the animal dies
