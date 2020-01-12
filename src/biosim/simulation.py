@@ -3,8 +3,8 @@
 """
 """
 
-__author__ = ""
-__email__ = ""
+__author__ = "Michael Lindberg, Daniel Milliam Müller"
+__email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
 from src.biosim.animals import Herbivore, Carnivore
 from src.biosim import cycle
@@ -27,18 +27,19 @@ ini_herbs = [
     }
 ]
 
-island_map = 'J' # for testing
+island_map = 'J'  # for testing
+
 
 class BioSim:
     def __init__(
-        self,
-        island_map,
-        ini_pop,
-        seed,
-        ymax_animals=None,
-        cmax_animals=None,
-        img_base=None,
-        img_fmt="png",
+            self,
+            island_map,
+            ini_pop,
+            seed,
+            ymax_animals=None,
+            cmax_animals=None,
+            img_base=None,
+            img_fmt="png",
     ):
         """
         :param island_map: Multi-line string specifying island geography
@@ -75,10 +76,11 @@ class BioSim:
         landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle,
                           'S': Savannah, 'D': Desert}
 
-        self.x = self.ini_pop[0]['loc'][0] # for testing
-        self.y = self.ini_pop[0]['loc'][1] # for testing
+        self.x = self.ini_pop[0]['loc'][0]  # for testing
+        self.y = self.ini_pop[0]['loc'][1]  # for testing
 
-        cell = landscape_dict[self.island_map]() # testing with single string map
+        cell = landscape_dict[
+            self.island_map]()  # testing with single string map
 
         self.df = pd.DataFrame([cell])
 
@@ -86,9 +88,11 @@ class BioSim:
 
         for animal in self.ini_pop[0]['pop']:
             if animal['species'] == 'Herbivore':
-                self.df[self.x][self.y].population.append(Herbivore(age=animal['age'], weight=animal['weight']))
+                self.df[self.x][self.y].population.append(
+                    Herbivore(age=animal['age'], weight=animal['weight']))
             if animal['species'] == 'Carnivore':
-                self.df[self.x][self.y].population.append(Carniovore(age=animal['age'], weight=animal['weight']))
+                self.df[self.x][self.y].population.append(
+                    Carniovore(age=animal['age'], weight=animal['weight']))
 
     def set_animal_parameters(self, species, params):
         """
@@ -119,11 +123,11 @@ class BioSim:
         Image files will be numbered consecutively.
         """
 
-        #for year in range(num_years):
-         #   for animal_object in self.df[self.x][self.y].population:
-          #      cycle.annual_cycle(self.landscape_cell.population,
-           #                        self.landscape_cell.fodder, animal_object,
-            #                       n=len(self.df[self.x][self.y].population))
+        # for year in range(num_years):
+        #   for animal_object in self.df[self.x][self.y].population:
+        #      cycle.annual_cycle(self.landscape_cell.population,
+        #                        self.landscape_cell.fodder, animal_object,
+        #                       n=len(self.df[self.x][self.y].population))
 
         # Have to run one part of cycle for each animal, not the total cycle
         # for one and one animal.
@@ -174,15 +178,13 @@ class BioSim:
         """Create MPEG4 movie from visualization images saved."""
 
 
-
 if __name__ == '__main__':
-
     # Simulation with Herbivores and one single landscape cell,
     # a jungle cell in this case.
 
     geogr = """\
                J"""
-    map = textwrap.dedent(geogr) # map = 'J'
+    map = textwrap.dedent(geogr)  # map = 'J'
 
     ini_herbs = [
         {
@@ -200,4 +202,3 @@ if __name__ == '__main__':
 
     # This simulation runs fine now, just run the whole file and edit this
     # main block for testing.
-

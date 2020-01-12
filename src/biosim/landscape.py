@@ -1,10 +1,16 @@
+# -*- coding: utf-8 -*-
+
+"""
+"""
+
+__author__ = "Michael Lindberg, Daniel Milliam Müller"
+__email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
+
 
 class Cell:
 
     def __init__(self, coordinate=(0, 0)):
-
         self.coordinate = coordinate
-
         self.fodder = 0
         self.population = []
 
@@ -13,7 +19,6 @@ class Ocean(Cell):
 
     def __init__(self):
         super(Ocean, self).__init__()
-
         self.landscape_type = "O"
 
 
@@ -21,7 +26,6 @@ class Mountain(Cell):
 
     def __init__(self):
         super(Mountain, self).__init__()
-
         self.landscape_type = "M"
 
 
@@ -31,9 +35,7 @@ class Jungle(Cell):
 
     def __init__(self):
         super(Jungle, self).__init__()
-
         self.landscape_type = "J"
-
         self.fodder = self.parameters['f_max']
 
 
@@ -43,9 +45,7 @@ class Savannah(Cell):
 
     def __init__(self):
         super(Savannah, self).__init__()
-
         self.landscape_type = "S"
-
         self.fodder = self.parameters['f_max']
 
 
@@ -53,5 +53,4 @@ class Desert(Cell):
 
     def __init__(self):
         super(Desert, self).__init__()
-
         self.landscape_type = "D"

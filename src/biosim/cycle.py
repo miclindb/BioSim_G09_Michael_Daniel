@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+"""
+"""
+
+__author__ = "Michael Lindberg, Daniel Milliam Müller"
+__email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
+
 from src.biosim.animals import Herbivore, Carnivore
 from src.biosim.landscape import Jungle, Ocean, Mountain
 import pandas as pd
@@ -65,7 +73,7 @@ def procreate(cell_population, animal_object, n):
 
 def migrate(animal_object):
     pass
-g
+
 
 def aging(animal_object):
     animal_object.age += 1
@@ -85,6 +93,7 @@ def death(cell_population, animal_object):
 
     Parameters
     ----------
+    cell_population:
     animal_object: class object
         Object for animal
 
@@ -111,5 +120,5 @@ def annual_cycle(cell_population, cell_fodder, animal_object, n):
     procreate(cell_population, animal_object, n)     # Checks for birth for all animals
     migrate(animal_object)      # Each animal moves
     aging(animal_object)        # Updates age for all animals
-    loss_of_weight(animal_object)   # Each animal loses weight
+    loss_of_weight(animal_object)               # Each animal loses weight
     death(cell_population, animal_object)        # For each animal, we check if the animal dies

@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+"""
+"""
+
+__author__ = "Michael Lindberg, Daniel Milliam Müller"
+__email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
+
 import numpy as np
 
 
@@ -61,13 +69,14 @@ class Animals:
         """
         return eaten * self.parameters['beta']
 
-    #@property
-    #def get_fitness(self):
-    #    return self.fitness
+    # These are currently only used for tests.
+    @property
+    def get_fitness(self):
+        return self.fitness
 
-    #@get_fitness.setter
-    #def get_fitness(self, value):
-    #    self.fitness = value
+    @get_fitness.setter
+    def get_fitness(self, value):
+        self.fitness = value
 
     def death(self):
         """
