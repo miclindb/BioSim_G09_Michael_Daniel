@@ -234,7 +234,7 @@ class Carnivore(Animals):
     def __init__(self, age=0, weight=None):
         super(Carnivore, self).__init__(age, weight)
 
-    def kill(self, nearby_herbivore_object):
+    def kill(self, nearby_herbivore_objects):
         """
         Carnivore attempts to kill a nearby herbivore. If the carnivore
         successfully kills the nearby herbivore, the carnivore's weight is
@@ -242,8 +242,8 @@ class Carnivore(Animals):
 
         Parameters
         ----------
-        nearby_herbivore_object: Class object
-            Herbivore residing in same cell as the carnivore.
+        nearby_herbivore_objects: list
+            List of herbivores residing in same cell as the carnivore.
 
         Returns
         -------
@@ -251,23 +251,30 @@ class Carnivore(Animals):
             'True' if the carnivore successfully kills and 'False' otherwise.
 
         """
-        chance = 0
-        if self.fitness <= nearby_herbivore_object.fitness:
-            pass
-        elif 0 < self.fitness - nearby_herbivore_object.fitness <= \
-                self.parameters['DeltaPhiMax']:
-            chance = (self.fitness - nearby_herbivore_object.fitness) / \
-                     self.parameters['DeltaPhiMax']
-        else:
-            chance = 1
+        kill_attempt = 0
+        eaten = 0
 
-        if chance >= np.random.uniform(0, 1):
-            kill = True
-        else:
-            kill = False
+        while eaten < self.parameters['F'] and kill_attempt <= len(nearby_herbivore_objects):
+            for herbivore in nearby_herbivore_objects:
+                if self.fitness <= herbivore.fitness:
+                    chance = 0
+                elif 0 < self.fitness - herbivore.fitness <= \
+                        self.parameters['DeltaPhiMax']:
+                    chance = (self.fitness - herbivore.fitness) / \
+                             self.parameters['DeltaPhiMax']
+                else:
+                    chance = 1
 
-        if kill:
-            self.weight += self.update_weight(nearby_herbivore_object.weight)
-            self.update_fitness()
+                if chance >= np.random.uniform(0, 1):
+                    kill = True
+                else:
+                    kill = False
+
+                if kill:
+                    self.weight += self.update_weight(herbivore.weight)
+                    self.update_fitness()
+                    eaten += herbivore.weight
+
+                kill_attempt += 1
 
         return kill
