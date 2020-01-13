@@ -48,17 +48,13 @@ class Animals:
                        self.weight - self.parameters['w_half']))))
 
     def update_fitness(self):
-        self.fitness = (1 / (1 + np.exp(
-            self.parameters['phi_age'] * (
-                    self.age - self.parameters['a_half'])))) * (
-                               1 / (1 + np.exp(
-                           self.parameters['phi_weight'] * (
-                                   self.weight - self.parameters[
-                               'w_half']))))
+        self.fitness = self.calculate_fitness()
 
     def update_weight(self, eaten):
         """
-        Weight update after feeding. Currently only used for herbivore.
+        Weight update after feeding. Currently used for herbivore feeding and
+        carnivore killing.
+
         Parameters
         ----------
         eaten
@@ -84,9 +80,11 @@ class Animals:
         The animal dies if the fitness of the animal is 0. The animal also has
         a fixed probability of dying each year.
 
-        Returns: Bool
-            'True' is the animal dies and 'False' otherwise.
+        Returns
         -------
+        Bool:
+            'True' is the animal dies and 'False' otherwise.
+
 
         """
         if self.fitness == 0:
@@ -130,8 +128,36 @@ class Animals:
                 pass
                 # return False
 
-    def migration(self):
-        pass
+    def migration(self, set_of_available_cells):
+        """
+        Animal attempts to migrate to one of the nearby cells.
+        The movement is determined by the fitness of the animal and the fodder
+        in the nearby cells.
+
+        Parameters
+        ----------
+        set_of_available_cells: Set
+            A set of four nearby available cells. The set can contain any cells
+            with invalid landscape types. (i.e. landscape that cannot be
+            traversed such as mountain or ocean).
+
+        Returns
+        -------
+        move: something
+            The cell the animal choose to migrate to. False if the animal
+            does not migrate.
+        """
+        check_move = self.parameters['mu'] * self.fitness
+        if check_move >= np.random.uniform(0,1):
+            fodder_abundance = []
+            for cell in set_of_available_cells:
+                e_k = cell.fodder / ((nearby_same_species_animals + 1) * appetite)
+                fodder_abundance.append(e_k)
+
+        else:
+            move = False
+
+        return move
 
 
 class Herbivore(Animals):
@@ -147,6 +173,7 @@ class Herbivore(Animals):
         'beta': 0.9,
         'phi_age': 0.2,
         'phi_weight': 0.1,
+        'mu': 0.25,
         'a_half': 40.0,
         'w_half': 10.0,
         'omega': 0.4,
@@ -166,6 +193,8 @@ class Herbivore(Animals):
         Class method for Herbivore feeding.
         Returns amount of eaten fodder. Used to update cell information.
         :return: None
+
+        wrong docstring type. Update for numpy.
         """
 
         eaten = self.parameters['F']
@@ -190,6 +219,7 @@ class Carnivore(Animals):
         'beta': 0.75,
         'phi_age': 0.4,
         'phi_weight': 0.4,
+        'mu': 0.4,
         'a_half': 60.0,
         'w_half': 4.0,
         'omega': 0.9,
@@ -204,16 +234,40 @@ class Carnivore(Animals):
     def __init__(self, age=0, weight=None):
         super(Carnivore, self).__init__(age, weight)
 
-    def kill(self, herbivore):
-        pass
+    def kill(self, nearby_herbivore_object):
+        """
+        Carnivore attempts to kill a nearby herbivore. If the carnivore
+        successfully kills the nearby herbivore, the carnivore's weight is
+        updated and its fitness is re-evaluated.
+
+        Parameters
+        ----------
+        nearby_herbivore_object: Class object
+            Herbivore residing in same cell as the carnivore.
+
+        Returns
+        -------
+        Kill: Bool
+            'True' if the carnivore successfully kills and 'False' otherwise.
 
         """
-        Try to use the classmethod for update eating.
-        
-        if self.fitness <= nearby_herbivore.fitness:
-            z = 0
-        elif 0 < self.fitness - nearby_herbivore.fitness < self.parameters['DeltaPhiMax']:
-            z = ((self.fitness - nearby_herbivore.fitness)/self.parameters['DeltaPhiMax'])
+        chance = 0
+        if self.fitness <= nearby_herbivore_object.fitness:
+            pass
+        elif 0 < self.fitness - nearby_herbivore_object.fitness <= \
+                self.parameters['DeltaPhiMax']:
+            chance = (self.fitness - nearby_herbivore_object.fitness) / \
+                     self.parameters['DeltaPhiMax']
         else:
-            z = 1
-            """
+            chance = 1
+
+        if chance >= np.random.uniform(0, 1):
+            kill = True
+        else:
+            kill = False
+
+        if kill:
+            self.weight += self.update_weight(nearby_herbivore_object.weight)
+            self.update_fitness()
+
+        return kill

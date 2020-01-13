@@ -113,7 +113,13 @@ def test_gives_birth_returns_newborn():
     assert herbivore.weight >= herbivore.parameters['zeta'] * \
            (herbivore.parameters['w_birth'] + herbivore.parameters[
                'sigma_birth'])
-    # How to test for probability
+
+
+def statistical_test_for_birth():
+    """
+    How to test for probability
+    """
+    pass
 
 
 def test_herbivore_feeding_max_fodder():
@@ -125,3 +131,33 @@ def test_herbivore_feeding_max_fodder():
     cell_info_fodder = 500
     assert herbivore.feed(cell_info_fodder) == 10
     assert herbivore.weight == 11
+
+
+def test_kill():
+    """
+    Tests that the carnivore can kill a nearby herbivore and that its weight
+    and fitness is updated successfully.
+
+    Fitness are manually set so that the carnivore will kill the herbivore with
+    100% probability all times.
+
+    After the carnivore kills, its weight should be increased and its
+    (artificial) fitness should be reduced to a value between 0 and 1.
+    """
+    carn = Carnivore(age=2, weight=8)
+    herb = Herbivore(age=2, weight=10)
+    carn.get_fitness = 11
+    herb.get_fitness = 0.5
+
+    assert bool(carn.kill(herb)) is True
+    carn.kill(herb)
+    assert carn.weight > 8
+    assert 0 < carn.fitness < 1
+    assert carn.age == 2
+
+
+def statistical_test_kill():
+    """
+    Tests the expected value for kill
+    """
+    pass
