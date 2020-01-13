@@ -159,6 +159,13 @@ class Animals:
 
         return move
 
+        #####
+       # if self.parameters['lambda'] == 0:
+        #    move = np.random.choice(available_cells)
+         #   return move
+        #elif self.paramteres['lambda'] > 0:
+         #   move =
+
 
 class Herbivore(Animals):
     """
@@ -277,7 +284,5 @@ class Carnivore(Animals):
                     killed_herbivores.append(herbivore)
 
                 kill_attempt += 1
-                print(kill_attempt)
-                print(eaten)
 
             return killed_herbivores

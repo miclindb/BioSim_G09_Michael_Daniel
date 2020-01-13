@@ -121,21 +121,32 @@ class BioSim:
             for index, row in self.df.iterrows():
                 for cell in row:
 
-                    for animal_object in cell.population:
+                    cell.population = sorted(cell.population, key=lambda x: x.fitness, reverse=True)
+
+                    for animal_object in cell.population[:]:
                         nearby_herbivores = [animal for animal in cell.population if animal.__class__.__name__ == 'Herbivore']
-                        cycle.feeding(animal_object, cell.fodder, nearby_herbivores)
+                        eaten = cycle.feeding(animal_object, cell.fodder, nearby_herbivores)
+                        if eaten is not None:
+                            for dead_herbivore in eaten:
+                                cell.population.remove(dead_herbivore)
+
                     for animal_object in cell.population:
                         cycle.procreate(cell.population, animal_object,
                                         n=len(cell.population)
                                         )
                     for animal_object in cell.population:
                         cycle.migrate(animal_object)
+
                     for animal_object in cell.population:
                         cycle.aging(animal_object)
+
                     for animal_object in cell.population:
                         cycle.loss_of_weight(animal_object)
-                    for animal_object in cell.population:
-                        cycle.death(cell.population, animal_object)
+
+                    for animal_object in cell.population[:]:
+                        death = cycle.death(cell.population, animal_object)
+                        if death is True:
+                            cell.population.remove(animal_object)
 
         return self.df
 
@@ -171,29 +182,22 @@ if __name__ == '__main__':
     # a jungle cell in this case.
 
     geogr = """\
-               J"""
+               D"""
     map = textwrap.dedent(geogr)  # map = 'J'
 
     ini_pop = [
         {
             "loc": (0, 0),
             "pop": [
-                {"species": "Herbivore", "age": 15, "weight": 40}
-                for _ in range(100)
-            ],
-        },
-        {
-            "loc": (0, 0),
-            "pop": [
-                {"species": "Carnivore", "age": 5, "weight": 20}
-                for _ in range(40)
+                {"species": "Herbivore", "age": 15, "weight": 60},
+                {"species": "Carnivore", "age": 15, "weight": 60}
             ],
         }
     ]
 
     simulation = BioSim(map, ini_pop, seed=1)
 
-    cell_after_simulation = simulation.simulate(40)
+    cell_after_simulation = simulation.simulate(1)
 
     # This simulation runs fine now, just run the whole file and edit this
     # main block for testing.

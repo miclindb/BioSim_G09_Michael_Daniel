@@ -41,9 +41,8 @@ def feeding(animal_object, cell_fodder, nearby_herbivores):
     if animal_species == 'Herbivore':
         animal_object.feed(cell_fodder)
     elif animal_species == 'Carnivore':
-        animal_object.kill(nearby_herbivores)
-    else:
-        pass
+        killed_herbivores = animal_object.kill(nearby_herbivores)
+        return killed_herbivores
 
 
 def procreate(cell_population, animal_object, n):
@@ -107,7 +106,7 @@ def death(cell_population, animal_object):
         cell_population.remove(animal_object)
     elif np.random.uniform(0, 1) <= animal_object.parameters['omega'] * (
            1.0 - animal_fitness):
-        cell_population.remove(animal_object)
+        return True
     else:
         pass
 
