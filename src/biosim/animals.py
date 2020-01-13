@@ -148,10 +148,11 @@ class Animals:
             does not migrate.
         """
         check_move = self.parameters['mu'] * self.fitness
-        if check_move >= np.random.uniform(0,1):
+        if check_move >= np.random.uniform(0, 1):
             fodder_abundance = []
             for cell in set_of_available_cells:
-                e_k = cell.fodder / ((nearby_same_species_animals + 1) * appetite)
+                e_k = cell.fodder / (
+                            (nearby_same_species_animals + 1) * appetite)
                 fodder_abundance.append(e_k)
 
         else:
@@ -160,11 +161,11 @@ class Animals:
         return move
 
         #####
-       # if self.parameters['lambda'] == 0:
-        #    move = np.random.choice(available_cells)
-         #   return move
-        #elif self.paramteres['lambda'] > 0:
-         #   move =
+    # if self.parameters['lambda'] == 0:
+    #    move = np.random.choice(available_cells)
+    #   return move
+    # elif self.paramteres['lambda'] > 0:
+    #   move =
 
 
 class Herbivore(Animals):
@@ -265,9 +266,9 @@ class Carnivore(Animals):
         eaten = 0
         killed_herbivores = []
 
-        while eaten < self.parameters['F'] and \
-                kill_attempt <= len(nearby_herbivores):
-            for herbivore in nearby_herbivores:
+        for herbivore in nearby_herbivores:
+            while eaten < self.parameters['F'] and \
+                    kill_attempt <= len(nearby_herbivores):
                 if self.fitness <= herbivore.fitness:
                     chance = 0
                 elif 0 < self.fitness - herbivore.fitness <= \

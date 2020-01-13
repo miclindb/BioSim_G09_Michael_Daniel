@@ -148,9 +148,11 @@ def test_kill():
     herb = Herbivore(age=2, weight=10)
     carn.get_fitness = 11
     herb.get_fitness = 0.5
+    nearby_herbivores = [herb]
+    x = carn.kill(nearby_herbivores)
 
-    assert bool(carn.kill(herb)) is True
-    carn.kill(herb)
+    assert isinstance(x, list)
+    assert len(x) == 1
     assert carn.weight > 8
     assert 0 < carn.fitness < 1
     assert carn.age == 2
