@@ -1,17 +1,34 @@
+# -*- coding: utf-8 -*-
+
+
+__author__ = "Michael Lindberg, Daniel Milliam Müller"
+__email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
+
 from src.biosim.animals import Herbivore, Carnivore
+import pytest
 from pytest import approx
 
+"""
 
-def test_herbivore_default_class_initializer():
+class TestAnimals:
+    @pytest.fixture(autouse=True)
+    def animals_for_tests(self):
+        self.herb = Herbivore()
+        self.carn = Carnivore()
+        
+"""
+
+
+def test_herbivore_default_class_initializer(self):
     """
     Tests that the class initializer for herbivore runs and uses default
     values when no inputs are provided
     """
-    herbivore = Herbivore()
-    assert herbivore.age == 0
-    assert isinstance(herbivore.age, int)
-    assert herbivore.weight > 0
-    assert isinstance(herbivore.weight, float)
+    # herbivore = Herbivore()
+    assert self.herb.age == 0
+    assert isinstance(self.herb.age, int)
+    assert self.herb.weight > 0
+    assert isinstance(self.herb.weight, float)
 
 
 def test_carnivore_default_class_initializer():
@@ -163,3 +180,11 @@ def statistical_test_kill():
     Tests the expected value for kill
     """
     pass
+
+
+def kill_stops_at_eaten_is_f():
+    pass
+
+
+if __name__ == '__main__':
+    pytest.main()

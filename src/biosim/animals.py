@@ -57,10 +57,13 @@ class Animals:
 
         Parameters
         ----------
-        eaten
+        eaten: float
+            Amount of relative fodder eaten.
 
         Returns
         -------
+        float
+            Weight adjustment.
 
         """
         return eaten * self.parameters['beta']
@@ -76,17 +79,16 @@ class Animals:
 
     def death(self):
         """
-        Class method used to determine whether an animal dies.
-        The animal dies if the fitness of the animal is 0. The animal also has
-        a fixed probability of dying each year.
+        Determine whether an animal dies. The animal dies if the fitness of the
+        animal is 0. The animal also has a fixed probability of dying each
+        year.
 
         Returns
         -------
         Bool:
             'True' is the animal dies and 'False' otherwise.
-
-
         """
+
         if self.fitness == 0:
             return True
         elif np.random.uniform(0, 1) <= self.parameters['omega'] * (
@@ -97,21 +99,33 @@ class Animals:
 
     def gives_birth(self, animal_object, n):
         """
-        Class method for birth.
+        Animals have a chance to produce an offspring each year. This is
+        decided by their weight and the amount of nearby same species animals.
 
-        #:param n: Number of other animals of same species in same cell
-        :return:
-        Bool
-        """
+        Gender plays no role in mating, and each animal can only give birth to
+        one offspring each year at most.
 
-        """
-        Can we remove 'animal_object' from input and use self instead?
+        After a successful birth, the animal loses weight equal to a portion of
+        the birth weight of the baby.
+
+        Parameters
+        ----------
+        animal_object: class object
+            The animal that has a chance to become pregnant.
+        n: int
+            Number of same species animals in the same cell.
+
+        Returns
+        -------
+        bool:
+        True if a newborn is successfully born.
+        new_born_animal: class object
+            Newborn animal.
         """
 
         if self.weight < self.parameters['zeta'] * \
                 (self.parameters['w_birth'] + self.parameters['sigma_birth']):
             pass
-            # return False
         else:
             prob_birth = min(1,
                              self.parameters['gamma'] * self.fitness * (n - 1))
@@ -121,12 +135,11 @@ class Animals:
                 elif animal_object.__class__.__name__ == 'Carnivore':
                     new_born_animal = Carnivore()
                 else:
-                    pass  # may add more species
+                    pass
                 self.weight -= self.parameters['xi'] * new_born_animal.weight
                 return True, new_born_animal
             else:
                 pass
-                # return False
 
     def migration(self, set_of_available_cells):
         """
@@ -160,21 +173,12 @@ class Animals:
 
         return move
 
-        #####
-    # if self.parameters['lambda'] == 0:
-    #    move = np.random.choice(available_cells)
-    #   return move
-    # elif self.paramteres['lambda'] > 0:
-    #   move =
-
 
 class Herbivore(Animals):
     """
     Subclass of Animals.
     """
-    """
-    Make sure we are able to change this manually
-    """
+
     parameters = {
         'w_birth': 8.0,
         'sigma_birth': 1.5,
@@ -198,11 +202,20 @@ class Herbivore(Animals):
 
     def feed(self, cell_fodder_info):
         """
-        Class method for Herbivore feeding.
-        Returns amount of eaten fodder. Used to update cell information.
-        :return: None
+        Herbivore feeding. Each year, the herbivore attempts to eat an amount
+        of fodder. How much the herbivore actually eats depends on the
+        available fodder in the cell.
 
-        wrong docstring type. Update for numpy.
+        Parameters
+        ----------
+        cell_fodder_info: float
+            Amount of available fodder in the cell.
+
+        Returns
+        -------
+        eaten: float
+            Amount of actually eaten fodder.
+
         """
 
         eaten = self.parameters['F']
