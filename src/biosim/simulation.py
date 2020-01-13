@@ -123,12 +123,16 @@ class BioSim:
 
                     cell.population = sorted(cell.population, key=lambda x: x.fitness, reverse=True)
 
-                    for animal_object in cell.population[:]:
+                    for animal_object in cell.population:
                         nearby_herbivores = [animal for animal in cell.population if animal.__class__.__name__ == 'Herbivore']
                         eaten = cycle.feeding(animal_object, cell.fodder, nearby_herbivores)
                         if eaten is not None:
-                            for dead_herbivore in eaten:
-                                cell.population.remove(dead_herbivore)
+                            cell.population = [x for x in cell.population if x not in eaten]
+                            #for dead_herbivore in eaten:
+                              #  killed_animals
+                             #   print(dead_herbivore)
+
+                                #cell.population.remove(dead_herbivore)
 
                     for animal_object in cell.population:
                         cycle.procreate(cell.population, animal_object,
@@ -143,10 +147,10 @@ class BioSim:
                     for animal_object in cell.population:
                         cycle.loss_of_weight(animal_object)
 
-                    for animal_object in cell.population[:]:
+                    for animal_object in cell.population:
                         death = cycle.death(cell.population, animal_object)
                         if death is True:
-                            cell.population.remove(animal_object)
+                            cell.population = [x for x in cell.population if x not in [animal_object]]
 
         return self.df
 
@@ -189,7 +193,12 @@ if __name__ == '__main__':
         {
             "loc": (0, 0),
             "pop": [
-                {"species": "Herbivore", "age": 15, "weight": 60},
+                {"species": "Herbivore", "age": 15, "weight": 5},
+                {"species": "Herbivore", "age": 15, "weight": 5},
+                {"species": "Herbivore", "age": 15, "weight": 5},
+                {"species": "Herbivore", "age": 15, "weight": 5},
+                {"species": "Carnivore", "age": 15, "weight": 60},
+                {"species": "Carnivore", "age": 15, "weight": 60},
                 {"species": "Carnivore", "age": 15, "weight": 60}
             ],
         }
