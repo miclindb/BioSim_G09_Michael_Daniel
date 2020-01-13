@@ -13,6 +13,7 @@ import pandas as pd
 from src.biosim.landscape import Ocean, Mountain, Jungle, Savannah, Desert
 import numpy as np
 
+<<<<<<< Updated upstream
 geogr = """\
            J"""
 map = textwrap.dedent(geogr)
@@ -29,6 +30,8 @@ ini_herbs = [
 
 island_map = 'J'  # for testing
 
+=======
+>>>>>>> Stashed changes
 
 class BioSim:
     def __init__(
@@ -202,3 +205,10 @@ if __name__ == '__main__':
 
     # This simulation runs fine now, just run the whole file and edit this
     # main block for testing.
+<<<<<<< Updated upstream
+=======
+
+    # Be careful with deleting and index changing in loops.
+    # randvis_project for plotting
+
+>>>>>>> Stashed changes
