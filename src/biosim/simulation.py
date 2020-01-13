@@ -122,7 +122,7 @@ class BioSim:
                 for cell in row:
 
                     for animal_object in cell.population:
-                        nearby_herbivores = [(isinstance(x, Herbivore) for x in cell.population)]
+                        nearby_herbivores = [animal for animal in cell.population if animal.__class__.__name__ == 'Herbivore']
                         cycle.feeding(animal_object, cell.fodder, nearby_herbivores)
                     for animal_object in cell.population:
                         cycle.procreate(cell.population, animal_object,
