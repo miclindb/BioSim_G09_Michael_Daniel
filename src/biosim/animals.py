@@ -234,28 +234,33 @@ class Carnivore(Animals):
     def __init__(self, age=0, weight=None):
         super(Carnivore, self).__init__(age, weight)
 
-    def kill(self, nearby_herbivore_objects):
+    def kill(self, nearby_herbivores):
         """
         Carnivore attempts to kill a nearby herbivore. If the carnivore
         successfully kills the nearby herbivore, the carnivore's weight is
         updated and its fitness is re-evaluated.
 
+        The carnivore continues to kill nearby herbivores until it is full or
+        there are no more nearby herbivores.
+
         Parameters
         ----------
-        nearby_herbivore_objects: list
+        nearby_herbivores: list
             List of herbivores residing in same cell as the carnivore.
 
         Returns
         -------
-        Kill: Bool
-            'True' if the carnivore successfully kills and 'False' otherwise.
-
+        killed_herbivore: list
+            List containing all herbivore objects that was killed by the
+            carnivore.
         """
         kill_attempt = 0
         eaten = 0
+        killed_herbivores = []
 
-        while eaten < self.parameters['F'] and kill_attempt <= len(nearby_herbivore_objects):
-            for herbivore in nearby_herbivore_objects:
+        while eaten < self.parameters['F'] and \
+                kill_attempt <= len(nearby_herbivores):
+            for herbivore in nearby_herbivores:
                 if self.fitness <= herbivore.fitness:
                     chance = 0
                 elif 0 < self.fitness - herbivore.fitness <= \
@@ -266,15 +271,13 @@ class Carnivore(Animals):
                     chance = 1
 
                 if chance >= np.random.uniform(0, 1):
-                    kill = True
-                else:
-                    kill = False
-
-                if kill:
                     self.weight += self.update_weight(herbivore.weight)
                     self.update_fitness()
                     eaten += herbivore.weight
+                    killed_herbivores.append(herbivore)
 
                 kill_attempt += 1
+                print(kill_attempt)
+                print(eaten)
 
-        return kill
+            return killed_herbivores
