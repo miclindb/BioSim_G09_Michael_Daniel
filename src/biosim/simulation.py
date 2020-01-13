@@ -50,34 +50,34 @@ class BioSim:
         img_base should contain a path and beginning of a file name.
         """
 
-        self.island_map = island_map
         self.ini_pop = ini_pop
         self.seed = seed
 
-        # initializing landscape cells in map
-        # This is only for one cell. Another solution needed for more cells.
+        self.island_map = island_map.split('\n')
 
-        #############
-        landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle,
+        for n in range(len(self.island_map)):
+            self.island_map[n] = \
+                [character for character in self.island_map[n]]
+
+        self.landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle,
                           'S': Savannah, 'D': Desert}
 
-        self.x = self.ini_pop[0]['loc'][0]  # for testing
-        self.y = self.ini_pop[0]['loc'][1]  # for testing
+        self.df = pd.DataFrame(index=range(len(self.island_map)),
+                               columns=range(len(self.island_map[0])))
 
-        cell = landscape_dict[
-            self.island_map]()  # testing with single string map
+        for y in range(len(self.island_map)):
+            for x in range(len(self.island_map[y])):
+                self.df[x][y] = self.landscape_dict[self.island_map[y][x]]()
 
-        self.df = pd.DataFrame([cell])
+        for population in self.ini_pop:
+            for animal in population['pop']:
+                if animal['species'] == 'Herbivore':
+                    self.df[population['loc'][0]][population['loc'][1]].population.append(
+                        Herbivore(age=animal['age'], weight=animal['weight']))
+                if animal['species'] == 'Carnivore':
+                    self.df[population['loc'][0]][population['loc'][1]].population.append(
+                        Carnivore(age=animal['age'], weight=animal['weight']))
 
-        self.landscape_cell = self.df[self.x][self.y]
-
-        for animal in self.ini_pop[0]['pop']:
-            if animal['species'] == 'Herbivore':
-                self.df[self.x][self.y].population.append(
-                    Herbivore(age=animal['age'], weight=animal['weight']))
-            if animal['species'] == 'Carnivore':
-                self.df[self.x][self.y].population.append(
-                    Carniovore(age=animal['age'], weight=animal['weight']))
 
     def set_animal_parameters(self, species, params):
         """
@@ -118,23 +118,26 @@ class BioSim:
         # for one and one animal.
 
         for year in range(num_years):
-            for animal_object in self.df[self.x][self.y].population:
-                cycle.feeding(animal_object, self.landscape_cell.fodder)
-            for animal_object in self.df[self.x][self.y].population:
-                cycle.procreate(self.landscape_cell.population, animal_object,
-                                n=len(self.landscape_cell.population)
-                                )
-            for animal_object in self.df[self.x][self.y].population:
-                cycle.migrate(animal_object)
-            for animal_object in self.df[self.x][self.y].population:
-                cycle.aging(animal_object)
-            for animal_object in self.df[self.x][self.y].population:
-                cycle.loss_of_weight(animal_object)
-            for animal_object in self.df[self.x][self.y].population:
-                cycle.death(self.landscape_cell.population, animal_object)
+            for index, row in self.df.iterrows():
+                for cell in row:
 
-        simulated_cell = self.df[self.x][self.y]
-        return simulated_cell
+                    for animal_object in cell.population:
+                        nearby_herbivores = [(isinstance(x, Herbivore) for x in cell.population)]
+                        cycle.feeding(animal_object, cell.fodder, nearby_herbivores)
+                    for animal_object in cell.population:
+                        cycle.procreate(cell.population, animal_object,
+                                        n=len(cell.population)
+                                        )
+                    for animal_object in cell.population:
+                        cycle.migrate(animal_object)
+                    for animal_object in cell.population:
+                        cycle.aging(animal_object)
+                    for animal_object in cell.population:
+                        cycle.loss_of_weight(animal_object)
+                    for animal_object in cell.population:
+                        cycle.death(cell.population, animal_object)
+
+        return self.df
 
     def add_population(self, population):
         """
@@ -171,17 +174,24 @@ if __name__ == '__main__':
                J"""
     map = textwrap.dedent(geogr)  # map = 'J'
 
-    ini_herbs = [
+    ini_pop = [
         {
             "loc": (0, 0),
             "pop": [
                 {"species": "Herbivore", "age": 15, "weight": 40}
                 for _ in range(100)
             ],
+        },
+        {
+            "loc": (0, 0),
+            "pop": [
+                {"species": "Carnivore", "age": 5, "weight": 20}
+                for _ in range(40)
+            ],
         }
     ]
 
-    simulation = BioSim(map, ini_herbs, seed=1)
+    simulation = BioSim(map, ini_pop, seed=1)
 
     cell_after_simulation = simulation.simulate(40)
 

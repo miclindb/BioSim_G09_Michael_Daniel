@@ -36,12 +36,12 @@ class AnnualCycle:
 """
 
 
-def feeding(animal_object, cell_fodder):
+def feeding(animal_object, cell_fodder, nearby_herbivores):
     animal_species = animal_object.__class__.__name__
     if animal_species == 'Herbivore':
         animal_object.feed(cell_fodder)
     elif animal_species == 'Carnivore':
-        animal_object.kill()
+        animal_object.kill(nearby_herbivores)
     else:
         pass
 
@@ -116,7 +116,7 @@ def annual_cycle(cell_population, cell_fodder, animal_object, n):
     """
     Performs operations related to the annual cycle for one cell.
     """
-    feeding(animal_object, cell_fodder)      # Each animal feeds
+    feeding(animal_object, cell_fodder, nearby_herbivores)      # Each animal feeds
     procreate(cell_population, animal_object, n)     # Checks for birth for all animals
     migrate(animal_object)      # Each animal moves
     aging(animal_object)        # Updates age for all animals
