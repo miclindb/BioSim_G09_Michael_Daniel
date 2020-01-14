@@ -278,6 +278,7 @@ class Carnivore(Animals):
         kill_attempt = 0
         eaten = 0
         killed_herbivores = []
+        self.get_fitness = 11
 
         for herbivore in nearby_herbivores:
             while eaten < self.parameters['F'] and \

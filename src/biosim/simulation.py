@@ -122,11 +122,18 @@ class BioSim:
 
                     cell.population = sorted(cell.population, key=lambda x: x.fitness, reverse=True)
 
+                    eaten_herbivores = []
                     for animal_object in cell.population:
-                        nearby_herbivores = [animal for animal in cell.population if animal.__class__.__name__ == 'Herbivore']
+                        nearby_herbivores = [animal for animal in cell.population if isinstance(animal, Herbivore)]
                         eaten = cycle.feeding(animal_object, cell.fodder, nearby_herbivores)
                         if eaten is not None:
-                            cell.population = [x for x in cell.population if x not in eaten]
+                            for eaten_animal in eaten:
+                                eaten_herbivores.append(eaten_animal)
+                            print(len(eaten_herbivores))
+
+                    print(len(cell.population))
+                    cell.population = [x for x in cell.population if x not in eaten_herbivores]
+                    print(len(cell.population))
                             #for dead_herbivore in eaten:
                               #  killed_animals
                              #   print(dead_herbivore)
@@ -146,10 +153,15 @@ class BioSim:
                     for animal_object in cell.population:
                         cycle.loss_of_weight(animal_object)
 
+                    dead_animals = []
+
                     for animal_object in cell.population:
                         death = cycle.death(cell.population, animal_object)
+
                         if death is True:
-                            cell.population = [x for x in cell.population if x not in [animal_object]]
+                            dead_animals.append(animal_object)
+
+                    cell.population = [x for x in cell.population if x not in dead_animals]
 
         return self.df
 
@@ -185,7 +197,7 @@ if __name__ == '__main__':
     # a jungle cell in this case.
 
     geogr = """\
-               D"""
+               J"""
     map = textwrap.dedent(geogr)  # map = 'J'
 
     ini_pop = [
