@@ -100,25 +100,20 @@ class Cell:
     def death(cell):
         dead_animals = []
         for animal in cell.population:
-            if death():
+            if animal.death():
                 dead_animals.append(animal)
-        self.population = []
+        cell.population = [animal for animal in cell.population if animal not in dead_animals]
 
-
-
-
-
-    def annual_cycle(cell):
+    def annual_cycle(self, cell):
         """
         Performs operations related to the annual cycle for one cell.
         """
         feeding(cell)  # Each animal feeds
         procreate(cell)  # Checks for birth for all animals
-        migrate(animal_object)  # Each animal moves
+        migrate(cell)  # Each animal moves
         aging(cell)  # Updates age for all animals
         loss_of_weight(cell)  # Each animal loses weight
-        death(cell_population,
-              animal_object)  # For each animal, we check if the animal dies
+        death(cell)  # For each animal, we check if the animal dies
 
 
 class Ocean(Cell):

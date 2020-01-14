@@ -281,10 +281,9 @@ class Carnivore(Animals):
         kill_attempt = 0
         eaten = 0
         killed_herbivores = []
-        self.get_fitness = 11
 
         for herbivore in nearby_herbivores:
-            while eaten < self.parameters['F'] and \
+            if eaten < self.parameters['F'] and \
                     kill_attempt <= len(nearby_herbivores):
                 if self.fitness <= herbivore.fitness:
                     chance = 0
@@ -300,8 +299,7 @@ class Carnivore(Animals):
                     self.update_fitness()
                     eaten += herbivore.weight
                     killed_herbivores.append(herbivore)
-                    self.get_fitness = 11
 
                 kill_attempt += 1
 
-            return killed_herbivores
+        return killed_herbivores
