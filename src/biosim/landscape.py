@@ -30,30 +30,28 @@ class Cell:
         self.population = []
 
     @staticmethod
-    def sort_population(cell_population):
-        sorted_population = sorted(cell_population, key=lambda x: x.fitness,
+    def sort_population(population):
+        sorted_population = sorted(population, key=lambda x: x.fitness,
                                  reverse=True)
         return sorted_population
 
-    @staticmethod
-    def feeding(cell):
-        sorted_herbivores = sort_population([animal for animal in cell.population if isinstance(animal, Herbivore)])
-        sorted_carnivores = sort_population([animal for animal in cell.population if isinstance(animal, Carnivore)])
-        cell.population = sorted_herbivores + sorted_carnivores
+    def feeding(self):
+        sorted_herbivores = self.sort_population([animal for animal in self.population if isinstance(animal, Herbivore)])
+        sorted_carnivores = self.sort_population([animal for animal in self.population if isinstance(animal, Carnivore)])
+        self.population = sorted_herbivores + sorted_carnivores
 
         nearby_herbivores = sorted_herbivores
         killed_herbivores = []
-        for animal in cell.population:
+        for animal in self.population:
             if isinstance(animal, Herbivore):
-                animal.feed(cell.fodder)
+                animal.feed(self.fodder)
             else:
                 killed_herbivores = animal.kill(nearby_herbivores)
 
             nearby_herbivores = [herbivore for herbivore in nearby_herbivores if herbivore not in killed_herbivores]
-        cell.population = nearby_herbivores + sorted_carnivores
+        self.population = nearby_herbivores + sorted_carnivores
 
-    @staticmethod
-    def procreate(cell):
+    def procreate(self):
         """
         Annual birth.
 
@@ -71,49 +69,44 @@ class Cell:
 
         """
         new_born_animals = []
-        for animal in cell.population:
-            nearby_same_species = len([ani for ani in cell.population if isinstance(ani, type(animal))])
+        for animal in self.population:
+            nearby_same_species = len([ani for ani in self.population if isinstance(ani, type(animal))])
             birth = animal.gives_birth(nearby_same_species)
 
             if birth is not None:
                 new_born_animals.append(birth)
 
         for new_born_animal in new_born_animals:
-            cell.population.append(new_born_animal)
+            self.population.append(new_born_animal)
 
-    def migrate(animal_object):
+    def migrate(self):
         pass
 
-    @staticmethod
-    def aging(cell):
-        for animal in cell.population:
-            animal.age += 1
-            animal.update_fitness()
+    def aging(self):
+        for animal in self.population:
+            animal.aging()
 
-    @staticmethod
-    def loss_of_weight(cell):
-        for animal in cell.population:
-            animal.weight -= loss_of_weight()
-            animal.update_fitness()
+    def loss_of_weight(self):
+        for animal in self.population:
+            animal.loss_of_weight()
 
-    @staticmethod
-    def death(cell):
+    def deaths(self):
         dead_animals = []
-        for animal in cell.population:
+        for animal in self.population:
             if animal.death():
                 dead_animals.append(animal)
-        cell.population = [animal for animal in cell.population if animal not in dead_animals]
+        self.population = [animal for animal in self.population if animal not in dead_animals]
 
-    def annual_cycle(self, cell):
+    def annual_cycle(self):
         """
         Performs operations related to the annual cycle for one cell.
         """
-        feeding(cell)  # Each animal feeds
-        procreate(cell)  # Checks for birth for all animals
-        migrate(cell)  # Each animal moves
-        aging(cell)  # Updates age for all animals
-        loss_of_weight(cell)  # Each animal loses weight
-        death(cell)  # For each animal, we check if the animal dies
+        self.feeding()  # Each animal feeds
+        self.procreate()  # Checks for birth for all animals
+        self.migrate()  # Each animal moves
+        self.aging()  # Updates age for all animals
+        self.loss_of_weight()  # Each animal loses weight
+        self.deaths()  # For each animal, we check if the animal dies
 
 
 class Ocean(Cell):

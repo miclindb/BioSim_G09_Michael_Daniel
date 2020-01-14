@@ -40,8 +40,13 @@ class Animals:
         return np.random.normal(self.parameters['w_birth'],
                                 self.parameters['sigma_birth'])
 
+    def aging(self):
+        self.age += 1
+        self.update_fitness()
+
     def loss_of_weight(self):
-        return self.weight * self.parameters['eta']
+        self.weight -= self.weight * self.parameters['eta']
+        self.update_fitness()
 
     def calculate_fitness(self):
         return (1 / (1 + np.exp(

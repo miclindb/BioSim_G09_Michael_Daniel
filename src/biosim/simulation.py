@@ -109,8 +109,8 @@ class BioSim:
 
         for year in range(num_years):
             for y in self.island_map:
-                for cell in self.island_map:
-                    landscape.annual_cycle(cell)
+                for cell in y:
+                    cell.annual_cycle()
 
     def add_population(self, population):
         """
@@ -177,7 +177,7 @@ if __name__ == '__main__':
 
     simulation = BioSim(map, ini_pop, seed=1)
 
-    cell_after_simulation = simulation.simulate(1)
+    cell_after_simulation = simulation.simulate(3)
 
     # This simulation runs fine now, just run the whole file and edit this
     # main block for testing.
