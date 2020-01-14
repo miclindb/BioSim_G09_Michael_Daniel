@@ -40,6 +40,9 @@ class Animals:
         return np.random.normal(self.parameters['w_birth'],
                                 self.parameters['sigma_birth'])
 
+    def loss_of_weight(self):
+        return self.weight * self.parameters['eta']
+
     def calculate_fitness(self):
         return (1 / (1 + np.exp(
             self.parameters['phi_age'] * (
@@ -88,7 +91,7 @@ class Animals:
         Bool:
             'True' is the animal dies and 'False' otherwise.
         """
-
+        #animal_fitness = float(animal.fitness)
         if self.fitness == 0:
             return True
         elif np.random.uniform(0, 1) <= self.parameters['omega'] * (
@@ -97,7 +100,7 @@ class Animals:
         else:
             return False
 
-    def gives_birth(self, animal_object, n):
+    def gives_birth(self, n):
         """
         Animals have a chance to produce an offspring each year. This is
         decided by their weight and the amount of nearby same species animals.
@@ -130,14 +133,14 @@ class Animals:
             prob_birth = min(1,
                              self.parameters['gamma'] * self.fitness * (n - 1))
             if np.random.uniform(0, 1) <= prob_birth:
-                if animal_object.__class__.__name__ == 'Herbivore':
+                if self.__class__.__name__ == 'Herbivore':
                     new_born_animal = Herbivore()
-                elif animal_object.__class__.__name__ == 'Carnivore':
+                elif self.__class__.__name__ == 'Carnivore':
                     new_born_animal = Carnivore()
                 else:
                     pass
                 self.weight -= self.parameters['xi'] * new_born_animal.weight
-                return True, new_born_animal
+                return new_born_animal
             else:
                 pass
 
@@ -297,6 +300,7 @@ class Carnivore(Animals):
                     self.update_fitness()
                     eaten += herbivore.weight
                     killed_herbivores.append(herbivore)
+                    self.get_fitness = 11
 
                 kill_attempt += 1
 

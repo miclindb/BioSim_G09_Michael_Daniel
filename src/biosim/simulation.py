@@ -61,22 +61,18 @@ class BioSim:
         self.landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle,
                           'S': Savannah, 'D': Desert}
 
-        self.df = pd.DataFrame(index=range(len(self.island_map)),
-                               columns=range(len(self.island_map[0])))
-
         for y in range(len(self.island_map)):
             for x in range(len(self.island_map[y])):
-                self.df[x][y] = self.landscape_dict[self.island_map[y][x]]()
+                self.island_map[y][x] = self.landscape_dict[self.island_map[y][x]]()
 
         for population in self.ini_pop:
             for animal in population['pop']:
                 if animal['species'] == 'Herbivore':
-                    self.df[population['loc'][0]][population['loc'][1]].population.append(
+                    self.island_map[population['loc'][0]][population['loc'][1]].population.append(
                         Herbivore(age=animal['age'], weight=animal['weight']))
                 if animal['species'] == 'Carnivore':
-                    self.df[population['loc'][0]][population['loc'][1]].population.append(
+                    self.island_map[population['loc'][0]][population['loc'][1]].population.append(
                         Carnivore(age=animal['age'], weight=animal['weight']))
-
 
     def set_animal_parameters(self, species, params):
         """
@@ -117,6 +113,12 @@ class BioSim:
         # for one and one animal.
 
         for year in range(num_years):
+            for y in self.island_map:
+                for cell in self.island_map:
+                    cell.annual_cycle(cell)
+
+
+            ###############################################
             for index, row in self.df.iterrows():
                 for cell in row:
 
@@ -204,20 +206,23 @@ if __name__ == '__main__':
         {
             "loc": (0, 0),
             "pop": [
-                {"species": "Herbivore", "age": 15, "weight": 5},
-                {"species": "Herbivore", "age": 15, "weight": 5},
-                {"species": "Herbivore", "age": 15, "weight": 5},
-                {"species": "Herbivore", "age": 15, "weight": 5},
-                {"species": "Carnivore", "age": 15, "weight": 60},
-                {"species": "Carnivore", "age": 15, "weight": 60},
-                {"species": "Carnivore", "age": 15, "weight": 60}
+                {"species": "Herbivore", "age": 15, "weight": 10},
+                {"species": "Herbivore", "age": 15, "weight": 10},
+                {"species": "Herbivore", "age": 15, "weight": 10},
+                {"species": "Herbivore", "age": 15, "weight": 10},
+                {"species": "Herbivore", "age": 15, "weight": 10},
+                {"species": "Herbivore", "age": 15, "weight": 10},
+                {"species": "Herbivore", "age": 15, "weight": 10},
+                {"species": "Carnivore", "age": 15, "weight": 10},
+                {"species": "Carnivore", "age": 15, "weight": 12},
+                {"species": "Carnivore", "age": 15, "weight": 20}
             ],
         }
     ]
 
     simulation = BioSim(map, ini_pop, seed=1)
 
-    cell_after_simulation = simulation.simulate(1)
+    #cell_after_simulation = simulation.simulate(1)
 
     # This simulation runs fine now, just run the whole file and edit this
     # main block for testing.

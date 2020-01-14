@@ -7,6 +7,9 @@ Landscape module
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
+from src.biosim.animals import Herbivore, Carnivore
+import pandas as pd
+import numpy as np
 
 class Cell:
     """
@@ -25,6 +28,97 @@ class Cell:
         self.coordinate = coordinate
         self.fodder = 0
         self.population = []
+
+    @staticmethod
+    def sort_population(cell_population):
+        sorted_population = sorted(cell_population, key=lambda x: x.fitness,
+                                 reverse=True)
+        return sorted_population
+
+    @staticmethod
+    def feeding(cell):
+        sorted_herbivores = sort_population([animal for animal in cell.population if isinstance(animal, Herbivore)])
+        sorted_carnivores = sort_population([animal for animal in cell.population if isinstance(animal, Carnivore)])
+        cell.population = sorted_herbivores + sorted_carnivores
+
+        nearby_herbivores = sorted_herbivores
+        killed_herbivores = []
+        for animal in cell.population:
+            if isinstance(animal, Herbivore):
+                animal.feed(cell.fodder)
+            else:
+                killed_herbivores = animal.kill(nearby_herbivores)
+
+            nearby_herbivores = [herbivore for herbivore in nearby_herbivores if herbivore not in killed_herbivores]
+        cell.population = nearby_herbivores + sorted_carnivores
+
+    @staticmethod
+    def procreate(cell):
+        """
+        Annual birth.
+
+        Parameters
+        ----------
+        n: int
+            Number of nearby animals.
+        animal_object: class object
+            Object of the animal.
+
+        Returns: Bool or class object
+            False if birth is unsuccessful
+            class object if a new baby is successfully born.
+        -------
+
+        """
+        new_born_animals = []
+        for animal in cell.population:
+            nearby_same_species = len([ani for ani in cell.population if isinstance(ani, type(animal))])
+            birth = animal.gives_birth(nearby_same_species)
+
+            if birth is not None:
+                new_born_animals.append(birth)
+
+        for new_born_animal in new_born_animals:
+            cell.population.append(new_born_animal)
+
+    def migrate(animal_object):
+        pass
+
+    @staticmethod
+    def aging(cell):
+        for animal in cell.population:
+            animal.age += 1
+            animal.update_fitness()
+
+    @staticmethod
+    def loss_of_weight(cell):
+        for animal in cell.population:
+            animal.weight -= loss_of_weight()
+            animal.update_fitness()
+
+    @staticmethod
+    def death(cell):
+        dead_animals = []
+        for animal in cell.population:
+            if death():
+                dead_animals.append(animal)
+        self.population = []
+
+
+
+
+
+    def annual_cycle(cell):
+        """
+        Performs operations related to the annual cycle for one cell.
+        """
+        feeding(cell)  # Each animal feeds
+        procreate(cell)  # Checks for birth for all animals
+        migrate(animal_object)  # Each animal moves
+        aging(cell)  # Updates age for all animals
+        loss_of_weight(cell)  # Each animal loses weight
+        death(cell_population,
+              animal_object)  # For each animal, we check if the animal dies
 
 
 class Ocean(Cell):
