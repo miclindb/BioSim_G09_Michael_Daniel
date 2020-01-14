@@ -202,8 +202,15 @@ def statistical_test_kill():
     pass
 
 
-def kill_stops_at_eaten_is_f():
-    pass
+def test_kill_stops_at_eaten_is_f():
+    carn = Carnivore(age=2, weight=8)
+    nearby_herbs = []
+    for i in range(10):
+        i = Herbivore(weight=10)
+        nearby_herbs.append(i)
+
+    killed = carn.kill(nearby_herbs)
+    assert len(killed) == 5
 
 
 if __name__ == '__main__':
