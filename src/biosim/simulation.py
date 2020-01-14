@@ -7,12 +7,12 @@ __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
 from src.biosim.animals import Herbivore, Carnivore
-from src.biosim import cycle
 import textwrap
 import pandas as pd
 from src.biosim.landscape import Ocean, Mountain, Jungle, Savannah, Desert
 from src.biosim import landscape
 import numpy as np
+from src.biosim.island import Island
 
 
 class BioSim:
@@ -50,6 +50,13 @@ class BioSim:
         img_base should contain a path and beginning of a file name.
         """
 
+        self.island_map = island_map
+        self.ini_pop = ini_pop
+        self.seed = seed
+        self.simulated_island = None
+
+
+        """
         self.ini_pop = ini_pop
         self.seed = seed
 
@@ -65,6 +72,25 @@ class BioSim:
         for y in range(len(self.island_map)):
             for x in range(len(self.island_map[y])):
                 self.island_map[y][x] = self.landscape_dict[self.island_map[y][x]]()
+                self.island_map[y][x].coordinate = (y, x)
+
+        for y in range(len(self.island_map)):
+            for x in range(len(self.island_map[y])):
+                list_of_nearby_cells = []
+                if y != 0:
+                    cell_1 = self.island_map[y-1][x]
+                    list_of_nearby_cells.append(cell_1)
+                if x != 0:
+                    cell_2 = self.island_map[y][x-1]
+                    list_of_nearby_cells.append(cell_2)
+                if y != len(self.island_map)-1:
+                    cell_3 = self.island_map[y+1][x]
+                    list_of_nearby_cells.append(cell_3)
+                if x != len(self.island_map[y])-1:
+                    cell_4 = self.island_map[y][x+1]
+                    list_of_nearby_cells.append(cell_4)
+
+                self.island_map[y][x].nearby_cells = set(list_of_nearby_cells)
 
         for population in self.ini_pop:
             for animal in population['pop']:
@@ -74,6 +100,7 @@ class BioSim:
                 if animal['species'] == 'Carnivore':
                     self.island_map[population['loc'][0]][population['loc'][1]].population.append(
                         Carnivore(age=animal['age'], weight=animal['weight']))
+        """
 
     def set_animal_parameters(self, species, params):
         """
@@ -104,13 +131,12 @@ class BioSim:
         Image files will be numbered consecutively.
         """
 
-        # Have to run one part of cycle for each animal, not the total cycle
-        # for one and one animal.
+        self.simulated_island = Island(self.island_map)
+        self.simulated_island.map_constructor()
+        self.simulated_island.adding_population(self.ini_pop)
 
         for year in range(num_years):
-            for y in self.island_map:
-                for cell in y:
-                    cell.annual_cycle()
+            self.simulated_island.annual_cycle()
 
     def add_population(self, population):
         """
@@ -144,12 +170,25 @@ if __name__ == '__main__':
     # a jungle cell in this case.
 
     geogr = """\
-               J"""
-    map = textwrap.dedent(geogr)  # map = 'J'
+               OOOOOOOOOOOOOOOOOOOOO
+               OOOOOOOOSMMMMJJJJJJJO
+               OSSSSSJJJJMMJJJJJJJOO
+               OSSSSSSSSSMMJJJJJJOOO
+               OSSSSSJJJJJJJJJJJJOOO
+               OSSSSSJJJDDJJJSJJJOOO
+               OSSJJJJJDDDJJJSSSSOOO
+               OOSSSSJJJDDJJJSOOOOOO
+               OSSSJJJJJDDJJJJJJJOOO
+               OSSSSJJJJDDJJJJOOOOOO
+               OOSSSSJJJJJJJJOOOOOOO
+               OOOSSSSJJJJJJJOOOOOOO
+               OOOOOOOOOOOOOOOOOOOOO"""
+
+    map = textwrap.dedent(geogr)
 
     ini_pop = [
         {
-            "loc": (0, 0),
+            "loc": (10, 10),
             "pop": [
                 {"species": "Herbivore", "age": 15, "weight": 40},
                 {"species": "Herbivore", "age": 15, "weight": 40},

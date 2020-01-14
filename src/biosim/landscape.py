@@ -15,7 +15,7 @@ class Cell:
     """
     Superclass for all cell types.
     """
-    def __init__(self, coordinate=(0, 0)):
+    def __init__(self):
         """
         Constructor for cells.
 
@@ -25,9 +25,10 @@ class Cell:
             For which two- dimensional coordinate value the cell is
             constructed. Default value is (0, 0).
         """
-        self.coordinate = coordinate
+        self.coordinate = ()
         self.fodder = 0
         self.population = []
+        self.nearby_cells = []
 
     @staticmethod
     def sort_population(population):
@@ -80,6 +81,12 @@ class Cell:
             self.population.append(new_born_animal)
 
     def migrate(self):
+        pass
+        #for animal in self.population:
+         #   if animal.check_move() is True:
+
+          #      animal.migration(available_cells)
+
         pass
 
     def aging(self):

@@ -96,7 +96,7 @@ class Animals:
         Bool:
             'True' is the animal dies and 'False' otherwise.
         """
-        #animal_fitness = float(animal.fitness)
+
         if self.fitness == 0:
             return True
         elif np.random.uniform(0, 1) <= self.parameters['omega'] * (
@@ -149,6 +149,10 @@ class Animals:
             else:
                 pass
 
+    def check_move(self):
+        move = np.random.binomial(1, self.parameters['mu'] * self.fitness)
+        return bool(move)
+
     def migration(self, set_of_available_cells):
         """
         Animal attempts to migrate to one of the nearby cells.
@@ -168,18 +172,17 @@ class Animals:
             The cell the animal choose to migrate to. False if the animal
             does not migrate.
         """
-        check_move = self.parameters['mu'] * self.fitness
-        if check_move >= np.random.uniform(0, 1):
-            fodder_abundance = []
-            for cell in set_of_available_cells:
-                e_k = cell.fodder / (
-                            (nearby_same_species_animals + 1) * appetite)
-                fodder_abundance.append(e_k)
+        pass
+           # fodder_abundance = []
+            #for cell in set_of_available_cells:
+             #   e_k = cell.fodder / (
+              #              (nearby_same_species_animals + 1) * appetite)
+               # fodder_abundance.append(e_k)
 
-        else:
-            move = False
+           # else:
+            #    move = False
 
-        return move
+            #return move
 
 
 class Herbivore(Animals):
@@ -290,7 +293,6 @@ class Carnivore(Animals):
         for herbivore in nearby_herbivores:
             if eaten < self.parameters['F'] and \
                     kill_attempt <= len(nearby_herbivores):
-                print('runs')
                 if self.fitness <= herbivore.fitness:
                     chance = 0
                 elif 0 < self.fitness - herbivore.fitness <= \
