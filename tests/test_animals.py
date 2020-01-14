@@ -19,16 +19,16 @@ class TestAnimals:
 """
 
 
-def test_herbivore_default_class_initializer(self):
+def test_herbivore_default_class_initializer():
     """
     Tests that the class initializer for herbivore runs and uses default
     values when no inputs are provided
     """
-    # herbivore = Herbivore()
-    assert self.herb.age == 0
-    assert isinstance(self.herb.age, int)
-    assert self.herb.weight > 0
-    assert isinstance(self.herb.weight, float)
+    herb = Herbivore()
+    assert herb.age == 0
+    assert isinstance(herb.age, int)
+    assert herb.weight > 0
+    assert isinstance(herb.weight, float)
 
 
 def test_carnivore_default_class_initializer():
@@ -107,7 +107,27 @@ def test_death_by_zero_fitness():
 
 
 def test_probability_of_death():
-    pass
+    """
+    Tests the binomial distribution of animal deaths. The tests is performed on
+    several animals, where the expected number of dead animals is asserted.
+
+    Returns
+    -------
+
+    """
+    dead_animals = []
+    animals = []
+    for i in range(10):
+        i = Herbivore()
+        animals.append(i)
+
+    for animal in animals:
+        animal.get_fitness = 0.3
+        x = animal.death()
+        if x is True:
+            dead_animals.append(animal)
+
+    assert 0 < len(dead_animals) < 3
 
 
 def test_gives_birth_returns_false():

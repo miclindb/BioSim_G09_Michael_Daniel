@@ -14,7 +14,6 @@ from src.biosim.landscape import Ocean, Mountain, Jungle, Savannah, Desert
 import numpy as np
 
 
-
 class BioSim:
     def __init__(
             self,
