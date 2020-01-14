@@ -11,6 +11,7 @@ from src.biosim import cycle
 import textwrap
 import pandas as pd
 from src.biosim.landscape import Ocean, Mountain, Jungle, Savannah, Desert
+from src.biosim import landscape
 import numpy as np
 
 
@@ -61,22 +62,18 @@ class BioSim:
         self.landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle,
                           'S': Savannah, 'D': Desert}
 
-        self.df = pd.DataFrame(index=range(len(self.island_map)),
-                               columns=range(len(self.island_map[0])))
-
         for y in range(len(self.island_map)):
             for x in range(len(self.island_map[y])):
-                self.df[x][y] = self.landscape_dict[self.island_map[y][x]]()
+                self.island_map[y][x] = self.landscape_dict[self.island_map[y][x]]()
 
         for population in self.ini_pop:
             for animal in population['pop']:
                 if animal['species'] == 'Herbivore':
-                    self.df[population['loc'][0]][population['loc'][1]].population.append(
+                    self.island_map[population['loc'][0]][population['loc'][1]].population.append(
                         Herbivore(age=animal['age'], weight=animal['weight']))
                 if animal['species'] == 'Carnivore':
-                    self.df[population['loc'][0]][population['loc'][1]].population.append(
+                    self.island_map[population['loc'][0]][population['loc'][1]].population.append(
                         Carnivore(age=animal['age'], weight=animal['weight']))
-
 
     def set_animal_parameters(self, species, params):
         """
@@ -107,63 +104,13 @@ class BioSim:
         Image files will be numbered consecutively.
         """
 
-        # for year in range(num_years):
-        #   for animal_object in self.df[self.x][self.y].population:
-        #      cycle.annual_cycle(self.landscape_cell.population,
-        #                        self.landscape_cell.fodder, animal_object,
-        #                       n=len(self.df[self.x][self.y].population))
-
         # Have to run one part of cycle for each animal, not the total cycle
         # for one and one animal.
 
         for year in range(num_years):
-            for index, row in self.df.iterrows():
-                for cell in row:
-
-                    cell.population = sorted(cell.population, key=lambda x: x.fitness, reverse=True)
-
-                    eaten_herbivores = []
-                    for animal_object in cell.population:
-                        nearby_herbivores = [animal for animal in cell.population if isinstance(animal, Herbivore)]
-                        eaten = cycle.feeding(animal_object, cell.fodder, nearby_herbivores)
-                        if eaten is not None:
-                            for eaten_animal in eaten:
-                                eaten_herbivores.append(eaten_animal)
-                            print(len(eaten_herbivores))
-
-                    print(len(cell.population))
-                    cell.population = [x for x in cell.population if x not in eaten_herbivores]
-                    print(len(cell.population))
-                            #for dead_herbivore in eaten:
-                              #  killed_animals
-                             #   print(dead_herbivore)
-
-                                #cell.population.remove(dead_herbivore)
-
-                    for animal_object in cell.population:
-                        cycle.procreate(cell.population, animal_object,
-                                        n=len(cell.population)
-                                        )
-                    for animal_object in cell.population:
-                        cycle.migrate(animal_object)
-
-                    for animal_object in cell.population:
-                        cycle.aging(animal_object)
-
-                    for animal_object in cell.population:
-                        cycle.loss_of_weight(animal_object)
-
-                    dead_animals = []
-
-                    for animal_object in cell.population:
-                        death = cycle.death(cell.population, animal_object)
-
-                        if death is True:
-                            dead_animals.append(animal_object)
-
-                    cell.population = [x for x in cell.population if x not in dead_animals]
-
-        return self.df
+            for y in self.island_map:
+                for cell in y:
+                    cell.annual_cycle()
 
     def add_population(self, population):
         """
@@ -204,20 +151,33 @@ if __name__ == '__main__':
         {
             "loc": (0, 0),
             "pop": [
-                {"species": "Herbivore", "age": 15, "weight": 5},
-                {"species": "Herbivore", "age": 15, "weight": 5},
-                {"species": "Herbivore", "age": 15, "weight": 5},
-                {"species": "Herbivore", "age": 15, "weight": 5},
-                {"species": "Carnivore", "age": 15, "weight": 60},
-                {"species": "Carnivore", "age": 15, "weight": 60},
-                {"species": "Carnivore", "age": 15, "weight": 60}
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Herbivore", "age": 15, "weight": 40},
+                {"species": "Carnivore", "age": 15, "weight": 10},
+                {"species": "Carnivore", "age": 15, "weight": 12},
+                {"species": "Carnivore", "age": 15, "weight": 20}
             ],
         }
     ]
 
     simulation = BioSim(map, ini_pop, seed=1)
 
-    cell_after_simulation = simulation.simulate(1)
+    cell_after_simulation = simulation.simulate(3)
 
     # This simulation runs fine now, just run the whole file and edit this
     # main block for testing.
