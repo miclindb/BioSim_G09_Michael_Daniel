@@ -35,7 +35,7 @@ class Animals:
         else:
             self.weight = weight
         self.fitness = self.calculate_fitness()
-        self.tried_to_move = False
+        self.has_moved = False
 
     def calculate_weight(self):
         return np.random.normal(self.parameters['w_birth'],
@@ -100,8 +100,7 @@ class Animals:
 
         if self.fitness == 0:
             return True
-        elif np.random.uniform(0, 1) <= self.parameters['omega'] * (
-                1 - self.fitness):
+        elif bool(np.random.binomial(1, self.parameters['omega'] * (1 - self.fitness))) is True:
             return True
         else:
             return False
@@ -138,13 +137,11 @@ class Animals:
         else:
             prob_birth = min(1,
                              self.parameters['gamma'] * self.fitness * (n - 1))
-            if np.random.uniform(0, 1) <= prob_birth:
+            if bool(np.random.binomial(1, prob_birth)) is True:
                 if self.__class__.__name__ == 'Herbivore':
                     new_born_animal = Herbivore()
-                elif self.__class__.__name__ == 'Carnivore':
-                    new_born_animal = Carnivore()
                 else:
-                    pass
+                    new_born_animal = Carnivore()
                 self.weight -= self.parameters['xi'] * new_born_animal.weight
                 return new_born_animal
             else:
@@ -173,28 +170,36 @@ class Animals:
             The cell the animal choose to migrate to. False if the animal
             does not migrate.
         """
-        self.tried_to_move = True
 
-        if check_move is True:
+        if self.check_move() is True:
             propensities = []
             for cell in relative_fodder_list:
-                if cell[1].landscape_type == 'M' or 'O':
+                if cell[1].landscape_type == 'M':
+                    propensities.append(float(0))
+                elif cell[1].landscape_type == 'O':
                     propensities.append(float(0))
                 else:
                     propensities.append(np.exp(self.parameters['lambda']) * cell[0])
             probabilities = []
+
+            if sum(propensities) == 0:
+                return None
+
             for propensity in propensities:
                 probabilities.append(propensity / sum(propensities))
 
             probabilities = np.array(probabilities)
             probabilities /= probabilities.sum()
 
-            chosen_cell_index = list(np.random.choice(len(probabilities), 1, p=probabilities))
-            chosen_cell = relative_fodder_list[chosen_cell_index[0]][1]
+            chosen_cell_index = list(np.random.choice(len(probabilities), 1, p=probabilities))[0]
+            chosen_cell = relative_fodder_list[chosen_cell_index][1]
+
+            self.has_moved = True
 
             return chosen_cell
+
         else:
-            pass
+            return None
 
 
 class Herbivore(Animals):
@@ -316,7 +321,7 @@ class Carnivore(Animals):
                 else:
                     chance = 1
 
-                if chance >= np.random.uniform(0, 1):
+                if bool(np.random.binomial(1, chance)) is True:
                     self.weight += self.update_weight(herbivore.weight)
                     self.update_fitness()
                     eaten += herbivore.weight
@@ -326,3 +331,4 @@ class Carnivore(Animals):
                 kill_attempt += 1
 
         return killed_herbivores
+

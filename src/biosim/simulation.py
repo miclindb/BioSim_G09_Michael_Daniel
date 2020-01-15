@@ -9,8 +9,8 @@ __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 from src.biosim.animals import Herbivore, Carnivore
 import textwrap
 import pandas as pd
-from src.biosim.landscape import Ocean, Mountain, Jungle, Savannah, Desert
-from src.biosim import landscape
+from src.biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
+from src.biosim import cell
 import numpy as np
 from src.biosim.island import Island
 
@@ -144,33 +144,22 @@ if __name__ == '__main__':
         {
             "loc": (10, 10),
             "pop": [
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Herbivore", "age": 15, "weight": 40},
-                {"species": "Carnivore", "age": 15, "weight": 10},
-                {"species": "Carnivore", "age": 15, "weight": 12},
-                {"species": "Carnivore", "age": 15, "weight": 20}
+                {"species": "Herbivore", "age": 5, "weight": 20}
+                for _ in range(400)
+            ],
+        },
+        {
+            "loc": (10, 10),
+            "pop": [
+                {"species": "Carnivore", "age": 5, "weight": 20}
+                for _ in range(400)
             ],
         }
     ]
 
     simulation = BioSim(map, ini_pop, seed=1)
 
-    cell_after_simulation = simulation.simulate(3)
+    cell_after_simulation = simulation.simulate(10)
 
     # This simulation runs fine now, just run the whole file and edit this
     # main block for testing.

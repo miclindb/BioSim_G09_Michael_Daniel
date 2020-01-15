@@ -1,7 +1,7 @@
 """
-A test for landscape.py
+A test for cell.py
 """
-from src.biosim.landscape import Cell, Ocean, Mountain, Jungle, Savannah, Desert
+from src.biosim.cell import Cell, Ocean, Mountain, Jungle, Savannah, Desert
 
 
 def test_fodder_cell():

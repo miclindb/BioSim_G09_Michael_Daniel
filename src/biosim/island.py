@@ -1,5 +1,5 @@
-from src.biosim.landscape import Ocean, Mountain, Jungle, Savannah, Desert
-from src.biosim import landscape
+from src.biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
+from src.biosim import cell
 from src.biosim.animals import Herbivore, Carnivore
 
 
@@ -13,7 +13,6 @@ class Island:
                           'S': Savannah, 'D': Desert}
 
         self.map_population = []
-
 
     def map_constructor(self):
 
@@ -60,11 +59,49 @@ class Island:
                     self.island_map[animals['loc'][0]][animals['loc'][1]].population.append(
                         Carnivore(age=animal['age'], weight=animal['weight']))
 
+    def island_fodder_growth(self):
+        for y in self.island_map:
+            for cell in y:
+                cell.fodder_growth()
+
+    def island_feeding(self):
+        for y in self.island_map:
+            for cell in y:
+                cell.feeding()
+
+    def island_procreate(self):
+        for y in self.island_map:
+            for cell in y:
+                cell.procreate()
+
+    def island_migration(self):
+        for y in self.island_map:
+            for cell in y:
+                cell.migration()
+
+    def island_aging(self):
+        for y in self.island_map:
+            for cell in y:
+                cell.aging()
+
+    def island_loss_of_weight(self):
+        for y in self.island_map:
+            for cell in y:
+                cell.loss_of_weight()
+
+    def island_deaths(self):
+        for y in self.island_map:
+            for cell in y:
+                cell.deaths()
+
     def island_cycle(self):
         """
         Performs operations related to the annual cycle for one cell.
         """
-        for y in self.island_map:
-            for cell in y:
-                cell.annual_cycle()
-
+        self.island_fodder_growth()
+        self.island_feeding()
+        self.island_procreate()
+        self.island_migration()
+        self.island_aging()
+        self.island_loss_of_weight()
+        self.island_deaths()
