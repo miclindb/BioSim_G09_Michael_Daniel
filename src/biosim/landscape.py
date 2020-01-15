@@ -36,6 +36,29 @@ class Cell:
                                  reverse=True)
         return sorted_population
 
+    @staticmethod
+    def calculate_relative_fodder(fodder, animal_species, number_of_same_species):
+        return fodder / ((number_of_same_species+1) * animal_species.parameters['F'])
+
+    def nearby_relative_fodder(self, animal):
+        relative_fodder_list = []
+
+        if isinstance(animal, Herbivore):
+            for nearby_cell in self.nearby_cells:
+                fodder = nearby_cell.fodder
+                number_of_same_species = len([animal for animal in nearby_cell.population if isinstance(animal, Herbivore)])
+                relative_fodder = self.calculate_relative_fodder(fodder, Herbivore, number_of_same_species)
+                relative_fodder_list.append((relative_fodder, nearby_cell))
+
+        elif isinstance(animal, Carnivore):
+            for nearby_cell in self.nearby_cells:
+                number_of_same_species = len([animal for animal in nearby_cell.population if isinstance(animal, Carnivore)])
+                fodder = sum([herbivore.weight for herbivore in herbivores_in_cell])
+                relative_fodder = self.calculate_relative_fodder(fodder, Carnivore, number_of_same_species)
+                relative_fodder_list.append((relative_fodder, nearby_cell))
+
+        return relative_fodder_list
+
     def feeding(self):
         sorted_herbivores = self.sort_population([animal for animal in self.population if isinstance(animal, Herbivore)])
         sorted_carnivores = self.sort_population([animal for animal in self.population if isinstance(animal, Carnivore)])
@@ -45,7 +68,8 @@ class Cell:
         killed_herbivores = []
         for animal in self.population:
             if isinstance(animal, Herbivore):
-                animal.feed(self.fodder)
+                fodder_eaten = animal.feed(self.fodder)
+                self.fodder -= fodder_eaten
             else:
                 killed_herbivores = animal.kill(nearby_herbivores)
 
@@ -80,14 +104,23 @@ class Cell:
         for new_born_animal in new_born_animals:
             self.population.append(new_born_animal)
 
-    def migrate(self):
-        pass
-        #for animal in self.population:
-         #   if animal.check_move() is True:
+    def migration(self):
+        migrations = []
+        if len(self.population) == 0:
+            pass
+        else:
+            for animal in self.population:
+                if animal.tried_to_move is False:
+                    relative_fodder_list = nearby_relative_fodder(animal)
+                    chosen_cell = animal.migrate(relative_fodder_list)
+                    migrations.append((animal, chosen_cell))
 
-          #      animal.migration(available_cells)
+        self.population = [animal for animal in self.population if animal not in migrations]
+        for migrating_animal, chosen_cell in migrations:
+            chosen_cell.population.append(migrating_animal)
 
-        pass
+        for animal in self.population:
+            animal.tried_to_move = False
 
     def aging(self):
         for animal in self.population:
@@ -104,6 +137,12 @@ class Cell:
                 dead_animals.append(animal)
         self.population = [animal for animal in self.population if animal not in dead_animals]
 
+    def update_fodder(self):
+        if isinstance(self, Jungle):
+            self.fodder = self.parameters['f_max']
+        elif isinstance(self, Savannah):
+            self.fodder = self.fodder + self.parameters['alpha'] * (self.parameters['f_max'] - self.fodder)
+
     def annual_cycle(self):
         """
         Performs operations related to the annual cycle for one cell.
@@ -114,6 +153,7 @@ class Cell:
         self.aging()  # Updates age for all animals
         self.loss_of_weight()  # Each animal loses weight
         self.deaths()  # For each animal, we check if the animal dies
+        self.update_fodder()
 
 
 class Ocean(Cell):

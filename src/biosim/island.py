@@ -14,6 +14,7 @@ class Island:
 
         self.map_population = []
 
+
     def map_constructor(self):
 
         self.island_map = self.island_map.split('\n')
@@ -27,7 +28,7 @@ class Island:
                 self.island_map[y][x] = self.landscape_dict[self.island_map[y][x]]()
                 self.island_map[y][x].coordinate = (y, x)
 
-    def nearby_cells(self):
+    def generate_nearby_cells(self):
         for y in range(len(self.island_map)):
             for x in range(len(self.island_map[y])):
                 list_of_nearby_cells = []
@@ -44,7 +45,7 @@ class Island:
                     cell_4 = self.island_map[y][x+1]
                     list_of_nearby_cells.append(cell_4)
 
-                self.island_map[y][x].nearby_cells = set(list_of_nearby_cells)
+                self.island_map[y][x].nearby_cells = list_of_nearby_cells
 
     def adding_population(self, population):
         for animals in population:
@@ -59,15 +60,11 @@ class Island:
                     self.island_map[animals['loc'][0]][animals['loc'][1]].population.append(
                         Carnivore(age=animal['age'], weight=animal['weight']))
 
-    def annual_cycle(self):
+    def island_cycle(self):
         """
         Performs operations related to the annual cycle for one cell.
         """
         for y in self.island_map:
             for cell in y:
-                cell.feeding()  # Each animal feeds
-                cell.procreate()  # Checks for birth for all animals
-                cell.migrate()  # Each animal moves
-                cell.aging()  # Updates age for all animals
-                cell.loss_of_weight()  # Each animal loses weight
-                cell.deaths()  # For each animal, we check if the animal dies
+                cell.annual_cycle()
+

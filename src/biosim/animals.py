@@ -35,6 +35,7 @@ class Animals:
         else:
             self.weight = weight
         self.fitness = self.calculate_fitness()
+        self.tried_to_move = False
 
     def calculate_weight(self):
         return np.random.normal(self.parameters['w_birth'],
@@ -153,7 +154,7 @@ class Animals:
         move = np.random.binomial(1, self.parameters['mu'] * self.fitness)
         return bool(move)
 
-    def migration(self, set_of_available_cells):
+    def migrate(self, relative_fodder_list):
         """
         Animal attempts to migrate to one of the nearby cells.
         The movement is determined by the fitness of the animal and the fodder
@@ -172,17 +173,28 @@ class Animals:
             The cell the animal choose to migrate to. False if the animal
             does not migrate.
         """
-        pass
-           # fodder_abundance = []
-            #for cell in set_of_available_cells:
-             #   e_k = cell.fodder / (
-              #              (nearby_same_species_animals + 1) * appetite)
-               # fodder_abundance.append(e_k)
+        self.tried_to_move = True
 
-           # else:
-            #    move = False
+        if check_move is True:
+            propensities = []
+            for cell in relative_fodder_list:
+                if cell[1].landscape_type == 'M' or 'O':
+                    propensities.append(float(0))
+                else:
+                    propensities.append(np.exp(self.parameters['lambda']) * cell[0])
+            probabilities = []
+            for propensity in propensities:
+                probabilities.append(propensity / sum(propensities))
 
-            #return move
+            probabilities = np.array(probabilities)
+            probabilities /= probabilities.sum()
+
+            chosen_cell_index = list(np.random.choice(len(probabilities), 1, p=probabilities))
+            chosen_cell = relative_fodder_list[chosen_cell_index[0]][1]
+
+            return chosen_cell
+        else:
+            pass
 
 
 class Herbivore(Animals):
@@ -194,17 +206,18 @@ class Herbivore(Animals):
         'w_birth': 8.0,
         'sigma_birth': 1.5,
         'beta': 0.9,
+        'eta': 0.05,
+        'a_half': 40.0,
         'phi_age': 0.2,
+        'w_half': 10.0,
         'phi_weight': 0.1,
         'mu': 0.25,
-        'a_half': 40.0,
-        'w_half': 10.0,
-        'omega': 0.4,
+        'lambda': 1.0,
         'gamma': 0.2,
         'zeta': 3.5,
         'xi': 1.2,
+        'omega': 0.4,
         'F': 10.0,
-        'eta': 0.05,
         'DeltaPhiMax': None
     }
 
@@ -249,17 +262,18 @@ class Carnivore(Animals):
         'w_birth': 6.0,
         'sigma_birth': 1.0,
         'beta': 0.75,
+        'eta': 0.125,
+        'a_half': 60.0,
         'phi_age': 0.4,
+        'w_half': 4.0,
         'phi_weight': 0.4,
         'mu': 0.4,
-        'a_half': 60.0,
-        'w_half': 4.0,
-        'omega': 0.9,
+        'lambda': 1.0,
         'gamma': 0.8,
         'zeta': 3.5,
         'xi': 1.1,
+        'omega': 0.9,
         'F': 50.0,
-        'eta': 0.125,
         'DeltaPhiMax': 10.0
     }
 

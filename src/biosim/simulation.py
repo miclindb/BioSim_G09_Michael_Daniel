@@ -55,53 +55,6 @@ class BioSim:
         self.seed = seed
         self.simulated_island = None
 
-
-        """
-        self.ini_pop = ini_pop
-        self.seed = seed
-
-        self.island_map = island_map.split('\n')
-
-        for n in range(len(self.island_map)):
-            self.island_map[n] = \
-                [character for character in self.island_map[n]]
-
-        self.landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle,
-                          'S': Savannah, 'D': Desert}
-
-        for y in range(len(self.island_map)):
-            for x in range(len(self.island_map[y])):
-                self.island_map[y][x] = self.landscape_dict[self.island_map[y][x]]()
-                self.island_map[y][x].coordinate = (y, x)
-
-        for y in range(len(self.island_map)):
-            for x in range(len(self.island_map[y])):
-                list_of_nearby_cells = []
-                if y != 0:
-                    cell_1 = self.island_map[y-1][x]
-                    list_of_nearby_cells.append(cell_1)
-                if x != 0:
-                    cell_2 = self.island_map[y][x-1]
-                    list_of_nearby_cells.append(cell_2)
-                if y != len(self.island_map)-1:
-                    cell_3 = self.island_map[y+1][x]
-                    list_of_nearby_cells.append(cell_3)
-                if x != len(self.island_map[y])-1:
-                    cell_4 = self.island_map[y][x+1]
-                    list_of_nearby_cells.append(cell_4)
-
-                self.island_map[y][x].nearby_cells = set(list_of_nearby_cells)
-
-        for population in self.ini_pop:
-            for animal in population['pop']:
-                if animal['species'] == 'Herbivore':
-                    self.island_map[population['loc'][0]][population['loc'][1]].population.append(
-                        Herbivore(age=animal['age'], weight=animal['weight']))
-                if animal['species'] == 'Carnivore':
-                    self.island_map[population['loc'][0]][population['loc'][1]].population.append(
-                        Carnivore(age=animal['age'], weight=animal['weight']))
-        """
-
     def set_animal_parameters(self, species, params):
         """
         Set parameters for animal species.
@@ -134,9 +87,10 @@ class BioSim:
         self.simulated_island = Island(self.island_map)
         self.simulated_island.map_constructor()
         self.simulated_island.adding_population(self.ini_pop)
+        self.simulated_island.generate_nearby_cells()
 
         for year in range(num_years):
-            self.simulated_island.annual_cycle()
+            self.simulated_island.island_cycle()
 
     def add_population(self, population):
         """
