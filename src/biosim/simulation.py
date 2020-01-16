@@ -50,10 +50,15 @@ class BioSim:
         img_base should contain a path and beginning of a file name.
         """
 
-        self.island_map = island_map
         self.ini_pop = ini_pop
         self.seed = np.random.seed(seed)
-        self.simulated_island = None
+        self.island_map = island_map
+        self.years_simulated = 0
+
+        self.simulated_island = Island(self.island_map)
+        self.simulated_island.map_constructor()
+        self.simulated_island.adding_population(self.ini_pop)
+        self.simulated_island.generate_nearby_cells()
 
     def set_animal_parameters(self, species, params):
         """
@@ -84,13 +89,9 @@ class BioSim:
         Image files will be numbered consecutively.
         """
 
-        self.simulated_island = Island(self.island_map)
-        self.simulated_island.map_constructor()
-        self.simulated_island.adding_population(self.ini_pop)
-        self.simulated_island.generate_nearby_cells()
-
         for year in range(num_years):
             self.simulated_island.island_cycle()
+            self.years_simulated += 1
 
     def add_population(self, population):
         """
@@ -102,18 +103,34 @@ class BioSim:
     @property
     def year(self):
         """Last year simulated."""
+        return self.years_simulated
 
     @property
     def num_animals(self):
         """Total number of animals on island."""
+        return len(self.simulated_island.total_population())
 
     @property
     def num_animals_per_species(self):
         """Number of animals per species in island, as dictionary."""
+        animals = self.simulated_island.total_population()
+        number_of_herbivores = sum(isinstance(animal, Herbivore) for animal in animals)
+        number_of_carnivores = sum(isinstance(animal, Carnivore) for animal in animals)
+        return {"Herbivore": number_of_herbivores,
+                "Carnivore": number_of_carnivores}
 
     @property
     def animal_distribution(self):
         """Pandas DataFrame with animal count per species for each cell on island."""
+        island = self.simulated_island.island_map()
+        df = pd.DataFrame(table)
+
+        for index, row in df.iterrows():
+            for cell in row:
+                cell = cell.population
+
+
+
 
     def make_movie(self):
         """Create MPEG4 movie from visualization images saved."""

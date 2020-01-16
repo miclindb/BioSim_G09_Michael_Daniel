@@ -11,8 +11,7 @@ class Island:
 
         self.island_map = island_map
 
-        self.landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle,
-                          'S': Savannah, 'D': Desert}
+        self.landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle, 'S': Savannah, 'D': Desert}
 
         self.map_population = []
 
@@ -25,9 +24,15 @@ class Island:
                 [character for character in self.island_map[n]]
 
         for y in range(len(self.island_map)):
+            if self.island_map[y][0] != 'O' and self.island_map[y][1] == 'O':
+                print(self.island_map[y][0], self.island_map[y][1])
+                raise ValueError('Bad boundary')
             for x in range(len(self.island_map[y])):
-                self.island_map[y][x] = self.landscape_dict[self.island_map[y][x]]()
-                self.island_map[y][x].coordinate = (y, x)
+                if self.island_map[y][x] not in self.landscape_dict.keys():
+                    raise ValueError('Landscape type does not exist')
+                else:
+                    self.island_map[y][x] = self.landscape_dict[self.island_map[y][x]]()
+                    self.island_map[y][x].coordinate = (y, x)
 
     def generate_nearby_cells(self):
         for y in range(len(self.island_map)):
@@ -60,6 +65,13 @@ class Island:
                 if animal['species'] == 'Carnivore':
                     self.island_map[animals['loc'][0]][animals['loc'][1]].population.append(
                         Carnivore(age=animal['age'], weight=animal['weight']))
+
+    def total_population(self):
+        total_population_list = []
+        for y in self.island_map:
+            for cell in y:
+                total_population_list += cell.population
+        return total_population_list
 
     def island_fodder_growth(self):
         for y in self.island_map:
