@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from src.biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
 from src.biosim import cell
 from src.biosim.animals import Herbivore, Carnivore
