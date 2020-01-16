@@ -126,9 +126,6 @@ class Cell:
         for migration in migrations:
             migration[1].population.append(migration[0])
 
-        for animal in self.population:
-            animal.has_moved = False
-
     def aging(self):
         for animal in self.population:
             animal.aging()

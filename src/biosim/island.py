@@ -79,6 +79,12 @@ class Island:
             for cell in y:
                 cell.migration()
 
+        for y in self.island_map:
+            for cell in y:
+                cell.migration()
+                for animal in cell.population:
+                    animal.has_moved = False
+
     def island_aging(self):
         for y in self.island_map:
             for cell in y:

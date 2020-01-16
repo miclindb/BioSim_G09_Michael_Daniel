@@ -52,7 +52,7 @@ class BioSim:
 
         self.island_map = island_map
         self.ini_pop = ini_pop
-        self.seed = seed
+        self.seed = np.random.seed(seed)
         self.simulated_island = None
 
     def set_animal_parameters(self, species, params):
@@ -145,14 +145,15 @@ if __name__ == '__main__':
             "loc": (10, 10),
             "pop": [
                 {"species": "Herbivore", "age": 5, "weight": 20}
-                for _ in range(400)
+                for _ in range(1000)
             ],
-        },
+        }]
+    ini_carns = [
         {
             "loc": (10, 10),
             "pop": [
                 {"species": "Carnivore", "age": 5, "weight": 20}
-                for _ in range(400)
+                for _ in range(40)
             ],
         }
     ]
