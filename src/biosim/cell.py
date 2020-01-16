@@ -61,6 +61,16 @@ class Cell:
 
         return relative_fodder_list
 
+    @property
+    def herbivores_in_cell(self):
+        herbivores = [animal for animal in self.population if isinstance(animal, Herbivore)]
+        return len(herbivores)
+
+    @property
+    def carnivores_in_cell(self):
+        carnivores = [animal for animal in self.population if isinstance(animal, Carnivore)]
+        return len(carnivores)
+
     def feeding(self):
         sorted_herbivores = self.sort_population([animal for animal in self.population if isinstance(animal, Herbivore)])
         sorted_carnivores = self.sort_population([animal for animal in self.population if isinstance(animal, Carnivore)])

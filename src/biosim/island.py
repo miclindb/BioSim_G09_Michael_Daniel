@@ -13,8 +13,6 @@ class Island:
 
         self.landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle, 'S': Savannah, 'D': Desert}
 
-        self.map_population = []
-
     def map_constructor(self):
 
         self.island_map = self.island_map.split('\n')
@@ -24,9 +22,14 @@ class Island:
                 [character for character in self.island_map[n]]
 
         for y in range(len(self.island_map)):
+            iteration = iter(self.island_map)
+            length = len(next(iteration))
+            if not all(len(list) == length for list in iteration):
+                raise ValueError('Inconsistent line length')
             if self.island_map[y][0] != 'O' and self.island_map[y][1] == 'O':
                 print(self.island_map[y][0], self.island_map[y][1])
                 raise ValueError('Bad boundary')
+
             for x in range(len(self.island_map[y])):
                 if self.island_map[y][x] not in self.landscape_dict.keys():
                     raise ValueError('Landscape type does not exist')
@@ -54,10 +57,10 @@ class Island:
                 self.island_map[y][x].nearby_cells = list_of_nearby_cells
 
     def adding_population(self, population):
-        for animals in population:
-            self.map_population.append(animals)
+        #for animals in population:
+         #   self.map_population.append(animals)
 
-        for animals in self.map_population:
+        for animals in population:
             for animal in animals['pop']:
                 if animal['species'] == 'Herbivore':
                     self.island_map[animals['loc'][0]][animals['loc'][1]].population.append(

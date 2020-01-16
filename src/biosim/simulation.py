@@ -60,23 +60,40 @@ class BioSim:
         self.simulated_island.adding_population(self.ini_pop)
         self.simulated_island.generate_nearby_cells()
 
-    def set_animal_parameters(self, species, params):
+    @staticmethod
+    def set_animal_parameters(species, params):
         """
         Set parameters for animal species.
 
         :param species: String, name of animal species
         :param params: Dict with valid parameter specification for species
         """
-        pass
 
-    def set_landscape_parameters(self, landscape, params):
+        if species == 'Herbivore':
+            for parameter in params:
+                Herbivore.parameters[parameter] = params[parameter]
+        elif species == 'Carnivore':
+            for parameter in params:
+                Carnivore.parameters[parameter] = params[parameter]
+        else:
+            raise ValueError
+
+    @staticmethod
+    def set_landscape_parameters(landscape, params):
         """
         Set parameters for landscape type.
 
         :param landscape: String, code letter for landscape
         :param params: Dict with valid parameter specification for landscape
         """
-        pass
+        if landscape == 'J':
+            for parameter in params:
+                Jungle.parameters[parameter] = params[parameter]
+        elif landscape == 'S':
+            for parameter in params:
+                Savannah.parameters[parameter] = params[parameter]
+        else:
+            raise ValueError
 
     def simulate(self, num_years, vis_years=1, img_years=None):
         """
@@ -100,6 +117,8 @@ class BioSim:
         :param population: List of dictionaries specifying population
         """
 
+        self.simulated_island.adding_population(population)
+
     @property
     def year(self):
         """Last year simulated."""
@@ -122,15 +141,22 @@ class BioSim:
     @property
     def animal_distribution(self):
         """Pandas DataFrame with animal count per species for each cell on island."""
-        island = self.simulated_island.island_map()
-        df = pd.DataFrame(table)
 
-        for index, row in df.iterrows():
+        island = self.simulated_island.island_map
+
+        data = []
+
+        for row in island:
             for cell in row:
-                cell = cell.population
+                n_herbivores = cell.herbivores_in_cell
+                n_carnivores = cell.carnivores_in_cell
 
+                data.append([cell.coordinate[0], cell.coordinate[1], n_herbivores, n_carnivores])
 
+        df = pd.DataFrame(data)
+        df.columns = (["Row", "Col", "Herbivore", "Carnivore"])
 
+        return df
 
     def make_movie(self):
         """Create MPEG4 movie from visualization images saved."""
