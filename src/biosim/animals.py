@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
+Animals Module
 """
 
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
