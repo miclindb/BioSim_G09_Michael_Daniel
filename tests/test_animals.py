@@ -27,7 +27,6 @@ class TestAnimals:
         self.carn = Carnivore()
         self.herb_parameters = Herbivore.parameters
         self.carn_parameters = Carnivore.parameters
-        
     """
 
     def test_herbivore_default_class_initializer(self):
@@ -105,9 +104,6 @@ class TestAnimals:
         """
         Tests that the animal's weight is correctly reduced and that its
         fitness is updated.
-
-        NB: Should Test that the parameter 'eta' correctly contributes to
-        amount of weight loss.
         """
         herb = Herbivore(age=2, weight=10)
         herb.loss_of_weight()
@@ -193,6 +189,7 @@ class TestAnimals:
         -------
         This is not done!!!
         """
+        pass
         alpha = 0.05
         herbs = [Herbivore() for _ in range(500)]
         data = []
@@ -202,6 +199,39 @@ class TestAnimals:
         expected_distribution = stats.binom_test(x=2, n=500, p=0.02)
         assert p_value > alpha
 
+    def test_weight_check_for_pregnancy(self):
+        """
+        Tests that the weight check is passed whenever the weight of the animal
+        is above the set threshold.
+        """
+        herb_1 = Herbivore(weight=40)
+        herb_2 = Herbivore(weight=10)
+        carn_1 = Carnivore(weight=25)
+        carn_2 = Carnivore(weight=8)
+        assert herb_1.weight >= herb_1.weight_check_for_pregnancy()
+        assert herb_2.weight < herb_2.weight_check_for_pregnancy()
+        assert carn_1.weight >= carn_1.weight_check_for_pregnancy()
+        assert carn_2.weight < carn_2.weight_check_for_pregnancy()
+
+    def test_probability_of_birth(self):
+        """
+        Tests that the probability of birth returns correctly.
+        Statistical tests?
+        """
+        pass
+        herb = Herbivore()
+        carn = Carnivore()
+
+    def test_adjust_weight_after_birth(self):
+        """
+        Tests that the weight of the mother is correctly updated after method
+        is called.
+        """
+        herb = Herbivore(weight=40)
+        new_born = Herbivore(weight=6)
+        herb.adjust_weight_after_birth(new_born)
+        assert herb.weight == 32.8
+
     def test_gives_birth_returns_none(self):
         """
         Tests that gives_birth passes if a baby is not successfully born.
@@ -209,23 +239,18 @@ class TestAnimals:
         baby animal.
         """
         herbivore = Herbivore(weight=3)
-        assert herbivore.weight < herbivore.parameters['zeta'] * \
-               (herbivore.parameters['w_birth'] + herbivore.parameters[
-                   'sigma_birth'])
+        assert herbivore.weight < herbivore.weight_check_for_pregnancy()
         assert herbivore.gives_birth(n=2) is None
 
     def test_gives_birth_returns_newborn(self):
         """
         Tests that gives_birth returns a new object of correct species when a
         baby is successfully born.
-
-        Need statistical test.
         """
-        herbivore = Herbivore(weight=20)
-        assert herbivore.weight >= herbivore.parameters['zeta'] * \
-               (herbivore.parameters['w_birth'] + herbivore.parameters[
-                   'sigma_birth'])
-        assert herbivore.gives_birth(n=2) is type(Herbivore)
+        herbivore = Herbivore(weight=50)
+        assert herbivore.weight >= herbivore.weight_check_for_pregnancy()
+        new_born = herbivore.gives_birth(n=500)
+        assert isinstance(new_born, Herbivore)
 
     def test_check_move_return(self):
         """
@@ -245,25 +270,39 @@ class TestAnimals:
     def test_migrate_returns_none_for_invalid_cells(self):
         """
         Tests that 'migrate' returns None whenever the animal attempts to move
-        to a invalid cell. The Herbivore's fitness is set to four so that it
-        always passes the 'check_move' check.
+        to a invalid cell, and that its status 'has_moved' is changed to
+        'True'. The Herbivore's fitness is set to four so that it always passes
+        the 'check_move' check.
+
+        relative_fodder_list is a list of tuple containing amount of fodder and
+        corresponding cell object.
         """
         relative_fodder_list = [(0, Ocean()), (0, Mountain())]
         herb = Herbivore()
         herb.get_fitness = 4
+        assert herb.has_moved is False
+        chosen_cell = herb.migrate(relative_fodder_list)
         assert bool(herb.check_move()) is True
-        assert herb.migrate(relative_fodder_list) is None
+        assert chosen_cell is None
+        assert herb.has_moved is False
 
     def test_migrate_to_valid_cell(self):
         """
-        Tests that the animal will migrate to a valid cell. The Herbivore's
-        fitness is set to four so that it always passes the 'check_move' check.
+        Tests that the animal will migrate to a valid cell, and that its status
+        'has_moved' is changed to 'True'. The Herbivore's fitness is set to
+        four so that it always passes the 'check_move' check.
+
+        relative_fodder_list is a list of tuple containing amount of fodder and
+        corresponding cell object.
         """
         relative_fodder_list = [(50, Jungle()), (0, Ocean()), (0, Mountain())]
         herb = Herbivore()
         herb.get_fitness = 4
+        assert herb.has_moved is False
+        chosen_cell = herb.migrate(relative_fodder_list)
         assert bool(herb.check_move()) is True
-        assert isinstance(herb.migrate(relative_fodder_list), Jungle)
+        assert isinstance(chosen_cell, Jungle)
+        assert herb.has_moved is True
 
     def test_herbivore_feeding_max_fodder(self):
         """
@@ -286,6 +325,27 @@ class TestAnimals:
         eaten = herbivore.feed(cell_fodder)
         assert eaten == 2
         assert herbivore.weight == 3.8
+
+    def test_fitness_greater_than_prey(self):
+        """
+        Tests that the method returns expected bool. If the fitness of the
+        carnivore is greater than the fitness of the herbivore, and not greater
+        than 'DeltaPhiMax', the method returns 'True'.
+        """
+        carn = Carnivore(weight=8)
+        carn.parameters['DeltaPhiMax'] = 10.0
+        herb = Herbivore(weight=100)
+        assert carn.fitness > herb.fitness
+        assert bool(carn.fitness_greater_than_prey(herb)) is True
+
+    def test_chance_of_kill_check(self):
+        """
+        Tests that 'chance_of_kill' returns an expected value.
+        """
+        carn = Carnivore(weight=8)
+        carn.parameters['DeltaPhiMax'] = 10.0
+        herb = Herbivore(weight=100)
+        assert carn.chance_of_kill(herb) == approx(0.01678582)
 
     def test_kill_one_herbivore(self):
         """
@@ -318,11 +378,9 @@ class TestAnimals:
     def test_kill_stops_at_eaten_is_f(self):
         """
         Tests that the carnivore stops eating.
-
-
         How can this be done?
         """
         carn = Carnivore(age=2, weight=8)
-        nearby_herbs = [Herbivore(weight=2) for herbivore in range(10)]
+        nearby_herbs = [Herbivore(weight=2) for _ in range(10)]
         killed = carn.kill(nearby_herbs)
         assert len(killed) == 2

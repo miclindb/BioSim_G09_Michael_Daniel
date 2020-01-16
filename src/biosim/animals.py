@@ -86,13 +86,24 @@ class Animals:
         return eaten * self.parameters['beta']
 
     def calculate_fitness(self):
+        """
+        Calculates the fitness of an animal.
+
+        Returns
+        -------
+        float:
+            Fitness of the animal
+        """
         return (1 / (1 + np.exp(
             self.parameters['phi_age'] * (
-                    self.age - self.parameters['a_half'])))) * (
-                       1 / (1 + np.exp(self.parameters['phi_weight'] * (
-                       self.weight - self.parameters['w_half']))))
+                    self.age - self.parameters['a_half'])))) * \
+               (1 / (1 + np.exp(self.parameters['phi_weight'] *
+                                (self.weight - self.parameters['w_half']))))
 
     def update_fitness(self):
+        """
+        Updates the fitness of an animal.
+        """
         self.fitness = self.calculate_fitness()
 
     # These are currently only used for tests.
@@ -118,10 +129,52 @@ class Animals:
 
         if self.fitness == 0:
             return True
-        elif bool(np.random.binomial(1, self.parameters['omega'] * (1 - self.fitness))) is True:
+        elif bool(np.random.binomial(1, self.parameters['omega'] * (
+                1 - self.fitness))) is True:
             return True
         else:
             return False
+
+    @classmethod
+    def weight_check_for_pregnancy(cls):
+        """
+        Checks whether the animal's weight is above a threshold. This is
+        required for the animal to potentially get pregnant.
+
+        Returns
+        -------
+        float:
+            Threshold value for pregnancy.
+        """
+        return cls.parameters['zeta'] * \
+               (cls.parameters['w_birth'] + cls.parameters['sigma_birth'])
+
+    def probability_birth(self, n):
+        """
+        Calculates the probability of birth.
+
+        Parameters
+        ----------
+        n: int
+            Nearby same species animals
+
+        Returns
+        -------
+        float
+            Probability of birth
+        """
+        return min(1, self.parameters['gamma'] * self.fitness * (n - 1))
+
+    def adjust_weight_after_birth(self, new_born_animal):
+        """
+        Updates the weight of the mother after a baby is born.
+
+        Parameters
+        ----------
+        new_born_animal: Class object
+            New born baby
+        """
+        self.weight -= self.parameters['xi'] * new_born_animal.weight
 
     def gives_birth(self, n):
         """
@@ -136,8 +189,6 @@ class Animals:
 
         Parameters
         ----------
-        animal_object: class object
-            The animal that has a chance to become pregnant.
         n: int
             Number of same species animals in the same cell.
 
@@ -149,23 +200,29 @@ class Animals:
             Newborn animal.
         """
 
-        if self.weight < self.parameters['zeta'] * \
-                (self.parameters['w_birth'] + self.parameters['sigma_birth']):
-            pass
-        else:
-            prob_birth = min(1,
-                             self.parameters['gamma'] * self.fitness * (n - 1))
-            if bool(np.random.binomial(1, prob_birth)) is True:
-                if self.__class__.__name__ == 'Herbivore':
+        if self.weight >= self.weight_check_for_pregnancy():
+            if bool(np.random.binomial(1, self.probability_birth(n))) is True:
+                if isinstance(self, Herbivore):
                     new_born_animal = Herbivore()
                 else:
                     new_born_animal = Carnivore()
-                self.weight -= self.parameters['xi'] * new_born_animal.weight
+                self.adjust_weight_after_birth(new_born_animal)
                 return new_born_animal
             else:
                 pass
+        else:
+            pass
 
     def check_move(self):
+        """
+        Checks if an animal moves. This is checked every time an animal
+        attempts to migrate.
+
+        Returns
+        -------
+        bool:
+            'True' if the check is passed, 'False' otherwise.
+        """
         move = np.random.binomial(1, self.parameters['mu'] * self.fitness)
         return bool(move)
 
@@ -183,8 +240,7 @@ class Animals:
         relative_fodder_list: List
             A list of up to four nearby available cells. The list can contain
             any cells with invalid landscape types. (i.e. landscape that cannot
-            be traversed such as mountain or ocean or cells outside of map
-            boundary).
+            be traversed such as mountain or ocean).
 
         Returns
         -------
@@ -200,7 +256,8 @@ class Animals:
                 elif cell[1].landscape_type == 'O':
                     propensities.append(float(0))
                 else:
-                    propensities.append(np.exp(self.parameters['lambda']) * cell[0])
+                    propensities.append(
+                        np.exp(self.parameters['lambda']) * cell[0])
             probabilities = []
 
             if sum(propensities) == 0:
@@ -212,7 +269,9 @@ class Animals:
             probabilities = np.array(probabilities)
             probabilities /= probabilities.sum()
 
-            chosen_cell_index = list(np.random.choice(len(probabilities), 1, p=probabilities))[0]
+            chosen_cell_index = \
+                list(np.random.choice(len(probabilities), 1, p=probabilities))[
+                    0]
             chosen_cell = relative_fodder_list[chosen_cell_index][1]
 
             self.has_moved = True
@@ -306,6 +365,41 @@ class Carnivore(Animals):
     def __init__(self, age=0, weight=None):
         super(Carnivore, self).__init__(age, weight)
 
+    def fitness_greater_than_prey(self, prey):
+        """
+        Checks if carnivore's fitness is greater than the herbivore's fitness,
+        and not greater than a threshold.
+
+        Parameters
+        ----------
+        prey: Class object
+            The animal the carnivore is trying to kill.
+
+        Returns
+        -------
+        bool:
+            'True' if the carnivore's fitness is greater than the herbivore's,
+            and not greater than 'DeltaPhiMax' threshold. 'False' otherwise.
+
+        """
+        return 0 < self.fitness - prey.fitness <= self.parameters['DeltaPhiMax']
+
+    def chance_of_kill(self, prey):
+        """
+        The chance the carnivore has to kill its prey.
+
+        Parameters
+        ----------
+        prey: Class object
+            The animal the carnivore is trying to kill.
+
+        Returns
+        -------
+        float:
+            Probability of killing prey.
+        """
+        return (self.fitness - prey.fitness) / self.parameters['DeltaPhiMax']
+
     def kill(self, nearby_herbivores):
         """
         Carnivore attempts to kill a nearby herbivore. If the carnivore
@@ -326,19 +420,18 @@ class Carnivore(Animals):
             List containing all herbivore objects that was killed by the
             carnivore.
         """
-        kill_attempt = 0
+        kill_attempts = 0
         eaten = 0
         killed_herbivores = []
+        number_of_nearby_herbivores = len(nearby_herbivores)
 
         for herbivore in nearby_herbivores:
             if eaten < self.parameters['F'] and \
-                    kill_attempt <= len(nearby_herbivores):
+                    kill_attempts <= number_of_nearby_herbivores:
                 if self.fitness <= herbivore.fitness:
                     chance = 0
-                elif 0 < self.fitness - herbivore.fitness <= \
-                        self.parameters['DeltaPhiMax']:
-                    chance = (self.fitness - herbivore.fitness) / \
-                             self.parameters['DeltaPhiMax']
+                elif self.fitness_greater_than_prey(herbivore):
+                    chance = self.chance_of_kill(herbivore)
                 else:
                     chance = 1
 
@@ -348,7 +441,6 @@ class Carnivore(Animals):
                     eaten += herbivore.weight
                     killed_herbivores.append(herbivore)
 
-                kill_attempt += 1
+                kill_attempts += 1
 
         return killed_herbivores
-
