@@ -26,8 +26,7 @@ class Animals:
             Age of the animal. Default value is 0
         weight: float
             Weight of the animal. If no value is specified, the weight assigned
-            is drawn from a gaussian distribution. Calculated in class method
-            'calculate_weight'.
+            is calculated in class method 'calculate_weight'.
         """
         self.age = age
         if weight is None:
@@ -37,29 +36,38 @@ class Animals:
         self.fitness = self.calculate_fitness()
         self.has_moved = False
 
-    def calculate_weight(self):
-        return np.random.normal(self.parameters['w_birth'],
-                                self.parameters['sigma_birth'])
-
     def aging(self):
+        """
+        Increases the age of the animal by one year and updates its fitness.
+        """
         self.age += 1
         self.update_fitness()
 
+    def calculate_weight(self):
+        """
+        Calculates the weight of animals. This is used whenever the class
+        initializer for the animals did not receive any specified weight input.
+
+        Weight is drawn from a normal distribution.
+
+        Returns
+        -------
+        float:
+            Weight of the animal.
+
+        """
+        return np.random.normal(self.parameters['w_birth'],
+                                self.parameters['sigma_birth'])
+
     def loss_of_weight(self):
+        """
+        Calculates the amount of weight an animal loses every year, and updates
+        the animals weight and fitness.
+        """
         self.weight -= self.weight * self.parameters['eta']
         self.update_fitness()
 
-    def calculate_fitness(self):
-        return (1 / (1 + np.exp(
-            self.parameters['phi_age'] * (
-                    self.age - self.parameters['a_half'])))) * (
-                       1 / (1 + np.exp(self.parameters['phi_weight'] * (
-                       self.weight - self.parameters['w_half']))))
-
-    def update_fitness(self):
-        self.fitness = self.calculate_fitness()
-
-    def update_weight(self, eaten):
+    def weight_gain(self, eaten):
         """
         Weight update after feeding. Currently used for herbivore feeding and
         carnivore killing.
@@ -71,11 +79,21 @@ class Animals:
 
         Returns
         -------
-        float
+        float:
             Weight adjustment.
 
         """
         return eaten * self.parameters['beta']
+
+    def calculate_fitness(self):
+        return (1 / (1 + np.exp(
+            self.parameters['phi_age'] * (
+                    self.age - self.parameters['a_half'])))) * (
+                       1 / (1 + np.exp(self.parameters['phi_weight'] * (
+                       self.weight - self.parameters['w_half']))))
+
+    def update_fitness(self):
+        self.fitness = self.calculate_fitness()
 
     # These are currently only used for tests.
     @property
@@ -157,18 +175,21 @@ class Animals:
         The movement is determined by the fitness of the animal and the fodder
         in the nearby cells.
 
+        The animal migrates only once per year, and the animal moved status is
+        updated to 'has_moved' after it has attempted to migrate.
+
         Parameters
         ----------
-        set_of_available_cells: Set
-            A set of four nearby available cells. The set can contain any cells
-            with invalid landscape types. (i.e. landscape that cannot be
-            traversed such as mountain or ocean).
+        relative_fodder_list: List
+            A list of up to four nearby available cells. The list can contain
+            any cells with invalid landscape types. (i.e. landscape that cannot
+            be traversed such as mountain or ocean or cells outside of map
+            boundary).
 
         Returns
         -------
-        move: something
-            The cell the animal choose to migrate to. False if the animal
-            does not migrate.
+        chosen_cell: Cell object
+            The cell the animal choose to migrate to.
         """
 
         if self.check_move() is True:
@@ -250,11 +271,11 @@ class Herbivore(Animals):
         eaten = self.parameters['F']
         if cell_fodder_info < eaten:
             eaten = cell_fodder_info
-            self.weight += self.update_weight(eaten)
+            self.weight += self.weight_gain(eaten)
             self.update_fitness()
             return eaten
         else:
-            self.weight += self.update_weight(eaten)
+            self.weight += self.weight_gain(eaten)
             self.update_fitness()
             return eaten
 
@@ -322,11 +343,10 @@ class Carnivore(Animals):
                     chance = 1
 
                 if bool(np.random.binomial(1, chance)) is True:
-                    self.weight += self.update_weight(herbivore.weight)
+                    self.weight += self.weight_gain(herbivore.weight)
                     self.update_fitness()
                     eaten += herbivore.weight
                     killed_herbivores.append(herbivore)
-                    self.get_fitness = 11
 
                 kill_attempt += 1
 
