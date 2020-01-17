@@ -6,12 +6,15 @@
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
-from src.biosim.animals import Herbivore, Carnivore
+import matplotlib.pyplot as plt
 import textwrap
 import pandas as pd
+import numpy as np
+
+from src.biosim.animals import Herbivore, Carnivore
 from src.biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
 from src.biosim import cell
-import numpy as np
+
 from src.biosim.island import Island
 
 
@@ -50,15 +53,22 @@ class BioSim:
         img_base should contain a path and beginning of a file name.
         """
 
+        self.island_map = island_map
         self.ini_pop = ini_pop
         self.seed = np.random.seed(seed)
-        self.island_map = island_map
+        self.ymax_animals = ymax_animals
+        self.cmax_animals = cmax_animals
+        self.image_base = img_base
+        self.image_format = img_fmt
+
         self.years_simulated = 0
 
         self.simulated_island = Island(self.island_map)
         self.simulated_island.map_constructor()
         self.simulated_island.adding_population(self.ini_pop)
         self.simulated_island.generate_nearby_cells()
+
+        self.figure = plt.figure()
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -106,9 +116,27 @@ class BioSim:
         Image files will be numbered consecutively.
         """
 
+        self.graphics_setup(num_years)
+
         for year in range(num_years):
             self.simulated_island.island_cycle()
             self.years_simulated += 1
+
+            self.graphics_update()
+
+        self.save_graphics()
+
+    def graphics_setup(self, num_years):
+        self.map_axis = self.figure.add_subplot(2, 2, 1)
+        self.map_axis.set_xlim(0, num_years)
+        self.map_axis.plot(0, len(self.simulated_island.total_population()))
+
+    def graphics_update(self):
+        self.map_axis.plot(self.years_simulated, len(self.simulated_island.total_population()))
+
+
+    def save_graphics(self):
+        plt.savefig('test.png')
 
     def add_population(self, population):
         """
@@ -166,6 +194,8 @@ if __name__ == '__main__':
     # Simulation with Herbivores and one single landscape cell,
     # a jungle cell in this case.
 
+    #plt.ion()
+
     geogr = """\
                OOOOOOOOOOOOOOOOOOOOO
                OOOOOOOOSMMMMJJJJJJJO
@@ -218,15 +248,12 @@ if __name__ == '__main__':
 
     sim.simulate(num_years=10, vis_years=1, img_years=2000)
 
-    #sim.add_population(population=ini_carns)
-    #sim.simulate(num_years=100, vis_years=1, img_years=2000)
+    sim.add_population(population=ini_carns)
+    sim.simulate(num_years=10, vis_years=1, img_years=2000)
 
     #plt.savefig("check_sim.pdf")
 
     #input("Press ENTER")
 
-    # This simulation runs fine now, just run the whole file and edit this
-    # main block for testing.
-    # Be careful with deleting and index changing in loops.
     # randvis_project for plotting
 
