@@ -95,11 +95,14 @@ class Animals:
         float:
             Fitness of the animal
         """
-        return (1 / (1 + np.exp(
-            self.parameters['phi_age'] * (
-                    self.age - self.parameters['a_half'])))) * \
-               (1 / (1 + np.exp(self.parameters['phi_weight'] *
-                                (self.weight - self.parameters['w_half']))))
+        if self.weight <= 0:
+            return 0
+        else:
+            return (1 / (1 + np.exp(
+                self.parameters['phi_age'] * (
+                        self.age - self.parameters['a_half'])))) * \
+                   (1 / (1 + np.exp(-(self.parameters['phi_weight'] *
+                                    (self.weight - self.parameters['w_half'])))))
 
     def update_fitness(self):
         """

@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+"""
+Island module
+"""
+
+__author__ = "Michael Lindberg, Daniel Milliam Müller"
+__email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
+
 from src.biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
 from src.biosim import cell
 from src.biosim.animals import Herbivore, Carnivore
@@ -11,7 +18,11 @@ class Island:
 
         self.island_map = island_map
 
-        self.landscape_dict = {'M': Mountain, 'O': Ocean, 'J': Jungle, 'S': Savannah, 'D': Desert}
+        self.landscape_dict = {'M': Mountain,
+                               'O': Ocean,
+                               'J': Jungle,
+                               'S': Savannah,
+                               'D': Desert}
 
     def map_constructor(self):
 
@@ -57,8 +68,6 @@ class Island:
                 self.island_map[y][x].nearby_cells = list_of_nearby_cells
 
     def adding_population(self, population):
-        #for animals in population:
-         #   self.map_population.append(animals)
 
         for animals in population:
             for animal in animals['pop']:
