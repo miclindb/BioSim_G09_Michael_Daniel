@@ -68,7 +68,10 @@ class BioSim:
         self.simulated_island.adding_population(self.ini_pop)
         self.simulated_island.generate_nearby_cells()
 
-        self.figure = plt.figure()
+        self.figure = None
+        self.map_axis = None
+        self.mean_axis = None
+        self.mean_line = None
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -127,11 +130,21 @@ class BioSim:
         self.save_graphics()
 
     def graphics_setup(self, num_years):
-        self.map_axis = self.figure.add_subplot(2, 2, 1)
-        self.map_axis.set_xlim(0, num_years)
-        self.map_axis.plot(0, len(self.simulated_island.total_population()))
+        self.figure = plt.figure()
+
+        self.map_axis = self.figure.add_subplot(1, 2, 1)
+
+        self.mean_axis = self.figure.add_subplot(1, 2, 2)
+        #self.mean_axis.set_ylim()
+
+        self.mean_axis.set_xlim(0, num_years)
+
+        mean_plot = self.mean_axis.plot(0, num_years)
+        self.mean_line = mean_plot[0]
 
     def graphics_update(self):
+
+
         self.map_axis.plot(self.years_simulated, len(self.simulated_island.total_population()))
 
 
@@ -257,3 +270,10 @@ if __name__ == '__main__':
 
     # randvis_project for plotting
 
+    # group lasso , sphinx, API Reference
+
+    # do tox coverage, profiling
+
+    # fixture, mocking, parameterize
+
+    # profiling: %% prun
