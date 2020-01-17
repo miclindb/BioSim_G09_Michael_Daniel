@@ -39,7 +39,7 @@ class Cell:
 
     @staticmethod
     def calculate_relative_fodder(fodder, animal_species, number_of_same_species):
-        return fodder / ((number_of_same_species+1) * animal_species.parameters['F'])
+        return fodder / ((number_of_same_species + 1) * animal_species.parameters['F'])
 
     def nearby_relative_fodder(self, animal):
         relative_fodder_list = []
@@ -213,7 +213,7 @@ class Savannah(Cell):
 class Desert(Cell):
     """
     Cell subclass for all desert landscape types.
-    Desert landscape can be traversed and contains no food.
+    Desert landscape can be traversed and contains no fodder.
     """
 
     def __init__(self):

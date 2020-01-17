@@ -3,6 +3,113 @@
 A test for cell.py
 """
 from src.biosim.cell import Cell, Ocean, Mountain, Jungle, Savannah, Desert
+from src.biosim.animals import Carnivore, Herbivore
+
+
+class TestCell:
+
+    def test_sort_population(self):
+        """
+        Test that the sort_population static method sorts correctly based on
+        the fitness of the animals. The first animal of the list shall have the
+        highest fitness.
+        """
+        cell = Ocean()
+        population = [Carnivore(age=10, weight=20),
+                      Herbivore(age=5, weight=20),
+                      Herbivore(age=10, weight=40),
+                      Herbivore(age=3, weight=10)]
+
+        sorted_from_fitness = cell.sort_population(population)
+
+        assert sorted_from_fitness[0].fitness > sorted_from_fitness[1].fitness
+
+    def test_calculate_relative_fodder(self):
+        """
+        Test that the calculate_relative_fodder static method calculates and
+        returns the correct value for relative fodder.
+        """
+        cell = Jungle()
+        relative_fodder = cell.calculate_relative_fodder(700, Herbivore, 100)
+
+        assert relative_fodder == (70/101)
+
+    def test_nearby_relative_fodder(self):
+        """
+        Test that the nearby_relative_fodder method returns a list of tuples
+        with correct values for relative_fodder in nearby_cells.
+        """
+        cell = Jungle()
+        cell.population = [Herbivore()]
+        animal = cell.population[0]
+
+        nearby_1 = Ocean()
+        nearby_2 = Jungle()
+        nearby_3 = Jungle()
+        nearby_4 = Savannah()
+
+        nearby_2.population = [Herbivore() for i in range(10)]
+        nearby_4.population = [Herbivore() for i in range(20)]
+
+        cell.nearby_cells = [nearby_1, nearby_2, nearby_3, nearby_4]
+
+        relative_fodder_list = cell.nearby_relative_fodder(animal)
+
+        assert relative_fodder_list == [(0.0, nearby_1),
+                                        (float(80/11), nearby_2),
+                                        (80.0, nearby_3),
+                                        (float(10/7), nearby_4)]
+
+    def test_herbivores_in_cell(self):
+        """
+        Test if herbivores_in_cell property returns the correct value for
+        the number of herbivores in the cell.
+        """
+        cell = Savannah()
+        cell.population = [Carnivore(), Carnivore(), Herbivore(), Herbivore(),
+                           Herbivore(), Herbivore()]
+
+        assert cell.herbivores_in_cell == 4
+
+    def test_carnivores_in_cell(self):
+        """
+        Test if carnivores_in_cell property returns the correct value for
+        the number of carnivores in the cell.
+        """
+        cell = Desert()
+        cell.population = [Carnivore(), Carnivore(), Herbivore(), Herbivore(),
+                           Herbivore(), Herbivore()]
+
+        assert cell.carnivores_in_cell == 2
+
+    def test_feeding_population_update(self):
+        """
+        Test if the feeding method updates the population correctly if at least
+        one herbivore is eaten.
+        """
+        cell = Jungle()
+        carnivore = Carnivore()
+        carnivore.get_fitness = 11
+
+        cell.population = [Herbivore(), Herbivore(), Herbivore(), carnivore]
+        cell.feeding()
+
+        assert cell.herbivores_in_cell < 3
+
+    def test_feeding_fodder_update(self):
+        """
+        Test that the fodder in the cell is updated correctly after one
+        feeding.
+        """
+        cell = Jungle()
+        cell.fodder = 500
+
+        cell.population = [Herbivore() for i in range(10)]
+        Herbivore.parameters['F'] = 20
+
+        cell.feeding()
+
+        assert cell.fodder == 500 - 10 * 20
 
 
 def test_fodder_cell():
