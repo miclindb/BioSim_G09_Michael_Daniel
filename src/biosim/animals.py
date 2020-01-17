@@ -103,6 +103,7 @@ class Animals:
                         self.age - self.parameters['a_half'])))) * \
                    (1 / (1 + np.exp(-(self.parameters['phi_weight'] *
                                     (self.weight - self.parameters['w_half'])))))
+        # MATH?
 
     def update_fitness(self):
         """
