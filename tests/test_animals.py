@@ -9,79 +9,69 @@ __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
 from src.biosim.animals import Herbivore, Carnivore
 from src.biosim.cell import Ocean, Mountain, Desert, Jungle, Savannah
+import pytest
 from pytest import approx
 from scipy import stats
 
-"""
 
 class TestAnimals:
-@pytest.fixture(autouse=True)
-def animals_for_tests(self):
-    self.herb = Herbivore()
-    self.carn = Carnivore()
-    
-"""
+    alpha = 0.05
 
-
-class TestAnimals:
-    """
-    def __init__(self):
-        self.herb = Herbivore()
-        self.carn = Carnivore()
-        self.herb_parameters = Herbivore.parameters
-        self.carn_parameters = Carnivore.parameters
-    """
+    @pytest.fixture(autouse=True)
+    def create_animals(self):
+        """
+        Setup for further animal tests.
+        """
+        self.herbivore = Herbivore(age=2, weight=10)
+        self.carnivore = Carnivore(age=2, weight=10)
+        self.new_herbivore = Herbivore()
+        self.new_carnivore = Carnivore()
 
     def test_herbivore_default_class_initializer(self):
         """
         Tests that the class initializer for herbivore runs and uses default
         values when no inputs are provided
         """
-        herb = Herbivore()
-        assert herb.age == 0
-        assert isinstance(herb.age, int)
-        assert herb.weight > 0
-        assert isinstance(herb.weight, float)
+        assert self.new_herbivore.age == 0
+        assert isinstance(self.new_herbivore.age, int)
+        assert self.new_herbivore.weight > 0
+        assert isinstance(self.new_herbivore.weight, float)
 
     def test_carnivore_default_class_initializer(self):
         """
         Tests that the class initializer for carnivore runs and uses default
         values when no inputs are provided
         """
-        carnivore = Carnivore()
-        assert carnivore.age == 0
-        assert isinstance(carnivore.age, int)
-        assert carnivore.weight > 0
-        assert isinstance(carnivore.weight, float)
+        assert self.new_carnivore.age == 0
+        assert isinstance(self.new_carnivore.age, int)
+        assert self.new_carnivore.weight > 0
+        assert isinstance(self.new_carnivore.weight, float)
 
     def test_herbivore_manual_input(self):
         """
         Tests that the class initializer for herbivore runs and uses inputs
         provided.
         """
-        herbivore = Herbivore(10, 8)
-        assert herbivore.age == 10
-        assert herbivore.weight == 8
+        assert self.herbivore.age == 2
+        assert self.herbivore.weight == 10
 
     def test_carnivore_manual_input(self):
         """
         Tests that the class initializer for herbivore runs and uses inputs
         provided.
         """
-        carnivore = Herbivore(10, 8)
-        assert carnivore.age == 10
-        assert carnivore.weight == 8
+        assert self.carnivore.age == 2
+        assert self.carnivore.weight == 10
 
     def test_aging_method(self):
         """
         Tests that the 'aging' method successfully increases an animal's age
         by one year and updates its fitness.
         """
-        herbivore = Herbivore(age=5)
-        fit = herbivore.fitness
-        herbivore.aging()
-        assert herbivore.age == 6
-        assert herbivore.fitness < fit
+        fit = self.new_herbivore.fitness
+        self.new_herbivore.aging()
+        assert self.new_herbivore.age == 1
+        assert self.new_herbivore.fitness < fit
 
     def test_calculate_weight_method(self):
         """
@@ -92,7 +82,6 @@ class TestAnimals:
         is set to 0.05. The 'p_value' is compared to the significance in order
         to determine whether the data is normally distributed.
         """
-        alpha = 0.05
         weights = []
         for _ in range(500):
             ani = Herbivore()
@@ -101,29 +90,26 @@ class TestAnimals:
 
         shapiro = stats.shapiro(weights)
         p_value = shapiro[1]
-        assert p_value > alpha
+        assert p_value > self.alpha
 
     def test_loss_of_weight(self):
         """
         Tests that the animal's weight is correctly reduced and that its
         fitness is updated.
         """
-        herb = Herbivore(age=2, weight=10)
-        herb.loss_of_weight()
-        assert herb.weight == 9.5
-        assert herb.fitness == approx(0.5122410)
+        self.herbivore.loss_of_weight()
+        assert self.herbivore.weight == 9.5
+        assert self.herbivore.fitness == approx(0.4872587)
 
     def test_weight_gain(self):
         """
         Tests that the method 'weight_gain" correctly calculates the amount of
         weight an animal should gain after eating a certain amount of fodder.
         """
-        herb = Herbivore(age=2, weight=10)
-        weight_gain = herb.weight_gain(eaten=10)
+        weight_gain = self.herbivore.weight_gain(eaten=10)
         assert weight_gain == 9.0
 
-        carn = Carnivore(age=2, weight=10)
-        weight_gain = carn.weight_gain(eaten=10)
+        weight_gain = self.carnivore.weight_gain(eaten=10)
         assert weight_gain == 7.5
 
     def test_calculate_fitness(self):
@@ -131,50 +117,52 @@ class TestAnimals:
         Tests that 'calculate_fitness' properly calculates the animal's
         fitness.
         """
-        herbivore = Herbivore(age=0, weight=10)
-        assert herbivore.fitness == approx(0.499832)
+        assert self.herbivore.fitness == approx(0.4997498)
 
     def test_update_fitness(self):
         """
         Tests that an animal's fitness is correctly updated.
         """
-        herb = Herbivore(age=0, weight=10)
-        assert herb.fitness == approx(0.499832)
-        herb.weight = 12
-        herb.update_fitness()
-        assert herb.fitness == approx(0.450015)
+        assert self.herbivore.fitness == approx(0.4997498)
+        self.herbivore.weight = 12
+        self.herbivore.update_fitness()
+        assert self.herbivore.fitness == approx(0.5495589)
 
     def test_fitness_getter_decorator(self):
         """
         Tests that the fitness getter returns the fitness value of the animal.
         """
-        herbivore = Herbivore()
-        assert herbivore.fitness == herbivore.get_fitness
+        assert self.herbivore.fitness == self.herbivore.get_fitness
 
     def test_fitness_setter_decorator(self):
         """
         Tests that the fitness setter successfully updates the fitness of the
         animal.
         """
-        herbivore = Herbivore()
-        herbivore.get_fitness = 0.8
-        assert herbivore.fitness == 0.8
+        self.herbivore.get_fitness = 0.8
+        assert self.herbivore.fitness == 0.8
+
+
+class TestDeath:
+
+    @pytest.fixture(autouse=True)
+    def create_animals(self):
+        pass
 
     def test_death_by_zero_fitness(self):
         """
         Tests that the animal dies upon reaching fitness = 0.
         """
-        herbivore = Herbivore()
-        herbivore.get_fitness = 0
-        assert bool(herbivore.death()) is True
+        self.herbivore.get_fitness = 0
+        assert bool(self.herbivore.death()) is True
 
     def test_death_with_max_fitness(self):
         """
         Tests that an animal will not die if it has fitness = 1.
-        The test is run for 1000 herbivores with fitness = 1.
+        The test is run for 100 herbivores with fitness = 1.
         """
         death_results = []
-        herbs = [Herbivore() for _ in range(1000)]
+        herbs = [Herbivore() for _ in range(100)]
         for herb in herbs:
             herb.get_fitness = 1
             dead = herb.death()
@@ -201,6 +189,12 @@ class TestAnimals:
 
         expected_distribution = stats.binom_test(x=2, n=500, p=0.02)
         assert p_value > alpha
+
+class TestBirth:
+
+    @pytest.fixture()
+    def create_animals(self):
+        pass
 
     def test_weight_check_for_pregnancy(self):
         """
@@ -231,9 +225,9 @@ class TestAnimals:
         is called.
         """
         herb = Herbivore(weight=40)
-        new_born = Herbivore(weight=6)
-        herb.adjust_weight_after_birth(new_born)
-        assert herb.weight == 32.8
+        herb.adjust_weight_after_birth(self.new_herbivore)
+        assert herb.weight == herb.weight - (
+                herb.parameters['xi'] * self.new_herbivore.weight)
 
     def test_gives_birth_returns_none(self):
         """
@@ -241,9 +235,9 @@ class TestAnimals:
         In the test, the mother's weight is manually set too low to birth a
         baby animal.
         """
-        herbivore = Herbivore(weight=3)
-        assert herbivore.weight < herbivore.weight_check_for_pregnancy()
-        assert herbivore.gives_birth(n=2) is None
+
+        assert self.new_herbivore.weight < self.new_herbivore.weight_check_for_pregnancy()
+        assert self.new_herbivore.gives_birth(n=2) is None
 
     def test_gives_birth_returns_newborn(self):
         """
@@ -255,12 +249,18 @@ class TestAnimals:
         new_born = herbivore.gives_birth(n=500)
         assert isinstance(new_born, Herbivore)
 
+
+class TestMigrate:
+
+    @pytest.fixture(autouse=True)
+    def setup_migrate(self):
+        pass
+
     def test_check_move_return(self):
         """
         Tests that 'check_move' returns a bool.
         """
-        herb = Herbivore()
-        check = herb.check_move()
+        check = self.herbivore.check_move()
         assert isinstance(check, bool)
 
     def test_statistical_test_check_move(self):
@@ -281,13 +281,12 @@ class TestAnimals:
         corresponding cell object.
         """
         relative_fodder_list = [(0, Ocean()), (0, Mountain())]
-        herb = Herbivore()
-        herb.get_fitness = 4
-        assert herb.has_moved is False
-        chosen_cell = herb.migrate(relative_fodder_list)
-        assert bool(herb.check_move()) is True
+        self.herbivore.get_fitness = 4
+        assert self.herbivore.has_moved is False
+        chosen_cell = self.herbivore.migrate(relative_fodder_list)
+        assert bool(self.herbivore.check_move()) is True
         assert chosen_cell is None
-        assert herb.has_moved is False
+        assert self.herbivore.has_moved is False
 
     def test_migrate_to_valid_cell(self):
         """
@@ -299,13 +298,18 @@ class TestAnimals:
         corresponding cell object.
         """
         relative_fodder_list = [(50, Jungle()), (0, Ocean()), (0, Mountain())]
-        herb = Herbivore()
         herb.get_fitness = 4
         assert herb.has_moved is False
         chosen_cell = herb.migrate(relative_fodder_list)
         assert bool(herb.check_move()) is True
         assert isinstance(chosen_cell, Jungle)
         assert herb.has_moved is True
+
+
+class TestFeedingKilling:
+
+    def create_animals(self):
+        pass
 
     def test_herbivore_feeding_max_fodder(self):
         """

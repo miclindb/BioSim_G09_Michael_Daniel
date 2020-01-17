@@ -68,15 +68,17 @@ class Island:
                 self.island_map[y][x].nearby_cells = list_of_nearby_cells
 
     def adding_population(self, population):
-
-        for animals in population:
-            for animal in animals['pop']:
-                if animal['species'] == 'Herbivore':
-                    self.island_map[animals['loc'][0]][animals['loc'][1]].population.append(
-                        Herbivore(age=animal['age'], weight=animal['weight']))
-                if animal['species'] == 'Carnivore':
-                    self.island_map[animals['loc'][0]][animals['loc'][1]].population.append(
-                        Carnivore(age=animal['age'], weight=animal['weight']))
+        try:
+            for animals in population:
+                for animal in animals['pop']:
+                    if animal['species'] == 'Herbivore':
+                        self.island_map[animals['loc'][0]][animals['loc'][1]].population.append(
+                            Herbivore(age=animal['age'], weight=animal['weight']))
+                    if animal['species'] == 'Carnivore':
+                        self.island_map[animals['loc'][0]][animals['loc'][1]].population.append(
+                            Carnivore(age=animal['age'], weight=animal['weight']))
+        except (ValueError, KeyError):
+            raise ValueError('Invalid input for population.')
 
     def total_population(self):
         total_population_list = []

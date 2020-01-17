@@ -6,11 +6,12 @@ Tests for island module
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
-from src.biosim.island import Island
-from src.biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
-from src.biosim.animals import Herbivore, Carnivore
 import textwrap
 import pytest
+import pytest_mock as pm
+from src.biosim.island import Island
+from src.biosim.cell import Cell, Ocean, Mountain, Jungle, Savannah, Desert
+from src.biosim.animals import Animals, Herbivore, Carnivore
 
 
 class TestIsland:
@@ -156,7 +157,29 @@ class TestIsland:
         assert isinstance(pop_1[2], Herbivore)
 
     def test_adding_population_bad_input(self):
-        pass
+        """
+        Tests that adding_population raises ValueError whenever a bad input is
+        given.
+        """
+        sample_map = """\
+                        JJOOOOJJJD
+                        JJMMMJJDDD
+                        DDDDDDDDDD"""
+        sample_map = textwrap.dedent(sample_map)
+        island = Island(sample_map)
+        island.map_constructor()
+
+        test_population = [
+            {
+                "pop": [
+                    {"species": "Herbivore", "age": 1, "weight": 10.0},
+                    {"species": "Carnivore", "age": 1, "weight": 10.0},
+                ],
+            }
+        ]
+
+        with pytest.raises(ValueError):
+            island.adding_population(test_population)
 
     def test_total_population_return(self):
         """
@@ -222,45 +245,114 @@ class TestIsland:
         assert island.island_map[0][1].fodder == 0.0
         assert island.island_map[0][2].fodder == 132.0
 
+    def test_island_growth_called_for_all_cells(self, mocker):
+        mocker.spy(Cell, 'fodder')
+
+        island.island_fodder_growth()
+
+
     def test_island_feeding(self):
         """
         Tests that feeding is successfully called.
         """
-        pass
+        sample_map = """\
+                        JJOOOOJJJD
+                        JJMMMJJDDD
+                        DDDDDDDDDD"""
+        sample_map = textwrap.dedent(sample_map)
+        island = Island(sample_map)
+        island.map_constructor()
+
+        island.island_feeding()
 
     def test_island_procreate(self):
         """
         Tests that procreate is successfully called.
         """
-        pass
+        sample_map = """\
+                        JJOOOOJJJD
+                        JJMMMJJDDD
+                        DDDDDDDDDD"""
+        sample_map = textwrap.dedent(sample_map)
+        island = Island(sample_map)
+        island.map_constructor()
 
     def test_island_migration(self):
         """
         Tests that migration is successfully called.
         'has_moved' set to false.
         """
-        pass
+        sample_map = """\
+                        JJOOOOJJJD
+                        JJMMMJJDDD
+                        DDDDDDDDDD"""
+        sample_map = textwrap.dedent(sample_map)
+        island = Island(sample_map)
+        island.map_constructor()
 
-    def test_island_aging(self):
+    def test_island_aging_calls(self, mocker):
         """
         Tests that aging is successfully called.
         """
-        pass
+
+        mocker.spy(Animals, 'age')
+
+        sample_map = """\
+                        JJOOOOJJJD
+                        JJMMMJJDDD
+                        DDDDDDDDDD"""
+        sample_map = textwrap.dedent(sample_map)
+        island = Island(sample_map)
+        island.map_constructor()
+
+        test_population = [
+            {
+                "loc": (0, 0),
+                "pop": [
+                    {"species": "Herbivore", "age": 1, "weight": 10.0},
+                    {"species": "Herbivore", "age": 1, "weight": 10.0},
+                ],
+            }
+        ]
+
+        island.adding_population(test_population)
+
+        island.aging()
+
+        assert Island.island_aging.call_count == 2
 
     def test_island_loss_of_weight(self):
         """
         Tests that loss_of_weight is successfully called.
         """
-        pass
+        sample_map = """\
+                        JJOOOOJJJD
+                        JJMMMJJDDD
+                        DDDDDDDDDD"""
+        sample_map = textwrap.dedent(sample_map)
+        island = Island(sample_map)
+        island.map_constructor()
 
     def test_island_deaths(self):
         """
         Tests that island_deaths is successfully called.
         """
-        pass
+        sample_map = """\
+                        JJOOOOJJJD
+                        JJMMMJJDDD
+                        DDDDDDDDDD"""
+        sample_map = textwrap.dedent(sample_map)
+        island = Island(sample_map)
+        island.map_constructor()
 
     def test_island_cycle(self):
         """
         Tests that island_cycle successfully calls expected methods.
         """
-        pass
+        sample_map = """\
+                        JJOOOOJJJD
+                        JJMMMJJDDD
+                        DDDDDDDDDD"""
+        sample_map = textwrap.dedent(sample_map)
+        island = Island(sample_map)
+        island.map_constructor()
