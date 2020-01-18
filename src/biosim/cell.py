@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Landscape module
+Cell Module
 """
 
 __author__ = "Michael Lindberg, Daniel Milliam Müller"

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Island module
+Island Module
 """
 
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
@@ -13,8 +13,21 @@ from src.biosim.animals import Herbivore, Carnivore
 
 
 class Island:
+    """
+    Island class
+    """
 
     def __init__(self, island_map):
+
+        """
+        Class constructor for island.
+
+        Parameters
+        ----------
+        island_map: str
+            String containing information about the island such as shape and
+            landscape type.
+        """
 
         self.island_map = island_map
 
@@ -25,6 +38,9 @@ class Island:
                                'D': Desert}
 
     def map_constructor(self):
+        """
+        Constructs the map of the island.
+        """
 
         self.island_map = self.island_map.split('\n')
 
@@ -49,6 +65,10 @@ class Island:
                     self.island_map[y][x].coordinate = (y, x)
 
     def generate_nearby_cells(self):
+        """
+        Generates a list of cells near current cell. These cells are used for
+        migration.
+        """
         for y in range(len(self.island_map)):
             for x in range(len(self.island_map[y])):
                 list_of_nearby_cells = []
@@ -68,6 +88,21 @@ class Island:
                 self.island_map[y][x].nearby_cells = list_of_nearby_cells
 
     def adding_population(self, population):
+        """
+        Adds population to the island.
+
+        Parameters
+        ----------
+        population: List
+            List containing dictionaries describing the population.
+            Requires format:
+            [{
+            "loc": (coordinate_x, coordinate_y),
+            "pop": [{"species": str(animal_species), "age": age, "weight": weight}
+                for _ in range(number_of_animal)],
+                }]
+
+        """
         try:
             for animals in population:
                 for animal in animals['pop']:
@@ -78,9 +113,17 @@ class Island:
                         self.island_map[animals['loc'][0]][animals['loc'][1]].population.append(
                             Carnivore(age=animal['age'], weight=animal['weight']))
         except (ValueError, KeyError):
-            raise ValueError('Invalid input for population.')
+            raise ValueError('Invalid input for population, see documentation.')
 
     def total_population(self):
+        """
+        Constructs a list containing all the animals on the island.
+
+        Returns
+        -------
+        total_population_list: list
+            List containing the total population on the island.
+        """
         total_population_list = []
         for y in self.island_map:
             for cell in y:
@@ -88,21 +131,36 @@ class Island:
         return total_population_list
 
     def island_fodder_growth(self):
+        """
+        Yearly cycle for fodder growth. Fodder growth for all cells on the
+        island.
+        """
         for y in self.island_map:
             for cell in y:
                 cell.fodder_growth()
 
     def island_feeding(self):
+        """
+        Yearly cycle for feeding. All animals on the island attempts to feed.
+        """
         for y in self.island_map:
             for cell in y:
                 cell.feeding()
 
     def island_procreate(self):
+        """
+        Yearly cycle for procreation. All animals on the island attempts to
+        procreate.
+        """
         for y in self.island_map:
             for cell in y:
                 cell.procreate()
 
     def island_migration(self):
+        """
+        Yearly cycle for migration. All animals on the island cell attempts to
+        migrate.
+        """
         for y in self.island_map:
             for cell in y:
                 cell.migration()
@@ -114,16 +172,27 @@ class Island:
                     animal.has_moved = False
 
     def island_aging(self):
+        """
+        Yearly cycle for aging. All animals on the island turn one year older.
+        """
         for y in self.island_map:
             for cell in y:
                 cell.aging()
 
     def island_loss_of_weight(self):
+        """
+        Yearly cycle for loss of weight. All animals on the island loses
+        weight.
+        """
         for y in self.island_map:
             for cell in y:
                 cell.loss_of_weight()
 
     def island_deaths(self):
+        """
+        Yearly cycle for death. Checks for all animals on the island if the
+        die.
+        """
         for y in self.island_map:
             for cell in y:
                 cell.deaths()

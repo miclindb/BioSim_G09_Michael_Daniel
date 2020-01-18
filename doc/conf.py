@@ -12,13 +12,13 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('/Users/danielmilliammuller/Desktop/NMBU/Semester 3/INF200/Exam/BioSim_G09_Michael_Daniel/src/biosim'))
 autoclass_content = 'both'
 
 
 # -- Project information -----------------------------------------------------
 
-project = 'BioSim_Test'
+project = 'BioSim_Project'
 copyright = '2020, Michael Lindberg and Daniel Milliam Müller'
 author = 'Michael Lindberg and Daniel Milliam Müller'
 
@@ -36,7 +36,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
-    'sphinx.ext.numpydoc'
+    'numpydoc'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

@@ -1,0 +1,5 @@
+Animals
+=========
+
+.. automodule:: animals
+   :members:
