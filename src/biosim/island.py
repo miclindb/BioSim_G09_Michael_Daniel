@@ -8,13 +8,12 @@ __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
 from src.biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
-from src.biosim import cell
 from src.biosim.animals import Herbivore, Carnivore
 
 
 class Island:
     """
-    Island class
+    Island class. Superclass for all landscape types.
     """
 
     def __init__(self, island_map):
@@ -30,7 +29,6 @@ class Island:
         """
 
         self.island_map = island_map
-
         self.landscape_dict = {'M': Mountain,
                                'O': Ocean,
                                'J': Jungle,
@@ -41,7 +39,6 @@ class Island:
         """
         Constructs the map of the island.
         """
-
         self.island_map = self.island_map.split('\n')
 
         for n in range(len(self.island_map)):
@@ -61,13 +58,15 @@ class Island:
                 if self.island_map[y][x] not in self.landscape_dict.keys():
                     raise ValueError('Landscape type does not exist')
                 else:
-                    self.island_map[y][x] = self.landscape_dict[self.island_map[y][x]]()
+                    self.island_map[y][x] = self.landscape_dict[
+                        self.island_map[y][x]
+                    ]()
                     self.island_map[y][x].coordinate = (y, x)
 
     def generate_nearby_cells(self):
         """
         Generates a list of cells near current cell. These cells are used for
-        migration.
+        animal migration.
         """
         for y in range(len(self.island_map)):
             for x in range(len(self.island_map[y])):
@@ -87,6 +86,38 @@ class Island:
 
                 self.island_map[y][x].nearby_cells = list_of_nearby_cells
 
+    def add_herbivores(self, animal, animals):
+        """
+        Adds herbivores to the island population. Used for 'adding_population'
+        method.
+
+        Parameters
+        ----------
+        animal: class object
+            Herbivore object to be added to the population.
+        animals: list
+            List of animals to be added to the population.
+        """
+        self.island_map[animals['loc'][0]][
+            animals['loc'][1]].population.append(
+            Herbivore(age=animal['age'], weight=animal['weight']))
+
+    def add_carnivores(self, animal, animals):
+        """
+        Adds carnivores to the island population. Used for 'adding_population'
+        method.
+
+        Parameters
+        ----------
+        animal: class object
+            Carnivore object to be added to the population.
+        animals: list
+            List of animals to be added to the population.
+        """
+        self.island_map[animals['loc'][0]][
+            animals['loc'][1]].population.append(
+            Carnivore(age=animal['age'], weight=animal['weight']))
+
     def adding_population(self, population):
         """
         Adds population to the island.
@@ -94,26 +125,29 @@ class Island:
         Parameters
         ----------
         population: List
-            List containing dictionaries describing the population.
-            Requires format:
-            [{
-            "loc": (coordinate_x, coordinate_y),
-            "pop": [{"species": str(animal_species), "age": age, "weight": weight}
-                for _ in range(number_of_animal)],
-                }]
+            List containing dictionaries describing the population's location
+            and population type.
 
+            Required format:
+            ini_animals = [{
+            "loc": (coordinate_x, coordinate_y),
+            "pop": [
+                {"species": str(animal_species), "age": age, "weight": weight}
+                for _ in range(number_of_animals)
+                ],
+            }]
         """
         try:
             for animals in population:
                 for animal in animals['pop']:
                     if animal['species'] == 'Herbivore':
-                        self.island_map[animals['loc'][0]][animals['loc'][1]].population.append(
-                            Herbivore(age=animal['age'], weight=animal['weight']))
+                        self.add_herbivores(animal, animals)
                     if animal['species'] == 'Carnivore':
-                        self.island_map[animals['loc'][0]][animals['loc'][1]].population.append(
-                            Carnivore(age=animal['age'], weight=animal['weight']))
+                        self.add_carnivores(animal, animals)
         except (ValueError, KeyError):
-            raise ValueError('Invalid input for population, see documentation.')
+            raise ValueError(
+                'Invalid input for population, see documentation.'
+            )
 
     def total_population(self):
         """
@@ -132,7 +166,7 @@ class Island:
 
     def island_fodder_growth(self):
         """
-        Yearly cycle for fodder growth. Fodder growth for all cells on the
+        Yearly cycle for fodder growth. Fodder grows for all cells on the
         island.
         """
         for y in self.island_map:
@@ -159,7 +193,7 @@ class Island:
     def island_migration(self):
         """
         Yearly cycle for migration. All animals on the island cell attempts to
-        migrate.
+        migrate. Resets the 'has_moved' status of the animals afterwards.
         """
         for y in self.island_map:
             for cell in y:

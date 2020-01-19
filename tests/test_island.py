@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 """
 Tests for island module
 """
@@ -8,26 +9,74 @@ __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
 import textwrap
 import pytest
-import pytest_mock as pm
 from src.biosim.island import Island
-from src.biosim.cell import Cell, Ocean, Mountain, Jungle, Savannah, Desert
-from src.biosim.animals import Animals, Herbivore, Carnivore
+from src.biosim.cell import Cell, Desert
+from src.biosim.animals import Herbivore, Carnivore
 
 
 class TestIsland:
+
+    @pytest.fixture(autouse=True)
+    def setup_island(self):
+        """
+        Setup for island tests.
+        """
+        sample_map = """\
+                        JJOOOOJJJD
+                        JJMMMJJDDD
+                        DDDDDDDDDD"""
+        self.sample_map = textwrap.dedent(sample_map)
+        self.island = Island(self.sample_map)
+        self.test_population = [
+            {
+                "loc": (0, 0),
+                "pop": [
+                    {"species": "Herbivore", "age": 1, "weight": 10.0},
+                    {"species": "Carnivore", "age": 1, "weight": 10.0},
+                ],
+            },
+            {
+                "loc": (1, 3),
+                "pop": [
+                    {"species": "Carnivore", "age": 15, "weight": 50.0},
+                    {"species": "Herbivore", "age": 25, "weight": 20.0},
+                    {"species": "Herbivore", "age": 2, "weight": 10.0}
+                ],
+            },
+        ]
+        self.bad_population_input = [
+            {
+                "pop": [
+                    {"species": "Herbivore", "age": 1, "weight": 10.0},
+                    {"species": "Carnivore", "age": 1, "weight": 10.0},
+                ],
+            }
+        ]
+        self.herbivore_population = [
+            {
+                "loc": (1, 3),
+                "pop": [
+                    {"species": "Herbivore", "age": 5, "weight": 20}
+                    for _ in range(5)
+                ],
+            }
+        ]
+        self.carnivore_population = [
+            {
+                "loc": (1, 3),
+                "pop": [
+                    {"species": "Carnivore", "age": 5, "weight": 20}
+                    for _ in range(5)
+                ],
+            }
+        ]
 
     def test_island_initializer(self):
         """
         Tests that the island initializer successfully initializes the island.
         """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        JMMDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        assert island.island_map == sample_map
-        assert len(island.landscape_dict) == 5
+        assert self.island.island_map == self.sample_map
+        assert len(self.island.landscape_dict) == 5
 
     def test_map_constructor(self):
         """
@@ -35,20 +84,13 @@ class TestIsland:
         representing the map, and that the list's elements are class instances
         representing the landscape.
         """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
+        self.island.map_constructor()
+        assert len(self.island.island_map[0]) == 10
+        assert len(self.island.island_map[1]) == 10
+        assert len(self.island.island_map[2]) == 10
+        assert isinstance(self.island.island_map, list)
 
-        island.map_constructor()
-        assert len(island.island_map[0]) == 10
-        assert len(island.island_map[1]) == 10
-        assert len(island.island_map[2]) == 10
-        assert isinstance(island.island_map, list)
-
-        for element in island.island_map[2]:
+        for element in self.island.island_map[2]:
             assert isinstance(element, Desert)
 
     def test_uneven_map_raises_error_in_constructor(self):
@@ -88,68 +130,62 @@ class TestIsland:
     def test_generate_nearby_cells(self):
         """
         Tests that the method successfully generates a list of nearby cells for
-        coordinates of the map. Tests that runs successfully for cells with
-        less than four neighbouring cells.
+        coordinates of the map. Also tests that runs successfully for cells
+        with less than four neighbouring cells.
         """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
-        island.generate_nearby_cells()
+        self.island.map_constructor()
+        self.island.generate_nearby_cells()
 
-        assert isinstance(island.island_map[0][0].nearby_cells, list)
-        assert len(island.island_map[1][2].nearby_cells) == 4
-        assert len(island.island_map[0][0].nearby_cells) == 2
+        assert isinstance(self.island.island_map[0][0].nearby_cells, list)
+        assert len(self.island.island_map[1][2].nearby_cells) == 4
+        assert len(self.island.island_map[0][0].nearby_cells) == 2
 
-        test_coordinates = island.island_map[-1][-2].nearby_cells
-        assert len(island.island_map[-1][-2].nearby_cells) == 3
-        assert isinstance(island.island_map[-1][-2].nearby_cells, list)
+        test_coordinates = self.island.island_map[-1][-2].nearby_cells
+        assert len(self.island.island_map[-1][-2].nearby_cells) == 3
+        assert isinstance(self.island.island_map[-1][-2].nearby_cells, list)
 
         for coordinate in test_coordinates:
             assert isinstance(coordinate, Desert)
+
+    def test_add_herbivores(self):
+        """
+        Tests that herbivores can successfully be added to the island.
+        """
+        self.island.map_constructor()
+        self.island.adding_population(self.herbivore_population)
+
+        pop_herb = self.island.island_map[1][3].population
+        assert isinstance(pop_herb, list)
+        assert len(pop_herb) == 5
+        assert isinstance(pop_herb[0], Herbivore)
+
+    def test_add_carnivores(self):
+        """
+        Tests that carnivores can successfully be added to the island.
+        """
+        self.island.map_constructor()
+        self.island.adding_population(self.carnivore_population)
+
+        pop_carn = self.island.island_map[1][3].population
+        assert isinstance(pop_carn, list)
+        assert len(pop_carn) == 5
+        assert isinstance(pop_carn[0], Carnivore)
 
     def test_adding_population(self):
         """
         Tests that the method successfully adds population to the desired
         coordinate.
         """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
+        self.island.map_constructor()
+        self.island.adding_population(self.test_population)
 
-        test_population = [
-            {
-                "loc": (0, 0),
-                "pop": [
-                    {"species": "Herbivore", "age": 1, "weight": 10.0},
-                    {"species": "Carnivore", "age": 1, "weight": 10.0},
-                ],
-            },
-            {
-                "loc": (1, 3),
-                "pop": [
-                    {"species": "Carnivore", "age": 15, "weight": 50.0},
-                    {"species": "Herbivore", "age": 25, "weight": 20.0},
-                    {"species": "Herbivore", "age": 2, "weight": 10.0}
-                ],
-            },
-        ]
-
-        island.adding_population(test_population)
-        pop_0 = island.island_map[0][0].population
+        pop_0 = self.island.island_map[0][0].population
         assert isinstance(pop_0, list)
         assert len(pop_0) == 2
         assert isinstance(pop_0[0], Herbivore)
         assert isinstance(pop_0[1], Carnivore)
 
-        pop_1 = island.island_map[1][3].population
+        pop_1 = self.island.island_map[1][3].population
         assert isinstance(pop_1, list)
         assert len(pop_1) == 3
         assert isinstance(pop_1[0], Carnivore)
@@ -161,151 +197,42 @@ class TestIsland:
         Tests that adding_population raises ValueError whenever a bad input is
         given.
         """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
-
-        test_population = [
-            {
-                "pop": [
-                    {"species": "Herbivore", "age": 1, "weight": 10.0},
-                    {"species": "Carnivore", "age": 1, "weight": 10.0},
-                ],
-            }
-        ]
-
+        self.island.map_constructor()
         with pytest.raises(ValueError):
-            island.adding_population(test_population)
+            self.island.adding_population(self.bad_population_input)
 
     def test_total_population_return(self):
         """
         Tests that the method returns correct list of total population on the
         island.
         """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
+        self.island.map_constructor()
+        self.island.adding_population(self.herbivore_population)
 
-        test_population = [
-            {
-                "loc": (0, 0),
-                "pop": [
-                    {"species": "Herbivore", "age": 1, "weight": 10.0},
-                    {"species": "Herbivore", "age": 1, "weight": 10.0},
-                ],
-            },
-            {
-                "loc": (1, 3),
-                "pop": [
-                    {"species": "Herbivore", "age": 15, "weight": 50.0},
-                    {"species": "Herbivore", "age": 25, "weight": 20.0},
-                    {"species": "Herbivore", "age": 2, "weight": 10.0}
-                ],
-            },
-        ]
-
-        island.adding_population(test_population)
-
-        total_population = island.total_population()
+        total_population = self.island.total_population()
         assert isinstance(total_population, list)
         assert len(total_population) == 5
 
         for animal in total_population:
             assert isinstance(animal, Herbivore)
 
-    def test_island_fodder_growth(self):
-        """
-        Tests that the fodder is correct after calling 'island_fodder_growth'.
-        """
-        sample_map = """\
-                        JDS"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
 
-        assert island.island_map[0][0].fodder == 800.0
-        assert island.island_map[0][1].fodder == 0.0
-        assert island.island_map[0][2].fodder == 300.0
+class TestIslandCycles:
 
-        island.island_map[0][0].fodder = 50.0
-        island.island_map[0][1].fodder = 0.0
-        island.island_map[0][2].fodder = 60.0
-
-        island.island_fodder_growth()
-
-        assert island.island_map[0][0].fodder == 800.0
-        assert island.island_map[0][1].fodder == 0.0
-        assert island.island_map[0][2].fodder == 132.0
-
-    def test_island_growth_called_for_all_cells(self, mocker):
-        mocker.spy(Cell, 'fodder')
-
-        island.island_fodder_growth()
-
-
-    def test_island_feeding(self):
-        """
-        Tests that feeding is successfully called.
-        """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
-
-        island.island_feeding()
-
-    def test_island_procreate(self):
-        """
-        Tests that procreate is successfully called.
-        """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
-
-    def test_island_migration(self):
-        """
-        Tests that migration is successfully called.
-        'has_moved' set to false.
-        """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
-
-    def test_island_aging_calls(self, mocker):
-        """
-        Tests that aging is successfully called.
-        """
-
-        mocker.spy(Animals, 'age')
-
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
-
-        test_population = [
+    @pytest.fixture(autouse=True)
+    def setup_island(self, mocker):
+        small_sample_map = """\
+                            JDS"""
+        self.small_sample_map = textwrap.dedent(small_sample_map)
+        self.small_island = Island(self.small_sample_map)
+        self.sample_map = """\
+                            JJOOOOJJJD
+                            JJMMMJJDDD
+                            DDDDDDDDDD"""
+        self.sample_map = textwrap.dedent(self.sample_map)
+        self.sample_map_length = len(self.sample_map)
+        self.island = Island(self.sample_map)
+        self.test_population = [
             {
                 "loc": (0, 0),
                 "pop": [
@@ -314,45 +241,104 @@ class TestIsland:
                 ],
             }
         ]
+        self.mock_fodder_growth = mocker.spy(Cell, 'fodder_growth')
+        self.mock_feeding = mocker.spy(Cell, 'feeding')
+        self.mock_procreate = mocker.spy(Cell, 'procreate')
+        self.mock_migration = mocker.spy(Cell, 'migration')
+        self.mock_aging = mocker.spy(Cell, 'aging')
+        self.mock_loss_of_weight = mocker.spy(Cell, 'loss_of_weight')
+        self.mock_deaths = mocker.spy(Cell, 'deaths')
 
-        island.adding_population(test_population)
+    def test_island_fodder_growth(self):
+        """
+        Tests that the fodder is correct after calling 'island_fodder_growth'.
+        """
+        self.small_island.map_constructor()
 
-        island.aging()
+        assert self.small_island.island_map[0][0].fodder == 800.0
+        assert self.small_island.island_map[0][1].fodder == 0.0
+        assert self.small_island.island_map[0][2].fodder == 300.0
 
-        assert Island.island_aging.call_count == 2
+        self.small_island.island_map[0][0].fodder = 50.0
+        self.small_island.island_map[0][1].fodder = 0.0
+        self.small_island.island_map[0][2].fodder = 60.0
+
+        self.small_island.island_fodder_growth()
+
+        assert self.small_island.island_map[0][0].fodder == 800.0
+        assert self.small_island.island_map[0][1].fodder == 0.0
+        assert self.small_island.island_map[0][2].fodder == 132.0
+
+    def test_island_growth_called_for_all_cells(self):
+        """
+        Tests that fodder growth is called for all cells.
+        """
+        self.island.map_constructor()
+        self.island.island_fodder_growth()
+        assert self.mock_fodder_growth.call_count == 30
+
+    def test_island_feeding(self):
+        """
+        Tests that feeding is successfully called for all cells.
+        """
+        self.island.map_constructor()
+        self.island.island_feeding()
+        assert self.mock_feeding.call_count == 30
+
+    def test_island_procreate(self):
+        """
+        Tests that procreate is successfully called for all cells.
+        """
+        self.island.map_constructor()
+        self.island.island_procreate()
+        assert self.mock_procreate.call_count == 30
+
+    def test_island_migration(self):
+        """
+        Tests that migration has been successfully called for all cells.
+        Also tests that 'has_moved' is reset to false for all cells.
+        """
+        self.island.map_constructor()
+        self.island.island_migration()
+        assert self.mock_migration.call_count == 60
+
+    def test_island_aging_calls(self):
+        """
+        Tests that aging is successfully called for all cells.
+        """
+        self.island.map_constructor()
+        self.island.adding_population(self.test_population)
+        self.island.island_aging()
+        assert self.mock_aging.call_count == 30
 
     def test_island_loss_of_weight(self):
         """
-        Tests that loss_of_weight is successfully called.
+        Tests that loss_of_weight is successfully called for all cells.
         """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
+        self.island.map_constructor()
+        self.island.island_loss_of_weight()
+        assert self.mock_loss_of_weight.call_count == 30
 
     def test_island_deaths(self):
         """
-        Tests that island_deaths is successfully called.
+        Tests that island_deaths is successfully called for all cells.
         """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
+        self.island.map_constructor()
+        self.island.island_deaths()
+        assert self.mock_deaths.call_count == 30
 
     def test_island_cycle(self):
         """
-        Tests that island_cycle successfully calls expected methods.
+        Tests that island_cycle successfully calls expected methods an expected
+        number of times.
         """
-        sample_map = """\
-                        JJOOOOJJJD
-                        JJMMMJJDDD
-                        DDDDDDDDDD"""
-        sample_map = textwrap.dedent(sample_map)
-        island = Island(sample_map)
-        island.map_constructor()
+        self.island.map_constructor()
+        self.island.adding_population(self.test_population)
+        self.island.island_cycle()
+        assert self.mock_fodder_growth.call_count == 30
+        assert self.mock_feeding.call_count == 30
+        assert self.mock_procreate.call_count == 30
+        assert self.mock_migration.call_count == 60
+        assert self.mock_aging.call_count == 30
+        assert self.mock_loss_of_weight.call_count == 30
+        assert self.mock_deaths.call_count == 30

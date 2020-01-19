@@ -7,11 +7,11 @@ Tests for animals module
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
-from src.biosim.animals import Herbivore, Carnivore
-from src.biosim.cell import Ocean, Mountain, Desert, Jungle, Savannah
 import pytest
 from pytest import approx
 from scipy import stats
+from src.biosim.animals import Herbivore, Carnivore
+from src.biosim.cell import Ocean, Mountain, Jungle
 
 
 class TestAnimals:
@@ -20,7 +20,7 @@ class TestAnimals:
     @pytest.fixture(autouse=True)
     def create_animals(self):
         """
-        Setup for further animal tests.
+        Setup for animal tests.
         """
         self.herbivore = Herbivore(age=2, weight=10)
         self.carnivore = Carnivore(age=2, weight=10)
@@ -79,7 +79,7 @@ class TestAnimals:
         calculating an animal's weight.
 
         The Shapiro-Wilks test is used for this. The significance level 'alpha'
-        is set to 0.05. The 'p_value' is compared to the significance in order
+        is set to 0.01. The 'p_value' is compared to the significance in order
         to determine whether the data is normally distributed.
         """
         weights = []
@@ -144,10 +144,18 @@ class TestAnimals:
 
 
 class TestDeath:
+    alpha = 0.05
+    omega = 0.4
 
     @pytest.fixture(autouse=True)
     def create_animals(self):
-        pass
+        """
+        Setup for tests involving death methods.
+        """
+        self.herbivore = Herbivore(weight=10)
+        self.prob_death = self.omega * (
+                1 - self.herbivore.fitness
+        )
 
     def test_death_by_zero_fitness(self):
         """
@@ -172,63 +180,76 @@ class TestDeath:
 
     def test_probability_of_death(self):
         """
-        WRONG: Tests the binomial distribution of animal deaths. The tests is
-        performed on several animals, where the expected number of dead
-        animals is asserted.
-
-        Returns
-        -------
-        This is not done!!!
+        Tests the binomial distribution of animal deaths. 'Stats.binom_test' is
+        used to determine whether the number of dead herbivores coincides with
+        the probability of death.
         """
-        pass
-        alpha = 0.05
-        herbs = [Herbivore() for _ in range(500)]
-        data = []
+        herbs = [Herbivore(weight=10) for _ in range(500)]
+        dead = 0
         for herb in herbs:
-            data.append(herb.death())
+            if herb.death() is True:
+                dead += 1
 
-        expected_distribution = stats.binom_test(x=2, n=500, p=0.02)
-        assert p_value > alpha
+        p_value = stats.binom_test(dead, len(herbs), self.prob_death)
+        assert p_value > self.alpha
 
 
 class TestBirth:
+    alpha = 0.05
+    gamma = 0.2
 
-    @pytest.fixture()
+    @pytest.fixture(autouse=True)
     def create_animals(self):
-        pass
+        """
+        Setup for tests involving birth methods.
+        """
+        self.new_herbivore = Herbivore()
+        self.heavy_h = Herbivore(weight=40)
+        self.light_h = Herbivore(weight=10)
+        self.heavy_c = Carnivore(weight=25)
+        self.light_c = Carnivore(weight=8)
+
+        self.herb_at_threshold = Herbivore(weight=33.25)
+        self.prob_birth = min(
+            1, self.gamma * self.herb_at_threshold.fitness * (10 - 1)
+        )
 
     def test_weight_check_for_pregnancy(self):
         """
         Tests that the weight check is passed whenever the weight of the animal
         is above the set threshold.
         """
-        herb_1 = Herbivore(weight=40)
-        herb_2 = Herbivore(weight=10)
-        carn_1 = Carnivore(weight=25)
-        carn_2 = Carnivore(weight=8)
-        assert herb_1.weight >= herb_1.weight_check_for_pregnancy()
-        assert herb_2.weight < herb_2.weight_check_for_pregnancy()
-        assert carn_1.weight >= carn_1.weight_check_for_pregnancy()
-        assert carn_2.weight < carn_2.weight_check_for_pregnancy()
+        assert self.heavy_h.weight >= self.heavy_h.weight_check_for_pregnancy()
+        assert self.light_h.weight < self.light_h.weight_check_for_pregnancy()
+        assert self.heavy_c.weight >= self.heavy_c.weight_check_for_pregnancy()
+        assert self.light_c.weight < self.light_c.weight_check_for_pregnancy()
 
     def test_probability_of_birth(self):
         """
         Tests that the probability of birth returns correctly.
-        Statistical tests?
+        Test with 10 nearby animals
         """
-        pass
-        herb = Herbivore()
-        carn = Carnivore()
+        herbs = [self.heavy_h for _ in range(500)]
+        new_born_herbs = []
+        for herb in herbs:
+            new_born_herbs.append(herb.gives_birth(10))
+
+        p_value = stats.binom_test(
+            len(new_born_herbs), len(new_born_herbs), self.prob_birth
+        )
+        assert p_value > self.alpha
 
     def test_adjust_weight_after_birth(self):
         """
         Tests that the weight of the mother is correctly updated after method
-        is called.
+        is called. Weight is manually set to ensure that the herbivore gives
+        birth.
         """
-        herb = Herbivore(weight=40)
-        herb.adjust_weight_after_birth(self.new_herbivore)
-        assert herb.weight == herb.weight - (
-                herb.parameters['xi'] * self.new_herbivore.weight)
+        herb_ini_weight = self.heavy_h.weight
+        self.heavy_h.adjust_weight_after_birth(self.new_herbivore)
+        assert self.heavy_h.weight == herb_ini_weight - (
+                self.heavy_h.parameters['xi'] * self.new_herbivore.weight
+        )
 
     def test_gives_birth_returns_none(self):
         """
@@ -237,7 +258,6 @@ class TestBirth:
         baby animal.
         """
 
-        assert self.new_herbivore.weight < self.new_herbivore.weight_check_for_pregnancy()
         assert self.new_herbivore.gives_birth(n=2) is None
 
     def test_gives_birth_returns_newborn(self):
@@ -255,14 +275,19 @@ class TestMigrate:
 
     @pytest.fixture(autouse=True)
     def setup_migrate(self):
-        pass
+        """
+        Setup for tests involving migration methods.
+        """
+        self.herbivore = Herbivore()
+        self.relative_fodder_list = [
+            (50, Jungle()), (0, Ocean()), (0, Mountain())
+        ]
 
     def test_check_move_return(self):
         """
         Tests that 'check_move' returns a bool.
         """
-        check = self.herbivore.check_move()
-        assert isinstance(check, bool)
+        assert isinstance(self.herbivore.check_move(), bool)
 
     def test_statistical_test_check_move(self):
         """
@@ -298,13 +323,12 @@ class TestMigrate:
         relative_fodder_list is a list of tuple containing amount of fodder and
         corresponding cell object.
         """
-        relative_fodder_list = [(50, Jungle()), (0, Ocean()), (0, Mountain())]
-        herb.get_fitness = 4
-        assert herb.has_moved is False
-        chosen_cell = herb.migrate(relative_fodder_list)
-        assert bool(herb.check_move()) is True
+        self.herbivore.get_fitness = 4
+        assert self.herbivore.has_moved is False
+        chosen_cell = self.herbivore.migrate(self.relative_fodder_list)
+        assert bool(self.herbivore.check_move()) is True
         assert isinstance(chosen_cell, Jungle)
-        assert herb.has_moved is True
+        assert self.herbivore.has_moved is True
 
 
 class TestFeedingKilling:
@@ -312,16 +336,21 @@ class TestFeedingKilling:
     @pytest.fixture(autouse=True)
     def create_animals(self):
         """
-        Setup for 'feed' and 'kill' testing.
+        Setup for tests involving feeding methods.
         """
         self.herbivore = Herbivore(weight=2)
         self.cell_full_fodder = 50.0
         self.cell_limited_fodder = 2.0
 
-        self.nearby_herbivores = [Herbivore() for _ in range(10)]
-        self.carnivore = Carnivore()
-        #self.low_fit_carnivore = Carnivore().get_fitness = 0.001
-        #self.low_fit_herbivore = Herbivore().get_fitness = 0.001
+        self.nearby_herbivore = [Herbivore()]
+        self.carnivore = Carnivore(weight=10)
+
+        # Setup for low fitness animals
+        low_fit_herbivore = Herbivore(weight=10)
+        low_fit_herbivore.get_fitness = 0.001
+        self.low_fit_herbivore = low_fit_herbivore
+        self.limited_low_fit_herbivores = [low_fit_herbivore for _ in range(3)]
+        self.nearby_low_fit_herbivores = [low_fit_herbivore for _ in range(10)]
 
     def test_herbivore_feeding_max_fodder(self):
         """
@@ -347,20 +376,18 @@ class TestFeedingKilling:
         carnivore is greater than the fitness of the herbivore, and not greater
         than 'DeltaPhiMax', the method returns 'True'.
         """
-        self.carnivore.parameters['DeltaPhiMax'] = 10.0
-        assert self.carnivore.fitness > self.low_fit_carnivore.fitness
+        assert self.carnivore.fitness > self.low_fit_herbivore.fitness
         assert bool(
-            self.carnivore.fitness_greater_than_prey(self.low_fit_carnivore)
+            self.carnivore.fitness_greater_than_prey(self.low_fit_herbivore)
         ) is True
 
     def test_chance_of_kill_check(self):
         """
         Tests that 'chance_of_kill' returns an expected value.
         """
-        carn = Carnivore(weight=8)
-        carn.parameters['DeltaPhiMax'] = 10.0
-        herb = Herbivore(weight=100)
-        assert carn.chance_of_kill(herb) == approx(0.01678582)
+        assert self.carnivore.chance_of_kill(
+            self.low_fit_herbivore
+        ) == approx(0.0915827)
 
     def test_kill_one_herbivore(self):
         """
@@ -373,28 +400,29 @@ class TestFeedingKilling:
         After the carnivore kills, its weight is increased and its
         (artificial) fitness should be reduced to a value between 0 and 1.
         """
-        carn = Carnivore(age=2, weight=8)
-        herb = [Herbivore(age=2, weight=10)]
-        carn.get_fitness = 11
-        x = carn.kill(herb)
+        self.carnivore.get_fitness = 11
+        killed = self.carnivore.kill(self.nearby_herbivore)
 
-        assert isinstance(x, list)
-        assert isinstance(x[0], Herbivore)
-        assert len(x) == 1
-        assert carn.weight > 8
-        assert 0 < carn.fitness < 1
+        assert isinstance(killed, list)
+        assert isinstance(killed[0], Herbivore)
+        assert len(killed) == 1
+        assert self.carnivore.weight > 8
+        assert 0 < self.carnivore.fitness < 1
 
     def test_attempt_all_herbivore_kill(self):
         """
         Tests that the Carnivore attempts to kill all Herbivores nearby.
+        Q for TA.
         """
+        self.carnivore.get_fitness = 11
+        killed = self.carnivore.kill(self.limited_low_fit_herbivores)
+        assert len(killed) == 3
 
     def test_kill_stops_at_eaten_is_f(self):
         """
         Tests that the carnivore stops eating.
         How can this be done?
         """
-        carn = Carnivore(age=2, weight=8)
-        nearby_herbs = [Herbivore(weight=2) for _ in range(10)]
-        killed = carn.kill(nearby_herbs)
-        assert len(killed) == 2
+        self.carnivore.get_fitness = 11
+        killed = self.carnivore.kill(self.nearby_low_fit_herbivores)
+        assert len(killed) == 4

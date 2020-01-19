@@ -243,6 +243,34 @@ class Animals:
             np.random.binomial(1, self.parameters['mu'] * self.fitness)
         )
 
+    def calculate_propensities(self, relative_fodder_list):
+        """
+        Calculates the propensity to move for the animal.
+
+        Parameters
+        ----------
+        relative_fodder_list: list
+            A list of up to four nearby available cells. The list can contain
+            any cells with invalid landscape types. (i.e. landscape that cannot
+            be traversed such as mountain or ocean).
+
+        Returns
+        -------
+        propensities: list
+            List of propensity values for each relevant cell the animal is
+            considering to migrate to.
+        """
+        propensities = []
+        for cell in relative_fodder_list:
+            if cell[1].landscape_type == 'M':
+                propensities.append(float(0))
+            elif cell[1].landscape_type == 'O':
+                propensities.append(float(0))
+            else:
+                propensities.append(
+                    np.exp(self.parameters['lambda']) * cell[0])
+        return propensities
+
     @staticmethod
     def choose_migration_destination(relative_fodder_list, propensities_list):
         """
@@ -300,39 +328,15 @@ class Animals:
         """
 
         if self.check_move() is True:
-            propensities = []
-            for cell in relative_fodder_list:
-                if cell[1].landscape_type == 'M':
-                    propensities.append(float(0))
-                elif cell[1].landscape_type == 'O':
-                    propensities.append(float(0))
-                else:
-                    propensities.append(
-                        np.exp(self.parameters['lambda']) * cell[0])
-            #probabilities = []
-
+            propensities = self.calculate_propensities(relative_fodder_list)
             if sum(propensities) == 0:
                 return None
-
             else:
                 chosen_cell = self.choose_migration_destination(
                     relative_fodder_list, propensities
                 )
-
-            #for propensity in propensities:
-            #    probabilities.append(propensity / sum(propensities))
-
-            #probabilities = np.array(probabilities)
-            #probabilities /= probabilities.sum()
-
-            #chosen_cell_index = \
-            #    list(np.random.choice(len(probabilities), 1, p=probabilities))[
-                    #0]
-            #chosen_cell = relative_fodder_list[chosen_cell_index][1]
-
             self.has_moved = True
             return chosen_cell
-
         else:
             return None
 
@@ -341,7 +345,6 @@ class Herbivore(Animals):
     """
     Subclass of Animals.
     """
-
     parameters = {
         'w_birth': 8.0,
         'sigma_birth': 1.5,
