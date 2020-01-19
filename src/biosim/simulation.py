@@ -22,8 +22,6 @@ from src.biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
 from src.biosim import cell
 from src.biosim.island import Island
 
-
-
 # update these variables to point to your ffmpeg and convert binaries
 _FFMPEG_BINARY = 'ffmpeg'
 _CONVERT_BINARY = 'magick'
@@ -84,7 +82,6 @@ class BioSim:
         self.simulated_island.map_constructor()
         self.simulated_island.adding_population(self.ini_pop)
         self.simulated_island.generate_nearby_cells()
-
 
         self._img_dir = None
 
@@ -194,11 +191,8 @@ class BioSim:
 
         self.idx = 0
 
-
-
     def _setup_graphics(self, num_years):
         """Creates subplots."""
-
 
         self._fig = plt.figure(figsize=(20, 10))
 
@@ -244,51 +238,30 @@ class BioSim:
         self.map_ax.set_yticks(range(0, len(rgb_island_map), 4))
         self.map_ax.set_yticklabels(range(1, 1 + len(rgb_island_map), 4))
 
-        ################ animal_lines #########################
-        #if self.ani_ax is None:
         self.ani_ax = self._fig.add_subplot(2, 2, 3)
 
-        #if self.years_simulated > 0:
-        #    plt.axis([self.years_simulated, self.years_simulated+num_years, 0, self._ymax_animals])
-        #else:
         plt.axis([0, num_years, 0, self._ymax_animals])
 
         self.title = plt.title('')
 
-        #if self.line_herbs is None:
         self.xdata_herbs = np.arange(num_years+1)
         self.ydata_herbs = np.nan * np.ones(num_years+1)
 
         self.line_herbs = self.ani_ax.plot(self.xdata_herbs, self.ydata_herbs,
                                         'g-', label="Herbivores")[0]
-        #else:
-        #    xdata, ydata = self.line_herbs.get_data()
-        #    xnew = np.arange(self.years_simulated, num_years+1)
-        #    if len(xnew) > 0:
-        #        ynew = np.nan * np.ones_like(xnew)
-        #        self.line_herbs.set_data(np.hstack((xdata, xnew)),
-        #                                     np.hstack((ydata, ynew)))
 
-        #if self.line_carns is None:
         self.xdata_carns = np.arange(num_years+1)
         self.ydata_carns = np.nan * np.ones(num_years+1)
 
         self.line_carns = self.ani_ax.plot(self.xdata_carns, self.ydata_carns,
                                         'r-', label='Carnivores')[0]
 
-        if self.years_simulated > 0:
-            self.ani_ax.set_xticklabels(range(self.years_simulated, self.years_simulated + num_years))
-            self.ani_ax.set_xticks(range(self.years_simulated, self.years_simulated + num_years))
-            
-        else:
-            self.ani_ax.set_xticklabels(np.arange(num_years*2))
+        #if self.year > 0:
+        #    self.ani_ax.set_xticklabels(np.arange(num_years))
+        #
         #else:
-        #    xdata, ydata = self.line_carns.get_data()
-        #    xnew = np.arange(self.years_simulated, num_years+1)
-        #    if len(xnew) > 0:
-        #        ynew = np.nan * np.ones_like(xnew)
-        #        self.line_carns.set_data(np.hstack((xdata, xnew)),
-        #                                     np.hstack((ydata, ynew)))
+        self.ani_ax.set_xticks(np.arange(num_years))
+        self.ani_ax.set_xticklabels(np.arange(num_years))
 
         plt.grid()
         plt.legend(loc=1, prop={'size': 7})
@@ -321,7 +294,6 @@ class BioSim:
 
         ydata_herbs = self.line_herbs.get_ydata()
         ydata_carns = self.line_carns.get_ydata()
-
 
         ydata_herbs[self.idx] = self.num_animals_per_species['Herbivore']
         ydata_carns[self.idx] = self.num_animals_per_species['Carnivore']
