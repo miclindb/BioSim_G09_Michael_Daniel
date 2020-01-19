@@ -190,6 +190,7 @@ class TestDeath:
         expected_distribution = stats.binom_test(x=2, n=500, p=0.02)
         assert p_value > alpha
 
+
 class TestBirth:
 
     @pytest.fixture()
@@ -308,30 +309,37 @@ class TestMigrate:
 
 class TestFeedingKilling:
 
+    @pytest.fixture(autouse=True)
     def create_animals(self):
-        pass
+        """
+        Setup for 'feed' and 'kill' testing.
+        """
+        self.herbivore = Herbivore(weight=2)
+        self.cell_full_fodder = 50.0
+        self.cell_limited_fodder = 2.0
+
+        self.nearby_herbivores = [Herbivore() for _ in range(10)]
+        self.carnivore = Carnivore()
+        #self.low_fit_carnivore = Carnivore().get_fitness = 0.001
+        #self.low_fit_herbivore = Herbivore().get_fitness = 0.001
 
     def test_herbivore_feeding_max_fodder(self):
         """
         Tests that the herbivore can eat and that it's weight is successfully
         updated.
         """
-        herbivore = Herbivore(weight=2)
-        cell_fodder = 50.0
-        eaten = herbivore.feed(cell_fodder)
+        eaten = self.herbivore.feed(self.cell_full_fodder)
         assert eaten == 10
-        assert herbivore.weight == 11.0
+        assert self.herbivore.weight == 11.0
 
     def test_herbivore_feeding_limited_fodder(self):
         """
         Tests that the herbivore can eat if there is limited fodder, and that
         it's weight is successfully updated.
         """
-        herbivore = Herbivore(weight=2)
-        cell_fodder = 2.0
-        eaten = herbivore.feed(cell_fodder)
+        eaten = self.herbivore.feed(self.cell_limited_fodder)
         assert eaten == 2
-        assert herbivore.weight == 3.8
+        assert self.herbivore.weight == 3.8
 
     def test_fitness_greater_than_prey(self):
         """
@@ -339,11 +347,11 @@ class TestFeedingKilling:
         carnivore is greater than the fitness of the herbivore, and not greater
         than 'DeltaPhiMax', the method returns 'True'.
         """
-        carn = Carnivore(weight=8)
-        carn.parameters['DeltaPhiMax'] = 10.0
-        herb = Herbivore(weight=100)
-        assert carn.fitness > herb.fitness
-        assert bool(carn.fitness_greater_than_prey(herb)) is True
+        self.carnivore.parameters['DeltaPhiMax'] = 10.0
+        assert self.carnivore.fitness > self.low_fit_carnivore.fitness
+        assert bool(
+            self.carnivore.fitness_greater_than_prey(self.low_fit_carnivore)
+        ) is True
 
     def test_chance_of_kill_check(self):
         """
@@ -376,11 +384,10 @@ class TestFeedingKilling:
         assert carn.weight > 8
         assert 0 < carn.fitness < 1
 
-    def statistical_test_kill(self):
+    def test_attempt_all_herbivore_kill(self):
         """
-        Tests the expected value for kill
+        Tests that the Carnivore attempts to kill all Herbivores nearby.
         """
-        pass
 
     def test_kill_stops_at_eaten_is_f(self):
         """

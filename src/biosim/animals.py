@@ -13,18 +13,18 @@ import numpy as np
 class Animals:
     """
     Superclass for Herbivores and Carnivores.
-
     """
 
     def __init__(self, age=0, weight=None):
         """
         Class constructor for Animals.
-        Creates an animal with age, weight and fitness as attributes.
+        Creates an animal with age, weight, fitness and 'has_moved' as instance
+        attributes.
 
         Parameters
         ----------
         age: int
-            Age of the animal. Default value is 0
+            Age of the animal. Default value is 0.
         weight: float
             Weight of the animal. If no value is specified, the weight assigned
             is calculated in class method 'calculate_weight'.
@@ -46,16 +46,13 @@ class Animals:
 
     def calculate_weight(self):
         """
-        Calculates the weight of animals. This is used whenever the class
+        Calculates the weight of the animal. This is used whenever the class
         initializer for the animals did not receive any specified weight input.
-
-        Weight is drawn from a normal distribution.
 
         Returns
         -------
-        float:
+        float
             Weight of the animal.
-
         """
         return np.random.normal(self.parameters['w_birth'],
                                 self.parameters['sigma_birth'])
@@ -80,9 +77,8 @@ class Animals:
 
         Returns
         -------
-        float:
+        float
             Weight adjustment.
-
         """
         return eaten * self.parameters['beta']
 
@@ -92,18 +88,18 @@ class Animals:
 
         Returns
         -------
-        float:
+        float
             Fitness of the animal
         """
         if self.weight <= 0:
             return 0
-        else:
+        else:  # MATH?
             return (1 / (1 + np.exp(
                 self.parameters['phi_age'] * (
                         self.age - self.parameters['a_half'])))) * \
                    (1 / (1 + np.exp(-(self.parameters['phi_weight'] *
-                                    (self.weight - self.parameters['w_half'])))))
-        # MATH?
+                                      (self.weight - self.parameters[
+                                          'w_half'])))))
 
     def update_fitness(self):
         """
@@ -111,24 +107,38 @@ class Animals:
         """
         self.fitness = self.calculate_fitness()
 
-    # These are currently only used for tests.
     @property
     def get_fitness(self):
+        """
+        Fitness getter for animals.
+
+        Returns
+        -------
+        float
+            Animal fitness
+        """
         return self.fitness
 
     @get_fitness.setter
     def get_fitness(self, value):
+        """
+        Fitness setter for animals.
+
+        Parameters
+        ----------
+        value: float
+            Fitness value
+        """
         self.fitness = value
 
     def death(self):
         """
-        Determine whether an animal dies. The animal dies if the fitness of the
-        animal is 0. The animal also has a fixed probability of dying each
-        year.
+        Determines whether an animal dies. The animal dies if the fitness of
+        the animal is 0. The animal also has a probability of dying each year.
 
         Returns
         -------
-        Bool:
+        Bool
             'True' is the animal dies and 'False' otherwise.
         """
 
@@ -148,11 +158,12 @@ class Animals:
 
         Returns
         -------
-        float:
+        float
             Threshold value for pregnancy.
         """
-        return cls.parameters['zeta'] * \
-               (cls.parameters['w_birth'] + cls.parameters['sigma_birth'])
+        return cls.parameters['zeta'] * (
+                cls.parameters['w_birth'] + cls.parameters['sigma_birth']
+        )
 
     def probability_birth(self, n):
         """
@@ -199,8 +210,8 @@ class Animals:
 
         Returns
         -------
-        bool:
-        True if a newborn is successfully born.
+        bool
+            True if a newborn is successfully born.
         new_born_animal: class object
             Newborn animal.
         """
@@ -220,16 +231,50 @@ class Animals:
 
     def check_move(self):
         """
-        Checks if an animal moves. This is checked every time an animal
+        Checks if an animal can move. This is checked every time an animal
         attempts to migrate.
 
         Returns
         -------
-        bool:
+        bool
             'True' if the check is passed, 'False' otherwise.
         """
-        move = np.random.binomial(1, self.parameters['mu'] * self.fitness)
-        return bool(move)
+        return bool(
+            np.random.binomial(1, self.parameters['mu'] * self.fitness)
+        )
+
+    @staticmethod
+    def choose_migration_destination(relative_fodder_list, propensities_list):
+        """
+        Calculates which cell the animal decides to migrate to.
+
+        Parameters
+        ----------
+        relative_fodder_list: list
+            A list of up to four nearby available cells. The list can contain
+            any cells with invalid landscape types. (i.e. landscape that cannot
+            be traversed such as mountain or ocean).
+        propensities_list: list
+            List containing propensity values for each relevant cell.
+
+        Returns
+        -------
+        chosen_cell: Cell object
+            The cell the animal choose to migrate to.
+        """
+        probabilities = []
+        for propensity in propensities_list:
+            probabilities.append(propensity / sum(propensities_list))
+
+        probabilities = np.array(probabilities)
+        probabilities /= probabilities.sum()
+
+        chosen_cell_index = \
+            list(np.random.choice(len(probabilities), 1, p=probabilities))[
+                0]
+
+        chosen_cell = relative_fodder_list[chosen_cell_index][1]
+        return chosen_cell
 
     def migrate(self, relative_fodder_list):
         """
@@ -237,8 +282,8 @@ class Animals:
         The movement is determined by the fitness of the animal and the fodder
         in the nearby cells.
 
-        The animal migrates only once per year, and the animal moved status is
-        updated to 'has_moved' after it has attempted to migrate.
+        The animal migrates only once per year, and the animal's 'has_moved'
+        status is updated to 'True' after.
 
         Parameters
         ----------
@@ -250,7 +295,8 @@ class Animals:
         Returns
         -------
         chosen_cell: Cell object
-            The cell the animal choose to migrate to.
+            The cell the animal choose to migrate to. Otherwise returns None if
+            the animal does not move.
         """
 
         if self.check_move() is True:
@@ -263,24 +309,28 @@ class Animals:
                 else:
                     propensities.append(
                         np.exp(self.parameters['lambda']) * cell[0])
-            probabilities = []
+            #probabilities = []
 
             if sum(propensities) == 0:
                 return None
 
-            for propensity in propensities:
-                probabilities.append(propensity / sum(propensities))
+            else:
+                chosen_cell = self.choose_migration_destination(
+                    relative_fodder_list, propensities
+                )
 
-            probabilities = np.array(probabilities)
-            probabilities /= probabilities.sum()
+            #for propensity in propensities:
+            #    probabilities.append(propensity / sum(propensities))
 
-            chosen_cell_index = \
-                list(np.random.choice(len(probabilities), 1, p=probabilities))[
-                    0]
-            chosen_cell = relative_fodder_list[chosen_cell_index][1]
+            #probabilities = np.array(probabilities)
+            #probabilities /= probabilities.sum()
+
+            #chosen_cell_index = \
+            #    list(np.random.choice(len(probabilities), 1, p=probabilities))[
+                    #0]
+            #chosen_cell = relative_fodder_list[chosen_cell_index][1]
 
             self.has_moved = True
-
             return chosen_cell
 
         else:
@@ -382,12 +432,13 @@ class Carnivore(Animals):
 
         Returns
         -------
-        bool:
+        bool
             'True' if the carnivore's fitness is greater than the herbivore's,
             and not greater than 'DeltaPhiMax' threshold. 'False' otherwise.
 
         """
-        return 0 < self.fitness - prey.fitness <= self.parameters['DeltaPhiMax']
+        return 0 < self.fitness - prey.fitness <= self.parameters[
+            'DeltaPhiMax']
 
     def chance_of_kill(self, prey):
         """
@@ -400,7 +451,7 @@ class Carnivore(Animals):
 
         Returns
         -------
-        float:
+        float
             Probability of killing prey.
         """
         return (self.fitness - prey.fitness) / self.parameters['DeltaPhiMax']
