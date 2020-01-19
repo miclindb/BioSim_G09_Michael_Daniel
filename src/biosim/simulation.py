@@ -9,6 +9,7 @@ __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
 
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 import textwrap
 import pandas as pd
 import numpy as np
@@ -20,6 +21,8 @@ from src.biosim.animals import Herbivore, Carnivore
 from src.biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
 from src.biosim import cell
 from src.biosim.island import Island
+
+
 
 # update these variables to point to your ffmpeg and convert binaries
 _FFMPEG_BINARY = 'ffmpeg'
@@ -99,15 +102,19 @@ class BioSim:
         self.line_carns = None
         self.line_herbs = None
 
-        self.ax1 = None
-        self.ax2 = None
+        self.map_ax = None
+        self.ani_ax = None
         self.ax3 = None
         self.ax3_bar = None
         self.ax4 = None
         self.ax4_bar = None
         self.title = None
         self.idx = 0
+        self.xdata_herbs = None
+        self.ydata_herbs = None
 
+        self.xdata_carns = None
+        self.ydata_carns = None
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -165,11 +172,12 @@ class BioSim:
         Image files will be numbered consecutively.
         """
 
+        plt.ion()
+
         if img_years is None:
             img_years = vis_years
 
         self._setup_graphics(num_years)
-        self.idx = 0
 
         for _ in range(num_years):
 
@@ -184,159 +192,129 @@ class BioSim:
             self.years_simulated += 1
             self.idx += 1
 
+        self.idx = 0
 
-    def make_movie(self):
-        """Create MPEG4 movie from visualization images saved."""
 
-        """
-        Creates MPEG4 movie from visualization images saved.
-        .. :note:
-            Requires ffmpeg
-        The movie is stored as img_base + movie_fmt
-        """
-
-        if self._img_base is None:
-            raise RuntimeError("No filename defined.")
-
-        if movie_fmt == 'mp4':
-            try:
-                # Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,
-                # section "Compatibility"
-                subprocess.check_call([_FFMPEG_BINARY,
-                                       '-i', '{}_%05d.png'.format(self._img_base),
-                                       '-y',
-                                       '-profile:v', 'baseline',
-                                       '-level', '3.0',
-                                       '-pix_fmt', 'yuv420p',
-                                       '{}.{}'.format(self._img_base,
-                                                      movie_fmt)])
-            except subprocess.CalledProcessError as err:
-                raise RuntimeError('ERROR: ffmpeg failed with: {}'.format(err))
-        elif movie_fmt == 'gif':
-            try:
-                subprocess.check_call([_CONVERT_BINARY,
-                                       '-delay', '1',
-                                       '-loop', '0',
-                                       '{}_*.png'.format(self._img_base),
-                                       '{}.{}'.format(self._img_base,
-                                                      movie_fmt)])
-            except subprocess.CalledProcessError as err:
-                raise RuntimeError('ERROR: convert failed with: {}'.format(err))
-        else:
-            raise ValueError('Unknown movie format: ' + movie_fmt)
 
     def _setup_graphics(self, num_years):
         """Creates subplots."""
 
 
-        if self._fig is None:
-            self._fig = plt.figure(figsize=(10, 8))
+        self._fig = plt.figure(figsize=(20, 10))
 
         if self._ymax_animals is None:
             self._ymax_animals = 20000
 
-        plt.title('Simulation of the Rossum Island')
+        plt.title('')
 
         plt.axis('off')
 
-        self.ax1 = self._fig.add_subplot(2, 2, 1)
-        plt.title('Island map')
+        self._fig.set_tight_layout(True)
 
-        rgb_values = {'O': (0.0, 0.0, 1.0),
-                     'M': (0.5, 0.5, 0.5),
-                     'J': (0.0, 0.6, 0.0),
-                     'S': (0.5, 1.0, 0.5),
-                     'D': (1.0, 1.0, 0.5)}
+        ###################### MAP ########################
+        self.map_ax = self._fig.add_subplot(2, 2, 1)
+        plt.title('Island map', weight='bold', fontsize=20)
+
+        rgb_values = {
+            "O": mcolors.to_rgba("navy"),
+            "J": mcolors.to_rgba("darkgreen"),
+            "S": mcolors.to_rgba("#e1ab62"),
+            "D": mcolors.to_rgba("palegoldenrod"),
+            "M": mcolors.to_rgba("dimgray"),
+        }
 
         rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
 
         rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
                           for row in rgb_island_map]
 
-        #axlg = self._fig.add_axes([0.0, 0.5, 0.025, 0.5])
-        #axlg.axis('off')
+        map_ax_lg = self._fig.add_axes([0.02, 0.65, 0.05, 0.5])
+        map_ax_lg.axis('off')
 
-        #for idx, name in enumerate(('Ocean', 'Mountain', 'Jungle',
-        #                            'Savannah', 'Desert')):
-        #    axlg.add_patch(plt.Rectangle((0., idx * 0.2), 0.3, 0.1,
-        #                                 edgecolor='none',
-        #                                 facecolor=rgb_values[name[0]]))
-        #    axlg.text(0.35, idx * 0.2, name, transform=axlg.transAxes)
+        for idx, name in enumerate(('Ocean', 'Mountain', 'Jungle',
+                                    'Savannah', 'Desert')):
+            map_ax_lg.add_patch(plt.Rectangle((0., idx * 0.1), 0.3, 0.1,
+                                         edgecolor='black',
+                                         facecolor=rgb_values[name[0]]))
+            map_ax_lg.text(0.4, idx * 0.1, name, transform=map_ax_lg.transAxes)
 
-        ####################################################################
+        self.map_ax.imshow(rgb_island_map, interpolation='nearest')
+        self.map_ax.set_xticks(range(0, len(rgb_island_map[0]), 4))
+        self.map_ax.set_xticklabels(range(1, 1 + len(rgb_island_map[0]), 4))
+        self.map_ax.set_yticks(range(0, len(rgb_island_map), 4))
+        self.map_ax.set_yticklabels(range(1, 1 + len(rgb_island_map), 4))
 
-        self.ax1.imshow(rgb_island_map, interpolation='nearest')
-        self.ax1.set_xticks(range(0, len(rgb_island_map[0]), 4))
-        self.ax1.set_xticklabels(range(1, 1 + len(rgb_island_map[0]), 4))
-        self.ax1.set_yticks(range(0, len(rgb_island_map), 4))
-        self.ax1.set_yticklabels(range(1, 1 + len(rgb_island_map), 4))
-
-        # adding subplot for herbivore, carnivore distribution
-
-        self.ax2 = self._fig.add_subplot(2, 2, 2)
+        ################ animal_lines #########################
+        #if self.ani_ax is None:
+        self.ani_ax = self._fig.add_subplot(2, 2, 3)
 
         if self.years_simulated > 0:
-            plt.axis([self.years_simulated, self.years_simulated + num_years, 0,
-                  self._ymax_animals])
+            plt.axis([self.years_simulated, self.years_simulated+num_years, 0, self._ymax_animals])
         else:
-            plt.axis([0, num_years, 0,
-                  self._ymax_animals])
+            plt.axis([0, num_years, 0, self._ymax_animals])
 
-        if self.title is None:
-            self.title = plt.title('')
+        self.title = plt.title('')
 
         #if self.line_herbs is None:
-        self.line_herbs = self.ax2.plot(np.arange(num_years+1), np.nan *
-                              np.ones(num_years+1), 'g-',
-                              label="Herbivores")[0]
+        self.xdata_herbs = np.arange(num_years+1)
+        self.ydata_herbs = np.nan * np.ones(num_years+1)
+
+        self.line_herbs = self.ani_ax.plot(self.xdata_herbs, self.ydata_herbs,
+                                        'g-', label="Herbivores")[0]
         #else:
-        #    self.line_herbs = self.ax2.plot(np.arange(self.years_simulated+1), np.nan *
-        #                          np.ones(self.years_simulated+1), 'r-', label='Herbivores')[0]
+        #    xdata, ydata = self.line_herbs.get_data()
+        #    xnew = np.arange(self.years_simulated, num_years+1)
+        #    if len(xnew) > 0:
+        #        ynew = np.nan * np.ones_like(xnew)
+        #        self.line_herbs.set_data(np.hstack((xdata, xnew)),
+        #                                     np.hstack((ydata, ynew)))
 
         #if self.line_carns is None:
-        self.line_carns = self.ax2.plot(np.arange(num_years+1), np.nan *
-                              np.ones(num_years+1), 'r-', label='Carnivores')[0]
+        self.xdata_carns = np.arange(num_years+1)
+        self.ydata_carns = np.nan * np.ones(num_years+1)
+
+        self.line_carns = self.ani_ax.plot(self.xdata_carns, self.ydata_carns,
+                                        'r-', label='Carnivores')[0]
         #else:
-        #    self.line_carns = self.ax2.plot(np.arange(self.years_simulated+1), np.nan *
-        #                          np.ones(self.years_simulated+1), 'r-', label='Carnivores')[0]
+        #    xdata, ydata = self.line_carns.get_data()
+        #    xnew = np.arange(self.years_simulated, num_years+1)
+        #    if len(xnew) > 0:
+        #        ynew = np.nan * np.ones_like(xnew)
+        #        self.line_carns.set_data(np.hstack((xdata, xnew)),
+        #                                     np.hstack((ydata, ynew)))
+
+        plt.grid()
+        plt.legend(loc=1, prop={'size': 7})
 
 
-        #if self.years_simulated == 0:
-        #    plt.grid()
-        #    plt.legend(loc=1, prop={'size': 7})
-
-        self.ax3 = self._fig.add_subplot(2, 2, 3)
-        plt.title("Herbivore distribution")
+        self.ax3 = self._fig.add_subplot(2, 2, 2)
+        plt.title("Herbivore distribution", weight='bold', fontsize=15)
         self.ax3.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
         self.ax3.set_xticklabels(range(1, 1 + len(self.simulated_island.island_map[0]), 2))
         self.ax3.set_yticks(range(0, len(self.simulated_island.island_map), 2))
         self.ax3.set_yticklabels(range(1, 1 + len(self.simulated_island.island_map), 2))
         self.ax3_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)])
 
-        if self.years_simulated == 0:
-            plt.colorbar(self.ax3_bar, orientation='horizontal', ticks=[])
 
         self.ax4 = self._fig.add_subplot(2, 2, 4)
-        plt.title("Carnivore distribution")
+        plt.title("Carnivore distribution", weight='bold', fontsize=15)
         self.ax4.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
         self.ax4.set_xticklabels(range(1, (1 + len(self.simulated_island.island_map[0])), 2))
         self.ax4.set_yticks(range(0, len(self.simulated_island.island_map), 2))
         self.ax4.set_yticklabels(range(1, (1 + len(self.simulated_island.island_map)), 2))
         self.ax4_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)])
 
-        if self.years_simulated == 0:
-            plt.colorbar(self.ax4_bar, orientation='horizontal', ticks=[])
-
     def _update_graphics(self):
 
         self.ax3.imshow(self.herbivore_island_map(), interpolation='nearest',
-                   cmap=None)
+                   cmap='jet')
 
         self.ax4.imshow(self.carnivore_island_map(), interpolation='nearest',
-                   cmap=None)
+                   cmap='jet')
 
         ydata_herbs = self.line_herbs.get_ydata()
         ydata_carns = self.line_carns.get_ydata()
+
 
         ydata_herbs[self.idx] = self.num_animals_per_species['Herbivore']
         ydata_carns[self.idx] = self.num_animals_per_species['Carnivore']
@@ -344,8 +322,7 @@ class BioSim:
         self.line_herbs.set_ydata(ydata_herbs)
         self.line_carns.set_ydata(ydata_carns)
 
-        self.title.set_text('Year: {:5}'.format(self.years_simulated + 1))
-
+        self.title.set_text('Year: {:5}'.format(self.years_simulated))
 
     def _save_graphics(self):
 
@@ -406,6 +383,46 @@ class BioSim:
 
         return df
 
+    def make_movie(self):
+        """Create MPEG4 movie from visualization images saved."""
+
+        """
+        Creates MPEG4 movie from visualization images saved.
+        .. :note:
+            Requires ffmpeg
+        The movie is stored as img_base + movie_fmt
+        """
+
+        if self._img_base is None:
+            raise RuntimeError("No filename defined.")
+
+        if movie_fmt == 'mp4':
+            try:
+                # Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,
+                # section "Compatibility"
+                subprocess.check_call([_FFMPEG_BINARY,
+                                       '-i', '{}_%05d.png'.format(self._img_base),
+                                       '-y',
+                                       '-profile:v', 'baseline',
+                                       '-level', '3.0',
+                                       '-pix_fmt', 'yuv420p',
+                                       '{}.{}'.format(self._img_base,
+                                                      movie_fmt)])
+            except subprocess.CalledProcessError as err:
+                raise RuntimeError('ERROR: ffmpeg failed with: {}'.format(err))
+        elif movie_fmt == 'gif':
+            try:
+                subprocess.check_call([_CONVERT_BINARY,
+                                       '-delay', '1',
+                                       '-loop', '0',
+                                       '{}_*.png'.format(self._img_base),
+                                       '{}.{}'.format(self._img_base,
+                                                      movie_fmt)])
+            except subprocess.CalledProcessError as err:
+                raise RuntimeError('ERROR: convert failed with: {}'.format(err))
+        else:
+            raise ValueError('Unknown movie format: ' + movie_fmt)
+
 
 if __name__ == '__main__':
     # Simulation with Herbivores and one single landscape cell,
@@ -463,15 +480,15 @@ if __name__ == '__main__':
     )
     sim.set_landscape_parameters("J", {"f_max": 700})
 
-    sim.simulate(num_years=10, vis_years=1, img_years=2)
+    sim.simulate(num_years=10, vis_years=1, img_years=5)
 
     sim.add_population(population=ini_carns)
 
-    sim.simulate(num_years=10, vis_years=1, img_years=2)
+    sim.simulate(num_years=10, vis_years=1, img_years=5)
 
     plt.savefig("check_sim.pdf")
 
-    input("Press ENTER")
+    #input("Press ENTER")
 
     # randvis_project for plotting
 
