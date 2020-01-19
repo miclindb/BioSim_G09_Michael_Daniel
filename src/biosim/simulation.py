@@ -106,6 +106,7 @@ class BioSim:
         self.ax4 = None
         self.ax4_bar = None
         self.title = None
+        self.idx = 0
 
 
     @staticmethod
@@ -168,6 +169,7 @@ class BioSim:
             img_years = vis_years
 
         self._setup_graphics(num_years)
+        self.idx = 0
 
         for _ in range(num_years):
 
@@ -178,9 +180,10 @@ class BioSim:
                 self._save_graphics()
 
             self.simulated_island.island_cycle()
-            plt.pause(1e-7)
 
             self.years_simulated += 1
+            self.idx += 1
+
 
     def make_movie(self):
         """Create MPEG4 movie from visualization images saved."""
@@ -225,18 +228,19 @@ class BioSim:
     def _setup_graphics(self, num_years):
         """Creates subplots."""
 
-        # create new figure window
+
         if self._fig is None:
-            self._fig = plt.figure()
+            self._fig = plt.figure(figsize=(10, 8))
 
         if self._ymax_animals is None:
             self._ymax_animals = 20000
 
+        plt.title('Simulation of the Rossum Island')
 
         plt.axis('off')
 
         self.ax1 = self._fig.add_subplot(2, 2, 1)
-        plt.title('The Rossum Island')
+        plt.title('Island map')
 
         rgb_values = {'O': (0.0, 0.0, 1.0),
                      'M': (0.5, 0.5, 0.5),
@@ -249,15 +253,17 @@ class BioSim:
         rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
                           for row in rgb_island_map]
 
-        axlg = self._fig.add_axes([0.0, 0.5, 0.025, 0.5])
-        axlg.axis('off')
+        #axlg = self._fig.add_axes([0.0, 0.5, 0.025, 0.5])
+        #axlg.axis('off')
 
-        for idx, name in enumerate(('Ocean', 'Mountain', 'Jungle',
-                                    'Savannah', 'Desert')):
-            axlg.add_patch(plt.Rectangle((0., idx * 0.2), 0.3, 0.1,
-                                         edgecolor='none',
-                                         facecolor=rgb_values[name[0]]))
-            axlg.text(0.35, idx * 0.2, name, transform=axlg.transAxes)
+        #for idx, name in enumerate(('Ocean', 'Mountain', 'Jungle',
+        #                            'Savannah', 'Desert')):
+        #    axlg.add_patch(plt.Rectangle((0., idx * 0.2), 0.3, 0.1,
+        #                                 edgecolor='none',
+        #                                 facecolor=rgb_values[name[0]]))
+        #    axlg.text(0.35, idx * 0.2, name, transform=axlg.transAxes)
+
+        ####################################################################
 
         self.ax1.imshow(rgb_island_map, interpolation='nearest')
         self.ax1.set_xticks(range(0, len(rgb_island_map[0]), 4))
@@ -265,32 +271,44 @@ class BioSim:
         self.ax1.set_yticks(range(0, len(rgb_island_map), 4))
         self.ax1.set_yticklabels(range(1, 1 + len(rgb_island_map), 4))
 
+        # adding subplot for herbivore, carnivore distribution
+
         self.ax2 = self._fig.add_subplot(2, 2, 2)
-        plt.axis([self.years_simulated, self.years_simulated, self.years_simulated,
+
+        if self.years_simulated > 0:
+            plt.axis([self.years_simulated, self.years_simulated + num_years, 0,
+                  self._ymax_animals])
+        else:
+            plt.axis([0, num_years, 0,
                   self._ymax_animals])
 
         if self.title is None:
             self.title = plt.title('')
 
-        if self.line_herbs is None:
-            self.line_herbs = self.ax2.plot(np.arange(num_years), np.nan *
-                                  np.ones(num_years), 'g-',
-                                  label="Herbivores")[0]
+        #if self.line_herbs is None:
+        self.line_herbs = self.ax2.plot(np.arange(num_years+1), np.nan *
+                              np.ones(num_years+1), 'g-',
+                              label="Herbivores")[0]
+        #else:
+        #    self.line_herbs = self.ax2.plot(np.arange(self.years_simulated+1), np.nan *
+        #                          np.ones(self.years_simulated+1), 'r-', label='Herbivores')[0]
 
-        if self.line_carns is None:
-            self.line_carns = self.ax2.plot(np.arange(num_years), np.nan *
-                                  np.ones(num_years), 'r-', label='Carnivores')[0]
+        #if self.line_carns is None:
+        self.line_carns = self.ax2.plot(np.arange(num_years+1), np.nan *
+                              np.ones(num_years+1), 'r-', label='Carnivores')[0]
+        #else:
+        #    self.line_carns = self.ax2.plot(np.arange(self.years_simulated+1), np.nan *
+        #                          np.ones(self.years_simulated+1), 'r-', label='Carnivores')[0]
 
 
-
-        if self.years_simulated == 0:
-            plt.grid()
-            plt.legend(loc=1, prop={'size': 7})
+        #if self.years_simulated == 0:
+        #    plt.grid()
+        #    plt.legend(loc=1, prop={'size': 7})
 
         self.ax3 = self._fig.add_subplot(2, 2, 3)
-        plt.title("Herbivores")
-        self.ax3.set_xticks(range(0, len(self.simulated_island.island_map), 2))
-        self.ax3.set_xticklabels(range(1, 1 + len(self.simulated_island.island_map), 2))
+        plt.title("Herbivore distribution")
+        self.ax3.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
+        self.ax3.set_xticklabels(range(1, 1 + len(self.simulated_island.island_map[0]), 2))
         self.ax3.set_yticks(range(0, len(self.simulated_island.island_map), 2))
         self.ax3.set_yticklabels(range(1, 1 + len(self.simulated_island.island_map), 2))
         self.ax3_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)])
@@ -299,9 +317,9 @@ class BioSim:
             plt.colorbar(self.ax3_bar, orientation='horizontal', ticks=[])
 
         self.ax4 = self._fig.add_subplot(2, 2, 4)
-        plt.title("Carnivores")
-        self.ax4.set_xticks(range(0, len(self.simulated_island.island_map), 2))
-        self.ax4.set_xticklabels(range(1, (1 + len(self.simulated_island.island_map)), 2))
+        plt.title("Carnivore distribution")
+        self.ax4.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
+        self.ax4.set_xticklabels(range(1, (1 + len(self.simulated_island.island_map[0])), 2))
         self.ax4.set_yticks(range(0, len(self.simulated_island.island_map), 2))
         self.ax4.set_yticklabels(range(1, (1 + len(self.simulated_island.island_map)), 2))
         self.ax4_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)])
@@ -309,27 +327,25 @@ class BioSim:
         if self.years_simulated == 0:
             plt.colorbar(self.ax4_bar, orientation='horizontal', ticks=[])
 
-
     def _update_graphics(self):
+
         self.ax3.imshow(self.herbivore_island_map(), interpolation='nearest',
                    cmap=None)
-
 
         self.ax4.imshow(self.carnivore_island_map(), interpolation='nearest',
                    cmap=None)
 
-
-        herbs = np.sum(self.herbivore_island_map())
-        carns = np.sum(self.carnivore_island_map())
-
         ydata_herbs = self.line_herbs.get_ydata()
         ydata_carns = self.line_carns.get_ydata()
-        ydata_herbs[self.year] = herbs
-        ydata_carns[self.year-1] = carns
+
+        ydata_herbs[self.idx] = self.num_animals_per_species['Herbivore']
+        ydata_carns[self.idx] = self.num_animals_per_species['Carnivore']
 
         self.line_herbs.set_ydata(ydata_herbs)
         self.line_carns.set_ydata(ydata_carns)
-        self.title.set_text('Year: {:5}'.format(self.year + 1))
+
+        self.title.set_text('Year: {:5}'.format(self.years_simulated + 1))
+
 
     def _save_graphics(self):
 
@@ -447,15 +463,15 @@ if __name__ == '__main__':
     )
     sim.set_landscape_parameters("J", {"f_max": 700})
 
-    sim.simulate(num_years=10, vis_years=1, img_years=5)
+    sim.simulate(num_years=10, vis_years=1, img_years=2)
 
     sim.add_population(population=ini_carns)
 
-    sim.simulate(num_years=10, vis_years=1, img_years=5)
+    sim.simulate(num_years=10, vis_years=1, img_years=2)
 
-    #plt.savefig("check_sim.pdf")
+    plt.savefig("check_sim.pdf")
 
-    #input("Press ENTER")
+    input("Press ENTER")
 
     # randvis_project for plotting
 
