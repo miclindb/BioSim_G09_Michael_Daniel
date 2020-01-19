@@ -248,10 +248,10 @@ class BioSim:
         #if self.ani_ax is None:
         self.ani_ax = self._fig.add_subplot(2, 2, 3)
 
-        if self.years_simulated > 0:
-            plt.axis([self.years_simulated, self.years_simulated+num_years, 0, self._ymax_animals])
-        else:
-            plt.axis([0, num_years, 0, self._ymax_animals])
+        #if self.years_simulated > 0:
+        #    plt.axis([self.years_simulated, self.years_simulated+num_years, 0, self._ymax_animals])
+        #else:
+        plt.axis([0, num_years, 0, self._ymax_animals])
 
         self.title = plt.title('')
 
@@ -275,6 +275,13 @@ class BioSim:
 
         self.line_carns = self.ani_ax.plot(self.xdata_carns, self.ydata_carns,
                                         'r-', label='Carnivores')[0]
+
+        if self.years_simulated > 0:
+            self.ani_ax.set_xticklabels(range(self.years_simulated, self.years_simulated + num_years))
+            self.ani_ax.set_xticks(range(self.years_simulated, self.years_simulated + num_years))
+            
+        else:
+            self.ani_ax.set_xticklabels(np.arange(num_years*2))
         #else:
         #    xdata, ydata = self.line_carns.get_data()
         #    xnew = np.arange(self.years_simulated, num_years+1)
