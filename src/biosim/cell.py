@@ -57,6 +57,42 @@ class Cell:
                 (same_species + 1) * animal_species.parameters['F']
         )
 
+    def herbivore_nearby_fodder(self, relative_fodder_list):
+        """
+        Calculates the the amount of nearby fodder for herbivores.
+        relative_fodder_list is a list containing the amount of fodder for each
+        nearby cell.
+        """
+        for nearby_cell in self.nearby_cells:
+            fodder = nearby_cell.fodder
+            same_species = len(
+                [animal for animal in nearby_cell.population if
+                 isinstance(animal, Herbivore)])
+            relative_fodder = self.calculate_relative_fodder(
+                fodder, Herbivore, same_species
+            )
+            relative_fodder_list.append((relative_fodder, nearby_cell))
+
+    def carnivore_nearby_fodder(self, relative_fodder_list):
+        """
+        Calculates the the amount of nearby fodder for carnivores.
+        relative_fodder_list is a list containing the amount of fodder for each
+        nearby cell.
+        """
+        for nearby_cell in self.nearby_cells:
+            same_species = len(
+                [animal for animal in nearby_cell.population if
+                 isinstance(animal, Carnivore)])
+            nearby_herbivores = [animal for animal in
+                                 nearby_cell.population if
+                                 isinstance(animal, Herbivore)]
+            fodder = sum(
+                [herbivore.weight for herbivore in nearby_herbivores])
+            relative_fodder = self.calculate_relative_fodder(
+                fodder, Carnivore, same_species
+            )
+            relative_fodder_list.append((relative_fodder, nearby_cell))
+
     def nearby_relative_fodder(self, animal):
         """
         Calculates the amount of fodder in nearby cells.
@@ -75,30 +111,10 @@ class Cell:
         relative_fodder_list = []
 
         if isinstance(animal, Herbivore):
-            for nearby_cell in self.nearby_cells:
-                fodder = nearby_cell.fodder
-                same_species = len(
-                    [animal for animal in nearby_cell.population if
-                     isinstance(animal, Herbivore)])
-                relative_fodder = self.calculate_relative_fodder(
-                    fodder, Herbivore, same_species
-                )
-                relative_fodder_list.append((relative_fodder, nearby_cell))
+            self.herbivore_nearby_fodder(relative_fodder_list)
 
         elif isinstance(animal, Carnivore):
-            for nearby_cell in self.nearby_cells:
-                same_species = len(
-                    [animal for animal in nearby_cell.population if
-                     isinstance(animal, Carnivore)])
-                nearby_herbivores = [animal for animal in
-                                     nearby_cell.population if
-                                     isinstance(animal, Herbivore)]
-                fodder = sum(
-                    [herbivore.weight for herbivore in nearby_herbivores])
-                relative_fodder = self.calculate_relative_fodder(
-                    fodder, Carnivore, same_species
-                )
-                relative_fodder_list.append((relative_fodder, nearby_cell))
+            self.carnivore_nearby_fodder(relative_fodder_list)
 
         return relative_fodder_list
 

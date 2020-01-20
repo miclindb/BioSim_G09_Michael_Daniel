@@ -351,7 +351,7 @@ class TestFeedingKilling:
         self.cell_full_fodder = 50.0
         self.cell_limited_fodder = 2.0
 
-        self.nearby_herbivore = [Herbivore()]
+        self.nearby_herbivore = [Herbivore(), Herbivore()]
         self.carnivore = Carnivore(weight=10)
 
         # Setup for low fitness animals
@@ -420,8 +420,7 @@ class TestFeedingKilling:
 
     def test_attempt_all_herbivore_kill(self):
         """
-        Tests that the Carnivore attempts to kill all Herbivores nearby.
-        Q for TA.
+        Tests that the Carnivore attempts to kill all nearby herbivores.
         """
         self.carnivore.get_fitness = 11
         killed = self.carnivore.kill(self.limited_low_fit_herbivores)

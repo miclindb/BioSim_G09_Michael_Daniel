@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+
 """
-A test for cell.py
+Tests for cell module
 """
+
+__author__ = "Michael Lindberg, Daniel Milliam Müller"
+__email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
 import pytest
 from biosim.cell import Cell, Ocean, Mountain, Jungle, Savannah, Desert
@@ -70,7 +74,6 @@ class TestCellOperations:
         the fitness of the animals. The first animal of the list shall have the
         highest fitness.
         """
-
         sorted_from_fitness = self.ocean_cell.sort_population(self.test_pop)
         assert sorted_from_fitness[0].fitness > sorted_from_fitness[1].fitness
 
@@ -89,9 +92,8 @@ class TestCellOperations:
         Test that the nearby_relative_fodder method returns a list of tuples
         with correct values for relative_fodder in nearby_cells.
         """
-        cell = Jungle()
-        cell.population = [Herbivore()]
-        animal = cell.population[0]
+        self.jungle_cell.population = [Herbivore()]
+        animal = self.jungle_cell.population[0]
 
         nearby_1 = Ocean()
         nearby_2 = Jungle()
@@ -101,9 +103,12 @@ class TestCellOperations:
         nearby_2.population = [Herbivore() for _ in range(10)]
         nearby_4.population = [Herbivore() for _ in range(20)]
 
-        cell.nearby_cells = [nearby_1, nearby_2, nearby_3, nearby_4]
+        self.jungle_cell.nearby_cells = [nearby_1,
+                                         nearby_2,
+                                         nearby_3,
+                                         nearby_4]
 
-        relative_fodder_list = cell.nearby_relative_fodder(animal)
+        relative_fodder_list = self.jungle_cell.nearby_relative_fodder(animal)
 
         assert relative_fodder_list == [(0.0, nearby_1),
                                         (float(80/11), nearby_2),
@@ -115,58 +120,46 @@ class TestCellOperations:
         Test if herbivores_in_cell property returns the correct value for
         the number of herbivores in the cell.
         """
-        cell = Savannah()
-        cell.population = [Carnivore(), Carnivore(), Herbivore(), Herbivore(),
-                           Herbivore(), Herbivore()]
-
-        assert cell.herbivores_in_cell == 4
+        self.savannah_cell.population = self.test_pop
+        assert self.savannah_cell.herbivores_in_cell == 3
 
     def test_carnivores_in_cell(self):
         """
         Test if carnivores_in_cell property returns the correct value for
         the number of carnivores in the cell.
         """
-        cell = Desert()
-        cell.population = [Carnivore(), Carnivore(), Herbivore(), Herbivore(),
-                           Herbivore(), Herbivore()]
-
-        assert cell.carnivores_in_cell == 2
+        self.desert_cell.population = self.test_pop
+        assert self.desert_cell.carnivores_in_cell == 1
 
     def test_feeding_population_update(self):
         """
         Test if the feeding method updates the population correctly if at least
         one herbivore is eaten.
         """
-        cell = Jungle()
-        carnivore = Carnivore()
-        carnivore.get_fitness = 11
-
-        cell.population = [Herbivore(), Herbivore(), Herbivore(), carnivore]
-        cell.feeding()
-
-        assert cell.herbivores_in_cell < 3
+        self.single_carn.get_fitness = 11
+        self.jungle_cell.population = [Herbivore(),
+                                       Herbivore(),
+                                       Herbivore(),
+                                       self.single_carn]
+        self.jungle_cell.feeding()
+        assert self.jungle_cell.herbivores_in_cell < 3
 
     def test_feeding_fodder_update(self):
         """
         Test that the fodder in the cell is updated correctly after one
         feeding.
         """
-        cell = Jungle()
-        cell.fodder = 500
-
-        cell.population = [Herbivore() for _ in range(10)]
+        self.jungle_cell.fodder = 500
+        self.jungle_cell.population = [Herbivore() for _ in range(10)]
         Herbivore.parameters['F'] = 20
-
-        cell.feeding()
-
-        assert cell.fodder == 500 - 10 * 20
+        self.jungle_cell.feeding()
+        assert self.jungle_cell.fodder == 500 - 10 * 20
 
     def test_feeding_herbivores(self):
         """
         Tests that 'Herbivore.feed is called an expected number of times for
         herbivores in cell.
         """
-
         self.jungle_cell.population = self.herb_pop
         self.jungle_cell.feeding()
         assert self.mock_feed_herbivore.call_count == 4
@@ -228,12 +221,11 @@ class TestCellOperations:
         population. Also tests that the method Animals.death is called a
         correct number of times.
         """
-
         self.test_pop[0].get_fitness = 0
         self.jungle_cell.population = self.test_pop
         assert len(self.jungle_cell.population) == 4
-        self.jungle_cell.deaths()
 
+        self.jungle_cell.deaths()
         assert len(self.jungle_cell.population) < 4
         assert self.mock_deaths.call_count == 4
 
@@ -337,7 +329,8 @@ class TestLandscapesTypes:
         amount of fodder in the cell right after initializing.
         """
         assert self.savannah_cell.fodder == self.savannah_cell.parameters[
-            'f_max']
+            'f_max'
+        ]
 
     def test_desert_landscape(self):
         """

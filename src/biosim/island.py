@@ -17,7 +17,6 @@ class Island:
     """
 
     def __init__(self, island_map):
-
         """
         Class constructor for island.
 
@@ -27,7 +26,6 @@ class Island:
             String containing information about the island such as shape and
             landscape type.
         """
-
         self.island_map = island_map
         self.landscape_dict = {'M': Mountain,
                                'O': Ocean,
@@ -35,16 +33,23 @@ class Island:
                                'S': Savannah,
                                'D': Desert}
 
-    def map_constructor(self):
+    def construct_vertical_coordinates(self, h_axis):
         """
-        Constructs the map of the island.
+        Constructs the vertical coordinates for the island map.
         """
-        self.island_map = self.island_map.split('\n')
+        for x in range(len(self.island_map[h_axis])):
+            if self.island_map[h_axis][x] not in self.landscape_dict.keys():
+                raise ValueError('Landscape type does not exist')
+            else:
+                self.island_map[h_axis][x] = self.landscape_dict[
+                    self.island_map[h_axis][x]
+                ]()
+                self.island_map[h_axis][x].coordinate = (h_axis, x)
 
-        for n in range(len(self.island_map)):
-            self.island_map[n] = \
-                [character for character in self.island_map[n]]
-
+    def construct_map_coordinates(self):
+        """
+        Construct the coordinates of the island map.
+        """
         for y in range(len(self.island_map)):
             iteration = iter(self.island_map)
             length = len(next(iteration))
@@ -54,14 +59,47 @@ class Island:
                 print(self.island_map[y][0], self.island_map[y][1])
                 raise ValueError('Bad boundary')
 
-            for x in range(len(self.island_map[y])):
-                if self.island_map[y][x] not in self.landscape_dict.keys():
-                    raise ValueError('Landscape type does not exist')
-                else:
-                    self.island_map[y][x] = self.landscape_dict[
-                        self.island_map[y][x]
-                    ]()
-                    self.island_map[y][x].coordinate = (y, x)
+            self.construct_vertical_coordinates(h_axis=y)
+
+    def map_constructor(self):
+        """
+        Constructs the entire map of the island.
+        """
+        self.island_map = self.island_map.split('\n')
+
+        for n in range(len(self.island_map)):
+            self.island_map[n] = \
+                [character for character in self.island_map[n]]
+
+        self.construct_map_coordinates()
+
+    def generate_cell_above(self, x, y, list_of_nearby_cells):
+        """
+        Generates cell above current cell.
+        """
+        cell_1 = self.island_map[y - 1][x]
+        list_of_nearby_cells.append(cell_1)
+
+    def generate_cell_left(self, x, y, list_of_nearby_cells):
+        """
+        Generates cell to the left of current cell.
+        """
+        cell_2 = self.island_map[y][x - 1]
+        list_of_nearby_cells.append(cell_2)
+
+    def generate_cell_below(self, x, y, list_of_nearby_cells):
+        """
+        Generates cell below current cell.
+        """
+        cell_3 = self.island_map[y + 1][x]
+        list_of_nearby_cells.append(cell_3)
+
+    def generate_cell_right(self, x, y, list_of_nearby_cells):
+        """
+        Generates cell to the right of current cell.
+        """
+        cell_4 = self.island_map[y][x + 1]
+        list_of_nearby_cells.append(cell_4)
 
     def generate_nearby_cells(self):
         """
@@ -71,51 +109,51 @@ class Island:
         for y in range(len(self.island_map)):
             for x in range(len(self.island_map[y])):
                 list_of_nearby_cells = []
+
                 if y != 0:
-                    cell_1 = self.island_map[y-1][x]
-                    list_of_nearby_cells.append(cell_1)
+                    self.generate_cell_above(x, y, list_of_nearby_cells)
+
                 if x != 0:
-                    cell_2 = self.island_map[y][x-1]
-                    list_of_nearby_cells.append(cell_2)
+                    self.generate_cell_left(x, y, list_of_nearby_cells)
+
                 if y != len(self.island_map)-1:
-                    cell_3 = self.island_map[y+1][x]
-                    list_of_nearby_cells.append(cell_3)
+                    self.generate_cell_below(x, y, list_of_nearby_cells)
+
                 if x != len(self.island_map[y])-1:
-                    cell_4 = self.island_map[y][x+1]
-                    list_of_nearby_cells.append(cell_4)
+                    self.generate_cell_right(x, y, list_of_nearby_cells)
 
                 self.island_map[y][x].nearby_cells = list_of_nearby_cells
 
-    def add_herbivores(self, animal, animals):
+    def add_herbivores(self, animal, animal_list):
         """
         Adds herbivores to the island population. Used for 'adding_population'
         method.
 
         Parameters
         ----------
-        animal: class object
+        animal: Herbivore
             Herbivore object to be added to the population.
-        animals: list
+        animal_list: list
             List of animals to be added to the population.
         """
-        self.island_map[animals['loc'][0]][
-            animals['loc'][1]].population.append(
+        self.island_map[animal_list['loc'][0]][
+            animal_list['loc'][1]].population.append(
             Herbivore(age=animal['age'], weight=animal['weight']))
 
-    def add_carnivores(self, animal, animals):
+    def add_carnivores(self, animal, animal_list):
         """
         Adds carnivores to the island population. Used for 'adding_population'
         method.
 
         Parameters
         ----------
-        animal: class object
+        animal: Carnivore
             Carnivore object to be added to the population.
-        animals: list
+        animal_list: list
             List of animals to be added to the population.
         """
-        self.island_map[animals['loc'][0]][
-            animals['loc'][1]].population.append(
+        self.island_map[animal_list['loc'][0]][
+            animal_list['loc'][1]].population.append(
             Carnivore(age=animal['age'], weight=animal['weight']))
 
     def adding_population(self, population):

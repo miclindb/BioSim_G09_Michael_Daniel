@@ -8,6 +8,7 @@ __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
 import numpy as np
+import math
 
 
 class Animals:
@@ -93,11 +94,11 @@ class Animals:
         """
         if self.weight <= 0:
             return 0
-        else:  # MATH?
-            return (1 / (1 + np.exp(
+        else:
+            return (1 / (1 + math.exp(
                 self.parameters['phi_age'] * (
                         self.age - self.parameters['a_half'])))) * \
-                   (1 / (1 + np.exp(-(self.parameters['phi_weight'] *
+                   (1 / (1 + math.exp(-(self.parameters['phi_weight'] *
                                       (self.weight - self.parameters[
                                           'w_half'])))))
 
@@ -489,7 +490,7 @@ class Carnivore(Animals):
         number_of_nearby_herbivores = len(nearby_herbivores)
 
         for herbivore in nearby_herbivores:
-            if eaten < self.parameters['F'] and \
+            while eaten < self.parameters['F'] and \
                     kill_attempts <= number_of_nearby_herbivores:
                 if self.fitness <= herbivore.fitness:
                     chance = 0

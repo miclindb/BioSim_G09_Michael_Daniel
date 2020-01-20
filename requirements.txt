@@ -3,6 +3,7 @@ matplotlib
 pandas
 numpy
 pytest
+pytest-mock
 tox
 black
 isort
