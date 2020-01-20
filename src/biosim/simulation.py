@@ -115,6 +115,13 @@ class BioSim:
 
         self.counter_ax = None
         self.map_herb = None
+        self.map_carn = None
+        self.herb_count = None
+        self.carn_count = None
+        self.herb_txt = None
+        self.carn_txt = None
+        self.carn_template = None
+        self.herb_template = None
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -172,7 +179,7 @@ class BioSim:
         Image files will be numbered consecutively.
         """
 
-        #plt.ion()
+        plt.ion()
 
         if img_years is None:
             img_years = vis_years
@@ -182,7 +189,7 @@ class BioSim:
         for _ in range(num_years):
 
             if self.year % vis_years == 0:
-                self._update_graphics()
+                self._update_graphics(num_years)
 
             if self.year % img_years == 0:
                 self._save_graphics()
@@ -191,45 +198,100 @@ class BioSim:
 
             self.years_simulated += 1
             self.idx += 1
-            #plt.pause(1e-6)
+            plt.pause(1e-6)
 
         self.idx = 0
 
+    def _setup_graphics(self, num_years):
+        """
+        Graphical setup for visualization of the simulation.
+
+        Parameters
+        ----------
+        num_years: int
+            The number of years to be simulated.
+        """
+
+        self._img_base = '/users/michaellindberg/desktop/bspics/'
+
+        if self._fig is None:
+            self._fig = plt.figure(figsize=(20, 10))
+
+        if self._ymax_animals is None:
+            self._ymax_animals = 20000
+
+        plt.title('')
+
+        plt.axis('off')
+
+        self._map_setup()
+        self._graph_setup(num_years)
+        self._heat_map_setup()
+        self._herb_count_setup()
+        self._carn_count_setup()
+
+    def _herb_count_setup(self):
+        if self.herb_count is None:
+            self.herb_count = self._fig.add_axes([0.70, 0.48, 0.2, 0.2])
+            self.herb_count.axis('off')
+            self.herb_template = 'Total number of herbivores: {:8}'
+            self.herb_txt = self.herb_count.text(0.5, 0.5, self.herb_template.format(0),
+                                       horizontalalignment='center',
+                                       verticalalignment='center',
+                                       transform=self.herb_count.transAxes)
+            self.herb_txt.set_text(self.herb_template.format(self.num_animals_per_species['Herbivore']))
+
+    def _carn_count_setup(self):
+        if self.carn_count is None:
+            self.carn_count = self._fig.add_axes([0.70, 0.38, 0.2, 0.2])
+            self.carn_count.axis('off')
+            self.carn_template = 'Total number of carnivores: {:8}'
+            self.carn_txt = self.carn_count.text(0.5, 0.5, self.carn_template.format(0),
+                                       horizontalalignment='center',
+                                       verticalalignment='center',
+                                       transform=self.carn_count.transAxes)
+            self.carn_txt.set_text(self.carn_template.format(self.num_animals_per_species['Carnivore']))
+
+    def _herb_count_update(self):
+        self.herb_txt.set_text(self.herb_template.format(self.num_animals_per_species['Herbivore']))
+
+    def _carn_count_update(self):
+        self.carn_txt.set_text(self.carn_template.format(self.num_animals_per_species['Carnivore']))
+
     def _map_setup(self):
 
-        self.map_ax = self._fig.add_axes([0.02, 0.55, 0.5, 0.4]) #_fig.add_axes([0.02, 0.65, 0.05, 0.5])
-        plt.title('Island map', weight='bold', fontsize=20)
-        #plt.grid()
+        if self.map_ax is None:
+            self.map_ax = self._fig.add_axes([0.02, 0.58, 0.45, 0.35])
+            plt.title('Island map', weight='bold', fontsize=20)
 
-        rgb_values = {
-            "O": mcolors.to_rgba("navy"),
-            "J": mcolors.to_rgba("darkgreen"),
-            "S": mcolors.to_rgba("#e1ab62"),
-            "D": mcolors.to_rgba("palegoldenrod"),
-            "M": mcolors.to_rgba("dimgray"),
-        }
+            rgb_values = {
+                "O": mcolors.to_rgba("navy"),
+                "J": mcolors.to_rgba("darkgreen"),
+                "S": mcolors.to_rgba("#e1ab62"),
+                "D": mcolors.to_rgba("palegoldenrod"),
+                "M": mcolors.to_rgba("dimgray"),
+            }
 
-        rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
+            rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
 
-        rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
-                          for row in rgb_island_map]
+            rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
+                              for row in rgb_island_map]
 
-        map_ax_lg = self._fig.add_axes([0.02, 0.65, 0.05, 0.5])
-        map_ax_lg.axis('off')
+            map_ax_lg = self._fig.add_axes([0.45, 0.7, 0.05, 0.3])
+            map_ax_lg.axis('off')
 
-        for idx, name in enumerate(('Ocean', 'Mountain', 'Jungle',
-                                    'Savannah', 'Desert')):
-            map_ax_lg.add_patch(plt.Rectangle((0., idx * 0.1), 0.3, 0.1,
-                                         edgecolor='black',
-                                         facecolor=rgb_values[name[0]]))
-            map_ax_lg.text(0.4, idx * 0.1, name, transform=map_ax_lg.transAxes)
+            for idx, name in enumerate(('Ocean', 'Mountain', 'Jungle',
+                                        'Savannah', 'Desert')):
+                map_ax_lg.add_patch(plt.Rectangle((0.02, idx * 0.1), 0.3, 0.1,
+                                             edgecolor='black',
+                                             facecolor=rgb_values[name[0]]))
+                map_ax_lg.text(0.4, idx * 0.1, name, transform=map_ax_lg.transAxes)
 
-        self.map_ax.imshow(rgb_island_map, interpolation='nearest')
-        self.map_ax.set_xticks(range(0, len(rgb_island_map[0]), 4))
-        self.map_ax.set_xticklabels(range(1, 1 + len(rgb_island_map[0]), 4))
-        self.map_ax.set_yticks(range(0, len(rgb_island_map), 4))
-        self.map_ax.set_yticklabels(range(1, 1 + len(rgb_island_map), 4))
-
+            self.map_ax.imshow(rgb_island_map, interpolation='nearest')
+            self.map_ax.set_xticks(range(0, len(rgb_island_map[0]), 4))
+            self.map_ax.set_xticklabels(range(1, 1 + len(rgb_island_map[0]), 4))
+            self.map_ax.set_yticks(range(0, len(rgb_island_map), 4))
+            self.map_ax.set_yticklabels(range(1, 1 + len(rgb_island_map), 4))
 
     def _graph_setup(self, num_years):
         """
@@ -242,134 +304,115 @@ class BioSim:
             The number of years to be simulated.
 
         """
+        if self.ani_ax is not None:
+            if self.idx == 0:
+                self._fig.delaxes(self.ani_ax)
 
-        self.ani_ax = self._fig.add_axes([0.05, 0.05, 0.45, 0.4])
+        if self.ani_ax is None or self.idx == 0:
+            self.ani_ax = self._fig.add_axes([0.07, 0.07, 0.45, 0.4])
 
-        plt.axis([0, num_years, 0, self._ymax_animals])
+            plt.axis([0, num_years, 0, self._ymax_animals])
 
-        self.title = plt.title('', weight='bold')
+            self.title = plt.title('', weight='bold')
 
-        self.xdata_herbs = np.arange(num_years + 1)
-        self.ydata_herbs = np.nan * np.ones(num_years + 1)
+            self.xdata_herbs = np.arange(num_years + 1)
+            self.ydata_herbs = np.nan * np.ones(num_years + 1)
 
-        self.line_herbs = self.ani_ax.plot(self.xdata_herbs, self.ydata_herbs,
-                                           'g-', label="Herbivores", linewidth=5.0)[0]
+            self.line_herbs = self.ani_ax.plot(self.xdata_herbs, self.ydata_herbs,
+                                               'b-', label="Herbivores", linewidth=3.0)[0]
 
-        self.xdata_carns = np.arange(num_years + 1)
-        self.ydata_carns = np.nan * np.ones(num_years + 1)
+            self.xdata_carns = np.arange(num_years + 1)
+            self.ydata_carns = np.nan * np.ones(num_years + 1)
 
-        self.line_carns = self.ani_ax.plot(self.xdata_carns, self.ydata_carns,
-                                           'r-', label='Carnivores', linewidth=5.0)[0]
+            self.line_carns = self.ani_ax.plot(self.xdata_carns, self.ydata_carns,
+                                               'r-', label='Carnivores', linewidth=3.0)[0]
+
+            plt.grid()
+            plt.legend(loc=1, prop={'size': 13})
 
         if self.year > 0:
-            self.ani_ax.set_xticks(np.arange(num_years))
+            self.ani_ax.set_xticks(np.arange(num_years+1))
             self.ani_ax.set_xticklabels(
-                np.arange(self.year, num_years + self.year))
+                np.arange(self.year, num_years + self.year+1))
 
         else:
-            self.ani_ax.set_xticks(np.arange(num_years))
-            self.ani_ax.set_xticklabels(np.arange(num_years))
-
-        plt.grid()
-        plt.legend(loc=1, prop={'size': 13})
+            self.ani_ax.set_xticks(np.arange(num_years+1))
+            self.ani_ax.set_xticklabels(np.arange(num_years+1))
 
     def _heat_map_setup(self):
         """
         Setup for the heat maps for herbivore and carnivore distribution.
         """
+        if self.herb_heat is None:
+            self.herb_heat = self._fig.add_axes([0.55, 0.65, 0.5, 0.3])
+            plt.title("Herbivore distribution", weight='bold', fontsize=15)
+            self.herb_heat.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
+            self.herb_heat.set_xticklabels(range(1, 1 + len(self.simulated_island.island_map[0]), 2))
+            self.herb_heat.set_yticks(range(0, len(self.simulated_island.island_map), 2))
+            self.herb_heat.set_yticklabels(range(1, 1 + len(self.simulated_island.island_map), 2))
+            self.herb_heat_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)], cmap='jet', alpha=0.5, zorder=2)
 
-        self.herb_heat = self._fig.add_axes([0.5, 0.55, 0.6, 0.4])
-        plt.title("Herbivore distribution", weight='bold', fontsize=15)
-        self.herb_heat.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
-        self.herb_heat.set_xticklabels(range(1, 1 + len(self.simulated_island.island_map[0]), 2))
-        self.herb_heat.set_yticks(range(0, len(self.simulated_island.island_map), 2))
-        self.herb_heat.set_yticklabels(range(1, 1 + len(self.simulated_island.island_map), 2))
-        self.herb_heat_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)], cmap='jet', alpha=0.5, zorder=2)
+            cbaxes = self._fig.add_axes([0.59, 0.65, 0.01, 0.3])
+            plt.colorbar(self.herb_heat_bar, cax=cbaxes, orientation='vertical', ticks=[])
 
-        cbaxes = self._fig.add_axes([0.6, 0.60, 0.01, 0.3])
-        plt.colorbar(self.herb_heat_bar, cax=cbaxes, orientation='vertical', ticks=[])
+            self._herb_map_setup()
 
-        self.map_herb = self._fig.add_axes([0.5, 0.55, 0.6, 0.4])
-        rgb_values = {
-            "O": mcolors.to_rgba("cornflowerblue"),
-            "J": mcolors.to_rgba("lightgreen"),
-            "S": mcolors.to_rgba("linen"),
-            "D": mcolors.to_rgba("lightyellow"),
-            "M": mcolors.to_rgba("gainsboro"),
-        }
-        rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
-        rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
-                          for row in rgb_island_map]
-        self.map_herb.imshow(rgb_island_map, interpolation='nearest', alpha=0.2, zorder=3)
+        if self.carn_heat is None:
+            self.carn_heat = self._fig.add_axes([0.55, 0.10, 0.5, 0.3])
+            plt.title("Carnivore distribution", weight='bold', fontsize=15)
+            self.carn_heat.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
+            self.carn_heat.set_xticklabels(range(1, (1 + len(self.simulated_island.island_map[0])), 2))
+            self.carn_heat.set_yticks(range(0, len(self.simulated_island.island_map), 2))
+            self.carn_heat.set_yticklabels(range(1, (1 + len(self.simulated_island.island_map)), 2))
+            self.carn_heat_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)], cmap='jet', alpha=0.5, zorder=2)
 
+            cbaxes = self._fig.add_axes([0.59, 0.10, 0.01, 0.3])
+            plt.colorbar(self.carn_heat_bar, cax=cbaxes, orientation='vertical', ticks=[])
 
-        self.carn_heat = self._fig.add_axes([0.5, 0.05, 0.6, 0.4])
-        plt.title("Carnivore distribution", weight='bold', fontsize=15)
-        self.carn_heat.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
-        self.carn_heat.set_xticklabels(range(1, (1 + len(self.simulated_island.island_map[0])), 2))
-        self.carn_heat.set_yticks(range(0, len(self.simulated_island.island_map), 2))
-        self.carn_heat.set_yticklabels(range(1, (1 + len(self.simulated_island.island_map)), 2))
-        self.carn_heat_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)], cmap='jet', alpha=0.5, zorder=2)
-        cbaxes = self._fig.add_axes([0.6, 0.10, 0.01, 0.3])
-        plt.colorbar(self.carn_heat_bar, cax=cbaxes, orientation='vertical', ticks=[])
+            self._carn_map_setup()
 
-        self.map_herb = self._fig.add_axes([0.5, 0.05, 0.6, 0.4])
-        rgb_values = {
-            "O": mcolors.to_rgba("cornflowerblue"),
-            "J": mcolors.to_rgba("lightgreen"),
-            "S": mcolors.to_rgba("linen"),
-            "D": mcolors.to_rgba("lightyellow"),
-            "M": mcolors.to_rgba("gainsboro"),
-        }
-        rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
-        rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
-                          for row in rgb_island_map]
-        self.map_herb.imshow(rgb_island_map, interpolation='nearest', alpha=0.2, zorder=3)
+    def _carn_map_setup(self):
+        if self.map_carn is None:
+            self.map_carn = self._fig.add_axes([0.55, 0.10, 0.5, 0.3])
+            rgb_values = {
+                "O": mcolors.to_rgba("cornflowerblue"),
+                "J": mcolors.to_rgba("lightgreen"),
+                "S": mcolors.to_rgba("linen"),
+                "D": mcolors.to_rgba("lightyellow"),
+                "M": mcolors.to_rgba("gainsboro"),
+            }
+            rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
+            rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
+                              for row in rgb_island_map]
+            self.map_carn.imshow(rgb_island_map, interpolation='nearest', alpha=0.2, zorder=3)
 
+    def _herb_map_setup(self):
+        if self.map_herb is None:
 
-    def _setup_graphics(self, num_years):
-        """
-        Graphical setup for visualization of the simulation.
+            self.map_herb = self._fig.add_axes([0.55, 0.65, 0.5, 0.3])
+            rgb_values = {
+                "O": mcolors.to_rgba("cornflowerblue"),
+                "J": mcolors.to_rgba("lightgreen"),
+                "S": mcolors.to_rgba("linen"),
+                "D": mcolors.to_rgba("lightyellow"),
+                "M": mcolors.to_rgba("gainsboro"),
+            }
+            rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
+            rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
+                              for row in rgb_island_map]
+            self.map_herb.imshow(rgb_island_map, interpolation='nearest', alpha=0.2, zorder=3)
 
-        Parameters
-        ----------
-        num_years: int
-            The number of years to be simulated.
-        """
-
-        self._img_base = 'sim'
-
-        self._fig = plt.figure(figsize=(20, 10))
-
-        if self._ymax_animals is None:
-            self._ymax_animals = 20000
-
-        plt.title('')
-
-        plt.axis('off')
-
-        self._map_setup()
-        self._graph_setup(num_years)
-        self._heat_map_setup()
-
-        self.counter_ax = self._fig.add_axes([0.4, 0.8, 0.2, 0.2])
-        self.counter_ax.axis('off')
-        template = 'Count: {:5}'
-        txt = self.counter_ax.text(0.5, 0.5, template.format(0),
-                 horizontalalignment='center',
-                 verticalalignment='center',
-                 transform=self.counter_ax.transAxes)
-
-        txt.set_text(template.format(self.year))
-
-    def _update_graphics(self):
+    def _update_graphics(self, num_years):
         """
         Updating graphics in the figure (self._fig). This is run for each
         iteration in the simulation loop.
         """
 
         self._update_heat_map()
-        self._update_graph()
+        self._update_graph(num_years)
+        self._herb_count_update()
+        self._carn_count_update()
+        # self._update_counter()
 
     def _update_heat_map(self):
         """
@@ -381,16 +424,21 @@ class BioSim:
         self.carn_heat.imshow(self.carnivore_island_map(), interpolation='nearest',
                    cmap='jet')
 
-    def _update_graph(self):
+    def _update_graph(self, num_years):
         """
         Updating the graphs showing the number of carnivores and herbivores
         for each year in the simulation.
         """
+
         ydata_herbs = self.line_herbs.get_ydata()
         ydata_carns = self.line_carns.get_ydata()
 
         ydata_herbs[self.idx] = self.num_animals_per_species['Herbivore']
         ydata_carns[self.idx] = self.num_animals_per_species['Carnivore']
+
+        #if self.year == 0:
+        #    ydata_herbs = np.full(num_years+1, np.nan)
+        #    ydata_carns = np.full(num_years+1, np.nan)
 
         self.line_herbs.set_ydata(ydata_herbs)
         self.line_carns.set_ydata(ydata_carns)
@@ -539,11 +587,11 @@ if __name__ == '__main__':
     )
     sim.set_landscape_parameters("J", {"f_max": 700})
 
-    sim.simulate(num_years=10, vis_years=1, img_years=3)
+    sim.simulate(num_years=10, vis_years=1, img_years=5)
 
     sim.add_population(population=ini_carns)
 
-    sim.simulate(num_years=10, vis_years=1, img_years=3)
+    sim.simulate(num_years=10, vis_years=1, img_years=5)
 
     plt.savefig("check_sim.pdf")
 
