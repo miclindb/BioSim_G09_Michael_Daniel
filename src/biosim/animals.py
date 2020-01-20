@@ -365,6 +365,9 @@ class Herbivore(Animals):
     }
 
     def __init__(self, age=0, weight=None):
+        """
+        Herbivore initializer.
+        """
         super(Herbivore, self).__init__(age, weight)
 
     def feed(self, cell_fodder_info):
@@ -421,6 +424,9 @@ class Carnivore(Animals):
     }
 
     def __init__(self, age=0, weight=None):
+        """
+        Carnivore initializer.
+        """
         super(Carnivore, self).__init__(age, weight)
 
     def fitness_greater_than_prey(self, prey):

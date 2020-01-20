@@ -7,24 +7,17 @@ Cell Module
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
-from src.biosim.animals import Herbivore, Carnivore
-import pandas as pd
-import numpy as np
+from biosim.animals import Herbivore, Carnivore
 
 
 class Cell:
     """
     Superclass for all cell types.
     """
+
     def __init__(self):
         """
         Constructor for cells.
-
-        Parameters
-        ----------
-        coordinate: tuple
-            For which two- dimensional coordinate value the cell is
-            constructed. Default value is (0, 0).
         """
         self.coordinate = ()
         self.fodder = 0
@@ -33,47 +26,110 @@ class Cell:
 
     @staticmethod
     def sort_population(population):
-        sorted_population = sorted(population, key=lambda x: x.fitness,
-                                 reverse=True)
+        """
+        Sorts a list of animals by their fitness in descending order.
+        """
+        sorted_population = sorted(
+            population, key=lambda x: x.fitness, reverse=True
+        )
         return sorted_population
 
     @staticmethod
-    def calculate_relative_fodder(fodder, animal_species, number_of_same_species):
-        return fodder / ((number_of_same_species + 1) * animal_species.parameters['F'])
+    def calculate_relative_fodder(fodder, animal_species, same_species):
+        """
+        Calculates amount of relative fodder in a cell.
+
+        Parameters
+        ----------
+        fodder: float
+            fodder in cell
+        animal_species: Animal
+            Type of animal
+        same_species: int
+            Number of same species animals in cell
+
+        Returns
+        -------
+        float:
+            Amount of relative fodder in cell.
+        """
+        return fodder / (
+                (same_species + 1) * animal_species.parameters['F']
+        )
 
     def nearby_relative_fodder(self, animal):
+        """
+        Calculates the amount of fodder in nearby cells.
+
+        Parameters
+        ----------
+        animal: Class object
+            Either a class instance of Herbivore or Carnivore
+
+        Returns
+        -------
+        relative_fodder_list: list
+            List containing relative fodder in nearby cells and cell type of
+            nearby cells.
+
+        """
         relative_fodder_list = []
 
         if isinstance(animal, Herbivore):
             for nearby_cell in self.nearby_cells:
                 fodder = nearby_cell.fodder
-                number_of_same_species = len([animal for animal in nearby_cell.population if isinstance(animal, Herbivore)])
-                relative_fodder = self.calculate_relative_fodder(fodder, Herbivore, number_of_same_species)
+                number_of_same_species = len(
+                    [animal for animal in nearby_cell.population if
+                     isinstance(animal, Herbivore)])
+                relative_fodder = self.calculate_relative_fodder(fodder,
+                                                                 Herbivore,
+                                                                 number_of_same_species)
                 relative_fodder_list.append((relative_fodder, nearby_cell))
 
         elif isinstance(animal, Carnivore):
             for nearby_cell in self.nearby_cells:
-                number_of_same_species = len([animal for animal in nearby_cell.population if isinstance(animal, Carnivore)])
-                nearby_herbivores = [animal for animal in nearby_cell.population if isinstance(animal, Herbivore)]
-                fodder = sum([herbivore.weight for herbivore in nearby_herbivores])
-                relative_fodder = self.calculate_relative_fodder(fodder, Carnivore, number_of_same_species)
+                number_of_same_species = len(
+                    [animal for animal in nearby_cell.population if
+                     isinstance(animal, Carnivore)])
+                nearby_herbivores = [animal for animal in
+                                     nearby_cell.population if
+                                     isinstance(animal, Herbivore)]
+                fodder = sum(
+                    [herbivore.weight for herbivore in nearby_herbivores])
+                relative_fodder = self.calculate_relative_fodder(fodder,
+                                                                 Carnivore,
+                                                                 number_of_same_species)
                 relative_fodder_list.append((relative_fodder, nearby_cell))
 
         return relative_fodder_list
 
     @property
     def herbivores_in_cell(self):
-        herbivores = [animal for animal in self.population if isinstance(animal, Herbivore)]
+        herbivores = [animal for animal in self.population if
+                      isinstance(animal, Herbivore)]
         return len(herbivores)
 
     @property
     def carnivores_in_cell(self):
-        carnivores = [animal for animal in self.population if isinstance(animal, Carnivore)]
+        carnivores = [animal for animal in self.population if
+                      isinstance(animal, Carnivore)]
         return len(carnivores)
 
+    # @classmethod
+    # def sort_animal(cls, animal_type):
+    #    return cls.sort_population(
+    #        [animal for animal in cls.population if isinstance(
+    #            animal, animal_type
+    #        )]
+    #    )
+
     def feeding(self):
-        sorted_herbivores = self.sort_population([animal for animal in self.population if isinstance(animal, Herbivore)])
-        sorted_carnivores = self.sort_population([animal for animal in self.population if isinstance(animal, Carnivore)])
+        sorted_herbivores = self.sort_population(
+            [animal for animal in self.population if
+             isinstance(animal, Herbivore)])
+        sorted_carnivores = self.sort_population(
+            [animal for animal in self.population if
+             isinstance(animal, Carnivore)])
         self.population = sorted_herbivores + sorted_carnivores
 
         nearby_herbivores = sorted_herbivores
@@ -85,29 +141,21 @@ class Cell:
             else:
                 killed_herbivores = animal.kill(nearby_herbivores)
 
-            nearby_herbivores = [herbivore for herbivore in nearby_herbivores if herbivore not in killed_herbivores]
+            nearby_herbivores = [herbivore for herbivore in nearby_herbivores
+                                 if herbivore not in killed_herbivores]
         self.population = nearby_herbivores + sorted_carnivores
 
     def procreate(self):
         """
         Annual birth.
-
-        Parameters
-        ----------
-        n: int
-            Number of nearby animals.
-        animal_object: class object
-            Object of the animal.
-
-        Returns: Bool or class object
-            False if birth is unsuccessful
-            class object if a new baby is successfully born.
-        -------
-
         """
         new_born_animals = []
         for animal in self.population:
-            nearby_same_species = len([ani for ani in self.population if isinstance(ani, type(animal))])
+            nearby_same_species = len(
+                [ani for ani in self.population if isinstance(
+                    ani, type(animal)
+                )]
+            )
             birth = animal.gives_birth(nearby_same_species)
 
             if birth is not None:
@@ -132,7 +180,8 @@ class Cell:
         for migration in migrations:
             migrating_animals.append(migration[0])
 
-        self.population = [animal for animal in self.population if animal not in migrating_animals]
+        self.population = [animal for animal in self.population if
+                           animal not in migrating_animals]
         for migration in migrations:
             migration[1].population.append(migration[0])
 
@@ -149,13 +198,15 @@ class Cell:
         for animal in self.population:
             if animal.death():
                 dead_animals.append(animal)
-        self.population = [animal for animal in self.population if animal not in dead_animals]
+        self.population = [animal for animal in self.population if
+                           animal not in dead_animals]
 
     def fodder_growth(self):
         if isinstance(self, Jungle):
             self.fodder = self.parameters['f_max']
         elif isinstance(self, Savannah):
-            self.fodder = self.fodder + self.parameters['alpha'] * (self.parameters['f_max'] - self.fodder)
+            self.fodder = self.fodder + self.parameters['alpha'] * (
+                    self.parameters['f_max'] - self.fodder)
 
 
 class Ocean(Cell):

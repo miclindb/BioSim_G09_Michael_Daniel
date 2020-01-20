@@ -14,8 +14,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Animals" href="animals.html" />
-    <link rel="prev" title="Island" href="island.html" />
+    <link rel="prev" title="Animals" href="animals.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -32,8 +31,779 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="cell">
-<h1>Cell<a class="headerlink" href="#cell" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-biosim.cell">
+<span id="cell"></span><h1>Cell<a class="headerlink" href="#module-biosim.cell" title="Permalink to this headline">¶</a></h1>
+<p>Cell Module</p>
+<dl class="class">
+<dt id="biosim.cell.Cell">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Cell</code><a class="reference internal" href="_modules/biosim/cell.html#Cell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Superclass for all cell types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Cell.calculate_relative_fodder" title="biosim.cell.Cell.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Cell.nearby_relative_fodder" title="biosim.cell.Cell.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Cell.procreate" title="biosim.cell.Cell.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Cell.sort_population" title="biosim.cell.Cell.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Constructor for cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Cell.calculate_relative_fodder" title="biosim.cell.Cell.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Cell.nearby_relative_fodder" title="biosim.cell.Cell.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Cell.procreate" title="biosim.cell.Cell.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Cell.sort_population" title="biosim.cell.Cell.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="biosim.cell.Cell.calculate_relative_fodder">
+<em class="property">static </em><code class="sig-name descname">calculate_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">fodder</em>, <em class="sig-param">animal_species</em>, <em class="sig-param">same_species</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/cell.html#Cell.calculate_relative_fodder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Cell.calculate_relative_fodder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates amount of relative fodder in a cell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fodder</strong> (<em>float</em>) – fodder in cell</p></li>
+<li><p><strong>animal_species</strong> (<em>Animal</em>) – Type of animal</p></li>
+<li><p><strong>same_species</strong> (<em>int</em>) – Number of same species animals in cell</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Amount of relative fodder in cell.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.Cell.nearby_relative_fodder">
+<code class="sig-name descname">nearby_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">animal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/cell.html#Cell.nearby_relative_fodder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Cell.nearby_relative_fodder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the amount of fodder in nearby cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>animal</strong> (<em>Class object</em>) – Either a class instance of Herbivore or Carnivore</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>relative_fodder_list</strong> – List containing relative fodder in nearby cells.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.Cell.procreate">
+<code class="sig-name descname">procreate</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/cell.html#Cell.procreate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Cell.procreate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Annual birth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) – Number of nearby animals.</p></li>
+<li><p><strong>animal_object</strong> (<em>class object</em>) – Object of the animal.</p></li>
+<li><p><strong>Returns</strong> (<em>Bool</em><em> or </em><em>class object</em>) – False if birth is unsuccessful
+class object if a new baby is successfully born.</p></li>
+<li><p><strong>-------</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="biosim.cell.Cell.sort_population">
+<em class="property">static </em><code class="sig-name descname">sort_population</code><span class="sig-paren">(</span><em class="sig-param">population</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/cell.html#Cell.sort_population"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Cell.sort_population" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sorts a list of animals by their fitness in descending order.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="biosim.cell.Desert">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Desert</code><a class="reference internal" href="_modules/biosim/cell.html#Desert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Desert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cell subclass for all desert landscape types.
+Desert landscape can be traversed and contains no fodder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Constructor for cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="biosim.cell.Jungle">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Jungle</code><a class="reference internal" href="_modules/biosim/cell.html#Jungle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Jungle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cell subclass for all jungle landscape types.
+Jungle landscape can be traversed and available food is fully replenished
+every year.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Constructor for cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="biosim.cell.Mountain">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Mountain</code><a class="reference internal" href="_modules/biosim/cell.html#Mountain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Mountain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cell subclass for all mountain landscape types.
+Mountain landscape cannot be traversed and contains no food.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Constructor for cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="biosim.cell.Ocean">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Ocean</code><a class="reference internal" href="_modules/biosim/cell.html#Ocean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Ocean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cell subclass for all ocean landscape types.
+Ocean landscape cannot be traversed and contains no food.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Constructor for cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="biosim.cell.Savannah">
+<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Savannah</code><a class="reference internal" href="_modules/biosim/cell.html#Savannah"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Savannah" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cell subclass for all savannah landscape types.
+Savannah landscape can be traversed and a portion of maximum available food
+is replenished every year.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Constructor for cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>carnivores_in_cell</strong></dt><dd></dd>
+<dt><strong>herbivores_in_cell</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code>(fodder, …)</p></td>
+<td><p>Calculates amount of relative fodder in a cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code>(self, animal)</p></td>
+<td><p>Calculates the amount of fodder in nearby cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code>(self)</p></td>
+<td><p>Annual birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code>(population)</p></td>
+<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>aging</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>deaths</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>feeding</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>fodder_growth</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>loss_of_weight</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>migration</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 
@@ -57,16 +827,15 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="island.html">Island</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Cell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="animals.html">Animals</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cell</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="island.html" title="previous chapter">Island</a></li>
-      <li>Next: <a href="animals.html" title="next chapter">Animals</a></li>
+      <li>Previous: <a href="animals.html" title="previous chapter">Animals</a></li>
   </ul></li>
 </ul>
 </div>

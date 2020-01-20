@@ -1,5 +1,5 @@
 Simulation
 =========
 
-.. automodule:: simulation
+.. automodule:: biosim.simulation
    :members:

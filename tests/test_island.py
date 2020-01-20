@@ -9,9 +9,9 @@ __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
 import textwrap
 import pytest
-from src.biosim.island import Island
-from src.biosim.cell import Cell, Desert
-from src.biosim.animals import Herbivore, Carnivore
+from biosim.island import Island
+from biosim.cell import Cell, Desert
+from biosim.animals import Herbivore, Carnivore
 
 
 class TestIsland:
@@ -296,11 +296,10 @@ class TestIslandCycles:
     def test_island_migration(self):
         """
         Tests that migration has been successfully called for all cells.
-        Also tests that 'has_moved' is reset to false for all cells.
         """
         self.island.map_constructor()
         self.island.island_migration()
-        assert self.mock_migration.call_count == 60
+        assert self.mock_migration.call_count == 30
 
     def test_island_aging_calls(self):
         """
@@ -338,7 +337,7 @@ class TestIslandCycles:
         assert self.mock_fodder_growth.call_count == 30
         assert self.mock_feeding.call_count == 30
         assert self.mock_procreate.call_count == 30
-        assert self.mock_migration.call_count == 60
+        assert self.mock_migration.call_count == 30
         assert self.mock_aging.call_count == 30
         assert self.mock_loss_of_weight.call_count == 30
         assert self.mock_deaths.call_count == 30

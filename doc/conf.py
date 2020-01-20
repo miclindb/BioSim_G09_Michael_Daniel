@@ -12,7 +12,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('/Users/danielmilliammuller/Desktop/NMBU/Semester 3/INF200/Exam/BioSim_G09_Michael_Daniel/src/biosim'))
+sys.path.insert(0, os.path.abspath('/Users/danielmilliammuller/Desktop/NMBU/Semester 3/INF200/Exam/BioSim_G09_Michael_Daniel/src/'))
 autoclass_content = 'both'
 
 

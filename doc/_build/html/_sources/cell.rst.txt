@@ -1,5 +1,5 @@
 Cell
 =========
 
-.. automodule:: cell
-   :members:
+.. automodule:: biosim.cell
+    :members:

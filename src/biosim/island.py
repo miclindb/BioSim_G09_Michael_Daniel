@@ -7,8 +7,8 @@ Island Module
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
-from src.biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
-from src.biosim.animals import Herbivore, Carnivore
+from biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
+from biosim.animals import Herbivore, Carnivore
 
 
 class Island:
@@ -201,7 +201,7 @@ class Island:
 
         for y in self.island_map:
             for cell in y:
-                cell.migration()
+#                cell.migration()
                 for animal in cell.population:
                     animal.has_moved = False
 

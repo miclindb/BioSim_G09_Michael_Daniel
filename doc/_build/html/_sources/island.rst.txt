@@ -1,5 +1,5 @@
 Island
 =========
 
-.. automodule:: island
+.. automodule:: biosim.island
    :members:

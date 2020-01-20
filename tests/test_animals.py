@@ -10,8 +10,8 @@ __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 import pytest
 from pytest import approx
 from scipy import stats
-from src.biosim.animals import Herbivore, Carnivore
-from src.biosim.cell import Ocean, Mountain, Jungle
+from biosim.animals import Herbivore, Carnivore
+from biosim.cell import Ocean, Mountain, Jungle
 
 
 class TestAnimals:
@@ -184,7 +184,7 @@ class TestDeath:
         used to determine whether the number of dead herbivores coincides with
         the probability of death.
         """
-        herbs = [Herbivore(weight=10) for _ in range(500)]
+        herbs = [Herbivore(weight=10) for _ in range(1000)]
         dead = 0
         for herb in herbs:
             if herb.death() is True:

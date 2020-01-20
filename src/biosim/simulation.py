@@ -16,10 +16,10 @@ import subprocess
 import copy
 import os
 
-from src.biosim.animals import Herbivore, Carnivore
-from src.biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
-from src.biosim import cell
-from src.biosim.island import Island
+from biosim.animals import Herbivore, Carnivore
+from biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
+from biosim import cell
+from biosim.island import Island
 
 # update these variables to point to your ffmpeg and convert binaries
 _FFMPEG_BINARY = 'ffmpeg'
@@ -33,6 +33,9 @@ _DEFAULT_MOVIE_FORMAT = 'mp4'   # alternatives: mp4, gif
 
 
 class BioSim:
+    """
+    Description
+    """
     def __init__(
             self,
             island_map,
