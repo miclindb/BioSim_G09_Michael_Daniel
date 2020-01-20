@@ -23,14 +23,14 @@ from src.biosim import cell
 from src.biosim.island import Island
 
 # update these variables to point to your ffmpeg and convert binaries
-_FFMPEG_BINARY = 'ffmpeg'
+_FFMPEG_BINARY = '/users/michaellindberg/downloads/ffmpeg'
 _CONVERT_BINARY = 'magick'
 
 # update this to the directory and file-name beginning
 # for the graphics files
 _DEFAULT_GRAPHICS_DIR = os.path.join('..', 'data')
 _DEFAULT_GRAPHICS_NAME = 'dv'
-_DEFAULT_MOVIE_FORMAT = 'mp4'   # alternatives: mp4, gif
+_DEFAULT_MOVIE_FORMAT = 'mp4'
 
 
 class BioSim:
@@ -101,10 +101,10 @@ class BioSim:
 
         self.map_ax = None
         self.ani_ax = None
-        self.ax3 = None
-        self.ax3_bar = None
-        self.ax4 = None
-        self.ax4_bar = None
+        self.herb_heat = None
+        self.herb_heat_bar = None
+        self.carn_heat = None
+        self.carn_heat_bar = None
         self.title = None
         self.idx = 0
         self.xdata_herbs = None
@@ -112,6 +112,8 @@ class BioSim:
 
         self.xdata_carns = None
         self.ydata_carns = None
+
+        self.counter_ax = None
 
     @staticmethod
     def set_animal_parameters(species, params):
@@ -188,26 +190,15 @@ class BioSim:
 
             self.years_simulated += 1
             self.idx += 1
+            #plt.pause(1e-6)
 
         self.idx = 0
 
-    def _setup_graphics(self, num_years):
-        """Creates subplots."""
+    def _map_setup(self):
 
-        self._fig = plt.figure(figsize=(20, 10))
-
-        if self._ymax_animals is None:
-            self._ymax_animals = 20000
-
-        plt.title('')
-
-        plt.axis('off')
-
-        self._fig.set_tight_layout(True)
-
-        ###################### MAP ########################
-        self.map_ax = self._fig.add_subplot(2, 2, 1)
+        self.map_ax = self._fig.add_axes([0.02, 0.55, 0.5, 0.4]) #_fig.add_axes([0.02, 0.65, 0.05, 0.5])
         plt.title('Island map', weight='bold', fontsize=20)
+        #plt.grid()
 
         rgb_values = {
             "O": mcolors.to_rgba("navy"),
@@ -238,60 +229,128 @@ class BioSim:
         self.map_ax.set_yticks(range(0, len(rgb_island_map), 4))
         self.map_ax.set_yticklabels(range(1, 1 + len(rgb_island_map), 4))
 
-        self.ani_ax = self._fig.add_subplot(2, 2, 3)
+    def _graph_setup(self, num_years):
+        """
+        Setup for the graphs showing the number of herbivores and carnivores
+        for the simulated year.
+
+        Parameters
+        ----------
+        num_years: int
+            The number of years to be simulated.
+
+        """
+
+        self.ani_ax = self._fig.add_axes([0.05, 0.05, 0.45, 0.4])
 
         plt.axis([0, num_years, 0, self._ymax_animals])
 
-        self.title = plt.title('')
+        self.title = plt.title('', weight='bold')
 
-        self.xdata_herbs = np.arange(num_years+1)
-        self.ydata_herbs = np.nan * np.ones(num_years+1)
+        self.xdata_herbs = np.arange(num_years + 1)
+        self.ydata_herbs = np.nan * np.ones(num_years + 1)
 
         self.line_herbs = self.ani_ax.plot(self.xdata_herbs, self.ydata_herbs,
-                                        'g-', label="Herbivores")[0]
+                                           'g-', label="Herbivores")[0]
 
-        self.xdata_carns = np.arange(num_years+1)
-        self.ydata_carns = np.nan * np.ones(num_years+1)
+        self.xdata_carns = np.arange(num_years + 1)
+        self.ydata_carns = np.nan * np.ones(num_years + 1)
 
         self.line_carns = self.ani_ax.plot(self.xdata_carns, self.ydata_carns,
-                                        'r-', label='Carnivores')[0]
+                                           'r-', label='Carnivores')[0]
 
-        #if self.year > 0:
-        #    self.ani_ax.set_xticklabels(np.arange(num_years))
-        #
-        #else:
-        self.ani_ax.set_xticks(np.arange(num_years))
-        self.ani_ax.set_xticklabels(np.arange(num_years))
+        if self.year > 0:
+            self.ani_ax.set_xticks(np.arange(num_years))
+            self.ani_ax.set_xticklabels(
+                np.arange(self.year, num_years + self.year))
+
+        else:
+            self.ani_ax.set_xticks(np.arange(num_years))
+            self.ani_ax.set_xticklabels(np.arange(num_years))
 
         plt.grid()
         plt.legend(loc=1, prop={'size': 7})
 
+    def _heat_map_setup(self):
+        """
+        Setup for the heat maps for herbivore and carnivore distribution.
+        """
 
-        self.ax3 = self._fig.add_subplot(2, 2, 2)
+        self.herb_heat = self._fig.add_axes([0.5, 0.55, 0.6, 0.4])
         plt.title("Herbivore distribution", weight='bold', fontsize=15)
-        self.ax3.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
-        self.ax3.set_xticklabels(range(1, 1 + len(self.simulated_island.island_map[0]), 2))
-        self.ax3.set_yticks(range(0, len(self.simulated_island.island_map), 2))
-        self.ax3.set_yticklabels(range(1, 1 + len(self.simulated_island.island_map), 2))
-        self.ax3_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)])
+        self.herb_heat.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
+        self.herb_heat.set_xticklabels(range(1, 1 + len(self.simulated_island.island_map[0]), 2))
+        self.herb_heat.set_yticks(range(0, len(self.simulated_island.island_map), 2))
+        self.herb_heat.set_yticklabels(range(1, 1 + len(self.simulated_island.island_map), 2))
+        self.herb_heat_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)])
 
-
-        self.ax4 = self._fig.add_subplot(2, 2, 4)
+        self.carn_heat = self._fig.add_axes([0.5, 0.05, 0.6, 0.4])
         plt.title("Carnivore distribution", weight='bold', fontsize=15)
-        self.ax4.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
-        self.ax4.set_xticklabels(range(1, (1 + len(self.simulated_island.island_map[0])), 2))
-        self.ax4.set_yticks(range(0, len(self.simulated_island.island_map), 2))
-        self.ax4.set_yticklabels(range(1, (1 + len(self.simulated_island.island_map)), 2))
-        self.ax4_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)])
+        self.carn_heat.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
+        self.carn_heat.set_xticklabels(range(1, (1 + len(self.simulated_island.island_map[0])), 2))
+        self.carn_heat.set_yticks(range(0, len(self.simulated_island.island_map), 2))
+        self.carn_heat.set_yticklabels(range(1, (1 + len(self.simulated_island.island_map)), 2))
+        self.carn_heat_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)])
+
+    def _setup_graphics(self, num_years):
+        """
+        Graphical setup for visualization of the simulation.
+
+        Parameters
+        ----------
+        num_years: int
+            The number of years to be simulated.
+        """
+
+        self._img_base = 'sim'
+
+        self._fig = plt.figure(figsize=(20, 10))
+
+        if self._ymax_animals is None:
+            self._ymax_animals = 20000
+
+        plt.title('')
+
+        plt.axis('off')
+
+        self._map_setup()
+        self._graph_setup(num_years)
+        self._heat_map_setup()
+
+        self.counter_ax = self._fig.add_axes([0.4, 0.8, 0.2, 0.2])
+        self.counter_ax.axis('off')
+        template = 'Count: {:5}'
+        txt = self.counter_ax.text(0.5, 0.5, template.format(0),
+                 horizontalalignment='center',
+                 verticalalignment='center',
+                 transform=self.counter_ax.transAxes)
+
+        txt.set_text(template.format(self.year))
 
     def _update_graphics(self):
+        """
+        Updating graphics in the figure (self._fig). This is run for each
+        iteration in the simulation loop.
+        """
 
-        self.ax3.imshow(self.herbivore_island_map(), interpolation='nearest',
+        self._update_heat_map()
+        self._update_graph()
+
+    def _update_heat_map(self):
+        """
+        Updating the heat maps for herbivore and carnivore distribution.
+        """
+        self.herb_heat.imshow(self.herbivore_island_map(), interpolation='nearest',
+                   cmap='jet', alpha=0.5)
+
+        self.carn_heat.imshow(self.carnivore_island_map(), interpolation='nearest',
                    cmap='jet')
 
-        self.ax4.imshow(self.carnivore_island_map(), interpolation='nearest',
-                   cmap='jet')
-
+    def _update_graph(self):
+        """
+        Updating the graphs showing the number of carnivores and herbivores
+        for each year in the simulation.
+        """
         ydata_herbs = self.line_herbs.get_ydata()
         ydata_carns = self.line_carns.get_ydata()
 
@@ -305,13 +364,12 @@ class BioSim:
 
     def _save_graphics(self):
 
-        #if self._img_base is None:
-         #   return
-        plt.savefig('{num}.png'.format(num=self._img_ctr))
+        if self._img_base is None:
+            return
 
-        #plt.savefig('{base}_{num:05d}.{type}'.format(base=self._img_base,
-          #                                           num=self._img_ctr,
-           #                                          type=self._img_fmt))
+        plt.savefig('{base}_{num:05d}.{type}'.format(base=self._img_base,
+                                                     num=self._img_ctr,
+                                                     type=self._img_fmt))
         self._img_ctr += 1
 
     def add_population(self, population):
@@ -372,15 +430,16 @@ class BioSim:
         The movie is stored as img_base + movie_fmt
         """
 
+        movie_fmt = _DEFAULT_MOVIE_FORMAT
+
         if self._img_base is None:
             raise RuntimeError("No filename defined.")
 
         if movie_fmt == 'mp4':
             try:
-                # Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,
-                # section "Compatibility"
                 subprocess.check_call([_FFMPEG_BINARY,
-                                       '-i', '{}_%05d.png'.format(self._img_base),
+                                       '-i',
+                                       '{}_%05d.png'.format(self._img_base),
                                        '-y',
                                        '-profile:v', 'baseline',
                                        '-level', '3.0',
@@ -389,23 +448,9 @@ class BioSim:
                                                       movie_fmt)])
             except subprocess.CalledProcessError as err:
                 raise RuntimeError('ERROR: ffmpeg failed with: {}'.format(err))
-        elif movie_fmt == 'gif':
-            try:
-                subprocess.check_call([_CONVERT_BINARY,
-                                       '-delay', '1',
-                                       '-loop', '0',
-                                       '{}_*.png'.format(self._img_base),
-                                       '{}.{}'.format(self._img_base,
-                                                      movie_fmt)])
-            except subprocess.CalledProcessError as err:
-                raise RuntimeError('ERROR: convert failed with: {}'.format(err))
-        else:
-            raise ValueError('Unknown movie format: ' + movie_fmt)
 
 
 if __name__ == '__main__':
-    # Simulation with Herbivores and one single landscape cell,
-    # a jungle cell in this case.
 
     plt.ion()
 
@@ -459,11 +504,11 @@ if __name__ == '__main__':
     )
     sim.set_landscape_parameters("J", {"f_max": 700})
 
-    sim.simulate(num_years=10, vis_years=1, img_years=5)
+    sim.simulate(num_years=10, vis_years=1, img_years=3)
 
     sim.add_population(population=ini_carns)
 
-    sim.simulate(num_years=10, vis_years=1, img_years=5)
+    sim.simulate(num_years=10, vis_years=1, img_years=3)
 
     plt.savefig("check_sim.pdf")
 
@@ -478,3 +523,8 @@ if __name__ == '__main__':
     # fixture, mocking, parameterize
 
     # profiling: %% prun
+
+    #checksim, biosiminterface, code coverage, some visualization,
+
+
+
