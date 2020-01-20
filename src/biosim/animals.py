@@ -172,7 +172,7 @@ class Animals:
         Parameters
         ----------
         n: int
-            Nearby same species animals
+            Number of nearby same species animals
 
         Returns
         -------
@@ -187,7 +187,7 @@ class Animals:
 
         Parameters
         ----------
-        new_born_animal: Class object
+        new_born_animal: Animal
             New born baby
         """
         self.weight -= self.parameters['xi'] * new_born_animal.weight
@@ -212,7 +212,7 @@ class Animals:
         -------
         bool
             True if a newborn is successfully born.
-        new_born_animal: class object
+        new_born_animal: Animal
             Newborn animal.
         """
 
@@ -287,7 +287,7 @@ class Animals:
 
         Returns
         -------
-        chosen_cell: Cell object
+        chosen_cell: Cell
             The cell the animal choose to migrate to.
         """
         probabilities = []
@@ -322,7 +322,7 @@ class Animals:
 
         Returns
         -------
-        chosen_cell: Cell object
+        chosen_cell: Cell
             The cell the animal choose to migrate to. Otherwise returns None if
             the animal does not move.
         """
@@ -385,7 +385,6 @@ class Herbivore(Animals):
         -------
         eaten: float
             Amount of actually eaten fodder.
-
         """
 
         eaten = self.parameters['F']
@@ -436,7 +435,7 @@ class Carnivore(Animals):
 
         Parameters
         ----------
-        prey: Class object
+        prey: Herbivore
             The animal the carnivore is trying to kill.
 
         Returns
@@ -455,7 +454,7 @@ class Carnivore(Animals):
 
         Parameters
         ----------
-        prey: Class object
+        prey: Herbivore
             The animal the carnivore is trying to kill.
 
         Returns
@@ -482,8 +481,7 @@ class Carnivore(Animals):
         Returns
         -------
         killed_herbivore: list
-            List containing all herbivore objects that was killed by the
-            carnivore.
+            List containing all herbivores that was killed by the carnivore.
         """
         kill_attempts = 0
         eaten = 0

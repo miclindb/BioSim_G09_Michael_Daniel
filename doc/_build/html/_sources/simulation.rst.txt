@@ -1,5 +1,5 @@
 Simulation
 =========
 
-.. automodule:: biosim.simulation
-   :members:
+.. autoclass:: biosim.simulation.BioSim
+   :inherited-members:

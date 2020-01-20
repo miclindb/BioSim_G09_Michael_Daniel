@@ -12,8 +12,8 @@ Welcome to BioSim_Test's documentation!
 
    simulation
    island
-   animals
    cell
+   animals
 
 
 

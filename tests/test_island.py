@@ -15,6 +15,9 @@ from biosim.animals import Herbivore, Carnivore
 
 
 class TestIsland:
+    """
+    Tests for island operations.
+    """
 
     @pytest.fixture(autouse=True)
     def setup_island(self):
@@ -218,9 +221,15 @@ class TestIsland:
 
 
 class TestIslandCycles:
+    """
+    Tests for island cycles.
+    """
 
     @pytest.fixture(autouse=True)
     def setup_island(self, mocker):
+        """
+        Setup for island cycles testing.
+        """
         small_sample_map = """\
                             JDS"""
         self.small_sample_map = textwrap.dedent(small_sample_map)
@@ -241,6 +250,8 @@ class TestIslandCycles:
                 ],
             }
         ]
+
+        # Setup for mocking
         self.mock_fodder_growth = mocker.spy(Cell, 'fodder_growth')
         self.mock_feeding = mocker.spy(Cell, 'feeding')
         self.mock_procreate = mocker.spy(Cell, 'procreate')

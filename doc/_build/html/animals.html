@@ -14,8 +14,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Cell" href="cell.html" />
-    <link rel="prev" title="Island" href="island.html" />
+    <link rel="prev" title="Cell" href="cell.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -175,7 +174,7 @@
 <dd><p>Updates the weight of the mother after a baby is born.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>new_born_animal</strong> (<em>Class object</em>) – New born baby</p>
+<dd class="field-odd"><p><strong>new_born_animal</strong> (<em>Animal</em>) – New born baby</p>
 </dd>
 </dl>
 </dd></dl>
@@ -267,7 +266,7 @@ be traversed such as mountain or ocean).</p></li>
 <dd class="field-even"><p><strong>chosen_cell</strong> – The cell the animal choose to migrate to.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Cell object</p>
+<dd class="field-odd"><p>Cell</p>
 </dd>
 </dl>
 </dd></dl>
@@ -336,7 +335,7 @@ the birth weight of the baby.</p>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><em>bool</em> – True if a newborn is successfully born.</p></li>
-<li><p><strong>new_born_animal</strong> (<em>class object</em>) – Newborn animal.</p></li>
+<li><p><strong>new_born_animal</strong> (<em>Animal</em>) – Newborn animal.</p></li>
 </ul>
 </p>
 </dd>
@@ -369,7 +368,7 @@ be traversed such as mountain or ocean).</p>
 the animal does not move.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Cell object</p>
+<dd class="field-odd"><p>Cell</p>
 </dd>
 </dl>
 </dd></dl>
@@ -380,7 +379,7 @@ the animal does not move.</p>
 <dd><p>Calculates the probability of birth.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>n</strong> (<em>int</em>) – Nearby same species animals</p>
+<dd class="field-odd"><p><strong>n</strong> (<em>int</em>) – Number of nearby same species animals</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Probability of birth</p>
@@ -585,7 +584,7 @@ carnivore killing.</p>
 <dd><p>Updates the weight of the mother after a baby is born.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>new_born_animal</strong> (<em>Class object</em>) – New born baby</p>
+<dd class="field-odd"><p><strong>new_born_animal</strong> (<em>Animal</em>) – New born baby</p>
 </dd>
 </dl>
 </dd></dl>
@@ -651,7 +650,7 @@ initializer for the animals did not receive any specified weight input.</p>
 <dd><p>The chance the carnivore has to kill its prey.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>prey</strong> (<em>Class object</em>) – The animal the carnivore is trying to kill.</p>
+<dd class="field-odd"><p><strong>prey</strong> (<a class="reference internal" href="#biosim.animals.Herbivore" title="biosim.animals.Herbivore"><em>Herbivore</em></a>) – The animal the carnivore is trying to kill.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Probability of killing prey.</p>
@@ -694,7 +693,7 @@ be traversed such as mountain or ocean).</p></li>
 <dd class="field-even"><p><strong>chosen_cell</strong> – The cell the animal choose to migrate to.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Cell object</p>
+<dd class="field-odd"><p>Cell</p>
 </dd>
 </dl>
 </dd></dl>
@@ -721,7 +720,7 @@ the animal is 0. The animal also has a probability of dying each year.</p>
 and not greater than a threshold.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>prey</strong> (<em>Class object</em>) – The animal the carnivore is trying to kill.</p>
+<dd class="field-odd"><p><strong>prey</strong> (<a class="reference internal" href="#biosim.animals.Herbivore" title="biosim.animals.Herbivore"><em>Herbivore</em></a>) – The animal the carnivore is trying to kill.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>‘True’ if the carnivore’s fitness is greater than the herbivore’s,
@@ -763,7 +762,7 @@ the birth weight of the baby.</p>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
 <li><p><em>bool</em> – True if a newborn is successfully born.</p></li>
-<li><p><strong>new_born_animal</strong> (<em>class object</em>) – Newborn animal.</p></li>
+<li><p><strong>new_born_animal</strong> (<em>Animal</em>) – Newborn animal.</p></li>
 </ul>
 </p>
 </dd>
@@ -783,8 +782,7 @@ there are no more nearby herbivores.</p>
 <dd class="field-odd"><p><strong>nearby_herbivores</strong> (<em>list</em>) – List of herbivores residing in same cell as the carnivore.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>killed_herbivore</strong> – List containing all herbivore objects that was killed by the
-carnivore.</p>
+<dd class="field-even"><p><strong>killed_herbivore</strong> – List containing all herbivores that was killed by the carnivore.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>list</p>
@@ -818,7 +816,7 @@ be traversed such as mountain or ocean).</p>
 the animal does not move.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Cell object</p>
+<dd class="field-odd"><p>Cell</p>
 </dd>
 </dl>
 </dd></dl>
@@ -829,7 +827,7 @@ the animal does not move.</p>
 <dd><p>Calculates the probability of birth.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>n</strong> (<em>int</em>) – Nearby same species animals</p>
+<dd class="field-odd"><p><strong>n</strong> (<em>int</em>) – Number of nearby same species animals</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Probability of birth</p>
@@ -904,16 +902,15 @@ carnivore killing.</p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="island.html">Island</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Animals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cell.html">Cell</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Animals</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="island.html" title="previous chapter">Island</a></li>
-      <li>Next: <a href="cell.html" title="next chapter">Cell</a></li>
+      <li>Previous: <a href="cell.html" title="previous chapter">Cell</a></li>
   </ul></li>
 </ul>
 </div>

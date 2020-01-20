@@ -63,7 +63,7 @@ class Cell:
 
         Parameters
         ----------
-        animal: Class object
+        animal: Animal
             Either a class instance of Herbivore or Carnivore
 
         Returns
@@ -71,24 +71,23 @@ class Cell:
         relative_fodder_list: list
             List containing relative fodder in nearby cells and cell type of
             nearby cells.
-
         """
         relative_fodder_list = []
 
         if isinstance(animal, Herbivore):
             for nearby_cell in self.nearby_cells:
                 fodder = nearby_cell.fodder
-                number_of_same_species = len(
+                same_species = len(
                     [animal for animal in nearby_cell.population if
                      isinstance(animal, Herbivore)])
-                relative_fodder = self.calculate_relative_fodder(fodder,
-                                                                 Herbivore,
-                                                                 number_of_same_species)
+                relative_fodder = self.calculate_relative_fodder(
+                    fodder, Herbivore, same_species
+                )
                 relative_fodder_list.append((relative_fodder, nearby_cell))
 
         elif isinstance(animal, Carnivore):
             for nearby_cell in self.nearby_cells:
-                number_of_same_species = len(
+                same_species = len(
                     [animal for animal in nearby_cell.population if
                      isinstance(animal, Carnivore)])
                 nearby_herbivores = [animal for animal in
@@ -96,40 +95,55 @@ class Cell:
                                      isinstance(animal, Herbivore)]
                 fodder = sum(
                     [herbivore.weight for herbivore in nearby_herbivores])
-                relative_fodder = self.calculate_relative_fodder(fodder,
-                                                                 Carnivore,
-                                                                 number_of_same_species)
+                relative_fodder = self.calculate_relative_fodder(
+                    fodder, Carnivore, same_species
+                )
                 relative_fodder_list.append((relative_fodder, nearby_cell))
 
         return relative_fodder_list
 
     @property
     def herbivores_in_cell(self):
+        """
+        Gets number of herbivores in cell.
+        """
         herbivores = [animal for animal in self.population if
                       isinstance(animal, Herbivore)]
         return len(herbivores)
 
     @property
     def carnivores_in_cell(self):
+        """
+        Gets number of carnivores in cell.
+        """
         carnivores = [animal for animal in self.population if
                       isinstance(animal, Carnivore)]
         return len(carnivores)
 
-    # @classmethod
-    # def sort_animal(cls, animal_type):
-    #    return cls.sort_population(
-    #        [animal for animal in cls.population if isinstance(
-    #            animal, animal_type
-    #        )]
-    #    )
-
     def feeding(self):
+        """
+        Each animal in the cell attempts to feed.
+
+        Each animal eats in order of their fitness. The most fit animal eats
+        first.
+
+        Feeding is different for herbivores and carnivores.
+        Herbivores eat plant fodder and carnivores eat herbivores.
+
+        Whenever a herbivore feeds, the amount of available fodder in the cell
+        is reduced accordingly.
+        Whenever a carnivore kills, the number of herbivores in the cell's
+        population is reduced.
+        """
         sorted_herbivores = self.sort_population(
             [animal for animal in self.population if
-             isinstance(animal, Herbivore)])
+             isinstance(animal, Herbivore)]
+        )
         sorted_carnivores = self.sort_population(
             [animal for animal in self.population if
-             isinstance(animal, Carnivore)])
+             isinstance(animal, Carnivore)]
+        )
+
         self.population = sorted_herbivores + sorted_carnivores
 
         nearby_herbivores = sorted_herbivores
@@ -147,7 +161,12 @@ class Cell:
 
     def procreate(self):
         """
-        Annual birth.
+        Each animal in the cell attempts to procreate.
+
+        Each animal can only mate with another animal that is of same
+        species and currently in the same cell as itself.
+
+        Each new born animal is added to the cell's population.
         """
         new_born_animals = []
         for animal in self.population:
@@ -165,6 +184,17 @@ class Cell:
             self.population.append(new_born_animal)
 
     def migration(self):
+        """
+        Each animal in the cell attempts to migrate if they haven't already
+        migrated.
+
+        Migration is decided by amount of relative fodder in nearby cells.
+        For herbivores, relative fodder is plant fodder.
+        For carnivores, relative fodder is herbivores.
+
+        After an animal has migrated, its instance is removed from the cell's
+        population list.
+        """
         migrations = []
         if len(self.population) == 0:
             pass
@@ -186,14 +216,24 @@ class Cell:
             migration[1].population.append(migration[0])
 
     def aging(self):
+        """
+        Updates animal age for all animals in cell.
+        """
         for animal in self.population:
             animal.aging()
 
     def loss_of_weight(self):
+        """
+        Reduces animal weight for all animals in cell
+        """
         for animal in self.population:
             animal.loss_of_weight()
 
     def deaths(self):
+        """
+        Checks whether an animal dies for all animals in cell. Dead animals are
+        removed from the cell's population.
+        """
         dead_animals = []
         for animal in self.population:
             if animal.death():
@@ -202,11 +242,15 @@ class Cell:
                            animal not in dead_animals]
 
     def fodder_growth(self):
+        """
+        Replenishes fodder for current cell.
+        """
         if isinstance(self, Jungle):
             self.fodder = self.parameters['f_max']
         elif isinstance(self, Savannah):
             self.fodder = self.fodder + self.parameters['alpha'] * (
-                    self.parameters['f_max'] - self.fodder)
+                    self.parameters['f_max'] - self.fodder
+            )
 
 
 class Ocean(Cell):
@@ -216,6 +260,9 @@ class Ocean(Cell):
     """
 
     def __init__(self):
+        """
+        Ocean initializer.
+        """
         super(Ocean, self).__init__()
         self.landscape_type = "O"
 
@@ -227,6 +274,9 @@ class Mountain(Cell):
     """
 
     def __init__(self):
+        """
+        Mountain initializer.
+        """
         super(Mountain, self).__init__()
         self.landscape_type = "M"
 
@@ -241,6 +291,9 @@ class Jungle(Cell):
     parameters = {'f_max': 800.0}
 
     def __init__(self):
+        """
+        Jungle initializer.
+        """
         super(Jungle, self).__init__()
         self.landscape_type = "J"
         self.fodder = self.parameters['f_max']
@@ -256,6 +309,9 @@ class Savannah(Cell):
     parameters = {'f_max': 300.0, 'alpha': 0.3}
 
     def __init__(self):
+        """
+        Savannah initializer.
+        """
         super(Savannah, self).__init__()
         self.landscape_type = "S"
         self.fodder = self.parameters['f_max']
@@ -268,5 +324,8 @@ class Desert(Cell):
     """
 
     def __init__(self):
+        """
+        Desert initializer.
+        """
         super(Desert, self).__init__()
         self.landscape_type = "D"

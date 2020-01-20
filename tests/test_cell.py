@@ -9,11 +9,14 @@ from biosim.animals import Animals, Carnivore, Herbivore
 
 
 class TestCellOperations:
+    """
+    Tests for operations in cell.
+    """
 
     @pytest.fixture(autouse=True)
     def setup_cells(self, mocker):
         """
-        Setup for cell tests
+        Setup for cell tests.
         """
         self.ocean_cell = Ocean()
         self.jungle_cell = Jungle()
@@ -33,8 +36,14 @@ class TestCellOperations:
                          Herbivore(age=2, weight=40),
                          Herbivore(age=2, weight=10)]
 
-        # For mocking
-        self.mock_feed = mocker.spy(Herbivore, 'feed')
+        self.carn_pop = [Carnivore(age=2, weight=20),
+                         Carnivore(age=2, weight=20),
+                         Carnivore(age=2, weight=40),
+                         Carnivore(age=2, weight=10)]
+
+        # Setup for mocking
+        self.mock_feed_herbivore = mocker.spy(Herbivore, 'feed')
+        self.mock_feed_carnivore = mocker.spy(Carnivore, 'kill')
         self.mock_procreate = mocker.spy(Animals, 'gives_birth')
         self.mock_migrate = mocker.spy(Animals, 'migrate')
         self.mock_aging = mocker.spy(Animals, 'aging')
@@ -89,8 +98,8 @@ class TestCellOperations:
         nearby_3 = Jungle()
         nearby_4 = Savannah()
 
-        nearby_2.population = [Herbivore() for i in range(10)]
-        nearby_4.population = [Herbivore() for i in range(20)]
+        nearby_2.population = [Herbivore() for _ in range(10)]
+        nearby_4.population = [Herbivore() for _ in range(20)]
 
         cell.nearby_cells = [nearby_1, nearby_2, nearby_3, nearby_4]
 
@@ -152,14 +161,24 @@ class TestCellOperations:
 
         assert cell.fodder == 500 - 10 * 20
 
-    def test_feeding(self):
+    def test_feeding_herbivores(self):
         """
         Tests that 'Herbivore.feed is called an expected number of times for
         herbivores in cell.
         """
+
         self.jungle_cell.population = self.herb_pop
         self.jungle_cell.feeding()
-        assert self.mock_feed.call_count == 4
+        assert self.mock_feed_herbivore.call_count == 4
+
+    def test_feeding_carnivores(self):
+        """
+        Tests that 'Carnivore.kill is called an expected number of times for
+        carnivores in cell.
+        """
+        self.jungle_cell.population = self.carn_pop
+        self.jungle_cell.feeding()
+        assert self.mock_feed_carnivore.call_count == 4
 
     def test_procreate(self):
         """
@@ -168,7 +187,7 @@ class TestCellOperations:
         """
         self.jungle_cell.population = self.herb_pop
         self.jungle_cell.procreate()
-        assert self.mock_feed.call_count == 4
+        assert self.mock_procreate.call_count == 4
 
     def test_migration(self):
         """
@@ -229,7 +248,7 @@ class TestCellOperations:
         assert cells[1].fodder == 300.0
         assert cells[2].fodder == 0.0
 
-        # fodder is set to 0 and then replenished
+        # Cell fodder is set to 0 then replenished
         for cell in cells:
             cell.fodder = 0.0
             cell.fodder_growth()
@@ -240,9 +259,15 @@ class TestCellOperations:
 
 
 class TestLandscapesTypes:
+    """
+    Tests for landscape types.
+    """
 
     @pytest.fixture(autouse=True)
     def landscape_setup(self):
+        """
+        Setup for landscape type testing.
+        """
         self.cell = Cell()
         self.ocean_cell = Ocean()
         self.jungle_cell = Jungle()

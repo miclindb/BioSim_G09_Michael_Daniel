@@ -15,6 +15,9 @@ from biosim.cell import Ocean, Mountain, Jungle
 
 
 class TestAnimals:
+    """
+    Tests for animals.
+    """
     alpha = 0.05
 
     @pytest.fixture(autouse=True)
@@ -272,6 +275,9 @@ class TestBirth:
 
 
 class TestMigrate:
+    """
+    Tests for migration.
+    """
 
     @pytest.fixture(autouse=True)
     def setup_migrate(self):
@@ -332,6 +338,9 @@ class TestMigrate:
 
 
 class TestFeedingKilling:
+    """
+    Tests for feeding.
+    """
 
     @pytest.fixture(autouse=True)
     def create_animals(self):

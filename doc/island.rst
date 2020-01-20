@@ -1,5 +1,5 @@
 Island
 =========
 
-.. automodule:: biosim.island
-   :members:
+.. autoclass:: biosim.island.Island
+   :inherited-members:
