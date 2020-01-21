@@ -17,10 +17,9 @@ import subprocess
 import copy
 import os
 
-from biosim.animals import Herbivore, Carnivore
-from biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
-from biosim import cell
-from biosim.island import Island
+from .animals import Herbivore, Carnivore
+from .cell import Ocean, Mountain, Jungle, Savannah, Desert
+from .island import Island
 
 # update these variables to point to your ffmpeg and convert binaries
 _FFMPEG_BINARY = '/users/michaellindberg/downloads/ffmpeg'
@@ -45,6 +44,7 @@ class BioSim:
             img_fmt="png",
     ):
         """
+        Initializer for the BioSim class.
 
         Parameters
         ----------
@@ -94,6 +94,8 @@ class BioSim:
         self.simulated_island.adding_population(self.ini_pop)
         self.simulated_island.generate_nearby_cells()
 
+        # For graphical setup
+
         self._img_dir = None
 
         if self._img_dir is not None:
@@ -104,29 +106,29 @@ class BioSim:
         self._final_year = None
         self._img_ctr = 0
 
-        # following will be initialized by _setup_graphics
         self._fig = None
+        self.title = None
+        self.idx = 0
 
+        self.map_ax = None
+
+        self.ani_ax = None
         self.line_carns = None
         self.line_herbs = None
 
-        self.map_ax = None
-        self.ani_ax = None
-        self.herb_heat = None
-        self.herb_heat_bar = None
-        self.carn_heat = None
-        self.carn_heat_bar = None
-        self.title = None
-        self.idx = 0
         self.xdata_herbs = None
         self.ydata_herbs = None
 
         self.xdata_carns = None
         self.ydata_carns = None
 
-        self.counter_ax = None
+        self.herb_heat = None
+        self.herb_heat_bar = None
+        self.carn_heat = None
+        self.carn_heat_bar = None
         self.map_herb = None
         self.map_carn = None
+
         self.herb_count = None
         self.carn_count = None
         self.herb_txt = None
@@ -137,10 +139,14 @@ class BioSim:
     @staticmethod
     def set_animal_parameters(species, params):
         """
-        Set parameters for animal species.
+        Setting parameters for animal species.
 
-        :param species: String, name of animal species
-        :param params: Dict with valid parameter specification for species
+        Parameters
+        ----------
+        species: str
+            String with name of animal species
+        params: dict
+            Dictionary with valid parameter specification for species.
         """
 
         if species == 'Herbivore':
@@ -155,10 +161,14 @@ class BioSim:
     @staticmethod
     def set_landscape_parameters(landscape, params):
         """
-        Set parameters for landscape type.
+        Setting parameters for landscape type.
 
-        :param landscape: String, code letter for landscape
-        :param params: Dict with valid parameter specification for landscape
+        Parameters
+        ----------
+        landscape: str
+            String, code letter for landscape
+        params: dict
+            Dict with valid parameter specification for landscape
         """
         if landscape == 'J':
             for parameter in params:
@@ -170,22 +180,47 @@ class BioSim:
             raise ValueError
 
     def carnivore_island_map(self):
+        """
+        Generates a nested list of carnivore population within each cell in
+        the map.
+
+        Returns
+        -------
+        carnivore_map: list
+            A nested list with the number of carnivores in each cell.
+
+        """
         carnivore_map = copy.deepcopy(self.simulated_island.island_map)
         carnivore_map = [[cell.carnivores_in_cell for cell in row] for row in carnivore_map]
         return carnivore_map
 
     def herbivore_island_map(self):
+        """
+        Generates a nested list of herbivore population within each cell in
+        the map.
+
+        Returns
+        -------
+        herbivore_map: list
+            A nested list with the number of herbivores in each cell.
+
+        """
         herbivore_map = copy.deepcopy(self.simulated_island.island_map)
         herbivore_map = [[cell.herbivores_in_cell for cell in row] for row in herbivore_map]
         return herbivore_map
 
     def simulate(self, num_years, vis_years=1, img_years=None):
         """
-        Run simulation while visualizing the result.
+        Simulation of the island.
 
-        :param num_years: number of years to simulate
-        :param vis_years: years between visualization updates
-        :param img_years: years between visualizations saved to files (default: vis_years)
+        Parameters
+        ----------
+        num_years: int
+            Number of years to simulate
+        vis_years: int
+            Years between visualization updates
+        img_years: int
+            Years between visualizations saved to files (default: vis_years)
 
         Image files will be numbered consecutively.
         """
@@ -223,8 +258,6 @@ class BioSim:
             The number of years to be simulated.
         """
 
-        self._img_base = '../BioSim_G09_Michael_Daniel/graphics/'
-
         if self._fig is None:
             self._fig = plt.figure(figsize=(20, 10))
 
@@ -243,6 +276,9 @@ class BioSim:
         self._carn_count_setup()
 
     def _map_setup(self):
+        """
+        A graphical setup for the map with color labels.
+        """
 
         if self.map_ax is None:
             self.map_ax = self._fig.add_axes([0.02, 0.58, 0.45, 0.35])
@@ -269,13 +305,23 @@ class BioSim:
                 map_ax_lg.add_patch(plt.Rectangle((0.02, idx * 0.1), 0.3, 0.1,
                                              edgecolor='black',
                                              facecolor=rgb_values[name[0]]))
-                map_ax_lg.text(0.4, idx * 0.1, name, transform=map_ax_lg.transAxes)
+                map_ax_lg.text(
+                    0.4, idx * 0.1, name, transform=map_ax_lg.transAxes
+                )
 
             self.map_ax.imshow(rgb_island_map, interpolation='nearest')
-            self.map_ax.set_xticks(range(0, len(rgb_island_map[0]), 4))
-            self.map_ax.set_xticklabels(range(1, 1 + len(rgb_island_map[0]), 4))
-            self.map_ax.set_yticks(range(0, len(rgb_island_map), 4))
-            self.map_ax.set_yticklabels(range(1, 1 + len(rgb_island_map), 4))
+            self.map_ax.set_xticks(
+                range(0, len(rgb_island_map[0]), 4)
+            )
+            self.map_ax.set_xticklabels(
+                range(1, 1 + len(rgb_island_map[0]), 4)
+            )
+            self.map_ax.set_yticks(
+                range(0, len(rgb_island_map), 4)
+            )
+            self.map_ax.set_yticklabels(
+                range(1, 1 + len(rgb_island_map), 4)
+            )
 
     def _graph_setup(self, num_years):
         """
@@ -302,14 +348,22 @@ class BioSim:
             self.xdata_herbs = np.arange(num_years)
             self.ydata_herbs = np.nan * np.ones(num_years)
 
-            self.line_herbs = self.ani_ax.plot(self.xdata_herbs, self.ydata_herbs,
-                                               'b-', label="Herbivores", linewidth=3.0)[0]
+            self.line_herbs = self.ani_ax.plot(
+                self.xdata_herbs,
+                self.ydata_herbs,
+                'b-',
+                label="Herbivores",
+                linewidth=3.0)[0]
 
             self.xdata_carns = np.arange(num_years)
             self.ydata_carns = np.nan * np.ones(num_years)
 
-            self.line_carns = self.ani_ax.plot(self.xdata_carns, self.ydata_carns,
-                                               'r-', label='Carnivores', linewidth=3.0)[0]
+            self.line_carns = self.ani_ax.plot(
+                self.xdata_carns,
+                self.ydata_carns,
+                'r-',
+                label='Carnivores',
+                linewidth=3.0)[0]
 
             plt.grid()
             plt.legend(loc=1, prop={'size': 13})
@@ -330,14 +384,32 @@ class BioSim:
         if self.herb_heat is None:
             self.herb_heat = self._fig.add_axes([0.55, 0.65, 0.5, 0.3])
             plt.title("Herbivore distribution", weight='bold', fontsize=15)
-            self.herb_heat.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
-            self.herb_heat.set_xticklabels(range(1, 1 + len(self.simulated_island.island_map[0]), 2))
-            self.herb_heat.set_yticks(range(0, len(self.simulated_island.island_map), 2))
-            self.herb_heat.set_yticklabels(range(1, 1 + len(self.simulated_island.island_map), 2))
-            self.herb_heat_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)], cmap='jet', alpha=0.5, zorder=2)
+            self.herb_heat.set_xticks(
+                range(0, len(self.simulated_island.island_map[0]), 2)
+            )
+            self.herb_heat.set_xticklabels(
+                range(1, 1 + len(self.simulated_island.island_map[0]), 2)
+            )
+            self.herb_heat.set_yticks(
+                range(0, len(self.simulated_island.island_map), 2)
+            )
+            self.herb_heat.set_yticklabels(
+                range(1, 1 + len(self.simulated_island.island_map), 2)
+            )
+            self.herb_heat_bar = plt.imshow(
+                [[0 for _ in range(21)] for _ in range(13)],
+                cmap='jet',
+                alpha=0.5,
+                zorder=2
+            )
 
             cbaxes = self._fig.add_axes([0.59, 0.65, 0.01, 0.3])
-            plt.colorbar(self.herb_heat_bar, cax=cbaxes, orientation='vertical', ticks=[])
+
+            plt.colorbar(
+                self.herb_heat_bar,
+                cax=cbaxes,
+                orientation='vertical',
+                ticks=[])
 
             self._herb_map_setup()
 
@@ -348,14 +420,33 @@ class BioSim:
         if self.carn_heat is None:
             self.carn_heat = self._fig.add_axes([0.55, 0.10, 0.5, 0.3])
             plt.title("Carnivore distribution", weight='bold', fontsize=15)
-            self.carn_heat.set_xticks(range(0, len(self.simulated_island.island_map[0]), 2))
-            self.carn_heat.set_xticklabels(range(1, (1 + len(self.simulated_island.island_map[0])), 2))
-            self.carn_heat.set_yticks(range(0, len(self.simulated_island.island_map), 2))
-            self.carn_heat.set_yticklabels(range(1, (1 + len(self.simulated_island.island_map)), 2))
-            self.carn_heat_bar = plt.imshow([[0 for _ in range(21)] for _ in range(13)], cmap='jet', alpha=0.5, zorder=2)
+            self.carn_heat.set_xticks(
+                range(0, len(self.simulated_island.island_map[0]), 2)
+            )
+            self.carn_heat.set_xticklabels(
+                range(1, (1 + len(self.simulated_island.island_map[0])), 2)
+            )
+            self.carn_heat.set_yticks(
+                range(0, len(self.simulated_island.island_map), 2)
+            )
+            self.carn_heat.set_yticklabels(
+                range(1, (1 + len(self.simulated_island.island_map)), 2)
+            )
+            self.carn_heat_bar = plt.imshow(
+                [[0 for _ in range(21)] for _ in range(13)],
+                cmap='jet',
+                alpha=0.5,
+                zorder=2
+            )
 
             cbaxes = self._fig.add_axes([0.59, 0.10, 0.01, 0.3])
-            plt.colorbar(self.carn_heat_bar, cax=cbaxes, orientation='vertical', ticks=[])
+
+            plt.colorbar(
+                self.carn_heat_bar,
+                cax=cbaxes,
+                orientation='vertical',
+                ticks=[]
+                         )
 
             self._carn_map_setup()
 
@@ -373,14 +464,16 @@ class BioSim:
                 "D": mcolors.to_rgba("lightyellow"),
                 "M": mcolors.to_rgba("gainsboro"),
             }
-            rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
-            rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
-                              for row in rgb_island_map]
+            rgb_island_map = copy.deepcopy(
+                self.simulated_island.island_map
+            )
+            rgb_island_map = [
+                [rgb_values[cell.landscape_type] for cell in row]
+                for row in rgb_island_map]
+
             self.map_herb.imshow(rgb_island_map,
                                  interpolation='nearest',
-                                 alpha=0.2,
-                zorder=3
-            )
+                                 alpha=0.2, zorder=3)
 
     def _carn_map_setup(self):
         """
@@ -395,9 +488,13 @@ class BioSim:
                 "D": mcolors.to_rgba("lightyellow"),
                 "M": mcolors.to_rgba("gainsboro"),
             }
-            rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
-            rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
-                              for row in rgb_island_map]
+            rgb_island_map = copy.deepcopy(
+                self.simulated_island.island_map
+            )
+            rgb_island_map = [
+                [rgb_values[cell.landscape_type] for cell in row]
+                for row in rgb_island_map]
+
             self.map_carn.imshow(
                 rgb_island_map, interpolation='nearest', alpha=0.2, zorder=3
             )
@@ -410,11 +507,13 @@ class BioSim:
             self.herb_count = self._fig.add_axes([0.70, 0.48, 0.2, 0.2])
             self.herb_count.axis('off')
             self.herb_template = 'Total number of herbivores: {:8}'
+
             self.herb_txt = self.herb_count.text(
                 0.5, 0.5, self.herb_template.format(0),
                 horizontalalignment='center',
                 verticalalignment='center',
                 transform=self.herb_count.transAxes)
+
             self.herb_txt.set_text(self.herb_template.format(
                 self.num_animals_per_species['Herbivore']))
 
@@ -426,11 +525,13 @@ class BioSim:
             self.carn_count = self._fig.add_axes([0.70, 0.38, 0.2, 0.2])
             self.carn_count.axis('off')
             self.carn_template = 'Total number of carnivores: {:8}'
+
             self.carn_txt = self.carn_count.text(
                 0.5, 0.5, self.carn_template.format(0),
                 horizontalalignment='center',
                 verticalalignment='center',
                 transform=self.carn_count.transAxes)
+
             self.carn_txt.set_text(self.carn_template.format(
                 self.num_animals_per_species['Carnivore']))
 
@@ -543,8 +644,12 @@ class BioSim:
         """
 
         animals = self.simulated_island.total_population()
-        number_of_herbivores = sum(isinstance(animal, Herbivore) for animal in animals)
-        number_of_carnivores = sum(isinstance(animal, Carnivore) for animal in animals)
+        number_of_herbivores = sum(
+            isinstance(animal, Herbivore) for animal in animals
+        )
+        number_of_carnivores = sum(
+            isinstance(animal, Carnivore) for animal in animals
+        )
 
         return {"Herbivore": number_of_herbivores,
                 "Carnivore": number_of_carnivores}
@@ -607,82 +712,3 @@ class BioSim:
                 raise RuntimeError(
                     'ERROR: ffmpeg failed with: {}'.format(err)
                 )
-
-
-if __name__ == '__main__':
-
-    plt.ion()
-
-    geogr = """\
-               OOOOOOOOOOOOOOOOOOOOO
-               OOOOOOOOSMMMMJJJJJJJO
-               OSSSSSJJJJMMJJJJJJJOO
-               OSSSSSSSSSMMJJJJJJOOO
-               OSSSSSJJJJJJJJJJJJOOO
-               OSSSSSJJJDDJJJSJJJOOO
-               OSSJJJJJDDDJJJSSSSOOO
-               OOSSSSJJJDDJJJSOOOOOO
-               OSSSJJJJJDDJJJJJJJOOO
-               OSSSSJJJJDDJJJJOOOOOO
-               OOSSSSJJJJJJJJOOOOOOO
-               OOOSSSSJJJJJJJOOOOOOO
-               OOOOOOOOOOOOOOOOOOOOO"""
-    geogr = textwrap.dedent(geogr)
-
-    ini_herbs = [
-        {
-            "loc": (10, 10),
-            "pop": [
-                {"species": "Herbivore", "age": 5, "weight": 20}
-                for _ in range(150)
-            ],
-        }
-    ]
-    ini_carns = [
-        {
-            "loc": (10, 10),
-            "pop": [
-                {"species": "Carnivore", "age": 5, "weight": 20}
-                for _ in range(40)
-            ],
-        }
-    ]
-
-    sim = BioSim(island_map=geogr, ini_pop=ini_herbs, seed=123456)
-
-    sim.set_animal_parameters("Herbivore", {"zeta": 3.2, "xi": 1.8})
-    sim.set_animal_parameters(
-        "Carnivore",
-        {
-            "a_half": 70,
-            "phi_age": 0.5,
-            "omega": 0.3,
-            "F": 65,
-            "DeltaPhiMax": 9.0,
-        },
-    )
-    sim.set_landscape_parameters("J", {"f_max": 700})
-
-    sim.simulate(num_years=10, vis_years=1, img_years=5)
-
-    sim.add_population(population=ini_carns)
-
-    sim.simulate(num_years=10, vis_years=1, img_years=5)
-
-    plt.savefig("check_sim.pdf")
-
-    #input("Press ENTER")
-
-    # randvis_project for plotting
-
-    # group lasso , sphinx, API Reference
-
-    # do tox coverage, profiling
-
-    # fixture, mocking, parameterize
-
-    # profiling: %% prun
-
-    #checksim, biosiminterface, code coverage, some visualization,
-
-    # delivery: tag 'submission' in commit
