@@ -308,7 +308,6 @@ class BioSim:
 
         for _ in range(num_years):
 
-
             self.simulated_island.island_cycle()
             self.years_simulated += 1
 
@@ -380,9 +379,12 @@ class BioSim:
 
             for idx, name in enumerate(('Ocean', 'Mountain', 'Jungle',
                                         'Savannah', 'Desert')):
-                map_ax_lg.add_patch(plt.Rectangle((0.02, idx * 0.09), 0.3, 0.1,
-                                             edgecolor='black',
-                                             facecolor=rgb_values[name[0]]))
+                map_ax_lg.add_patch(
+                    plt.Rectangle(
+                        (0.02, idx * 0.09),
+                        0.3, 0.1, edgecolor='black',
+                        facecolor=rgb_values[name[0]])
+                )
                 map_ax_lg.text(
                     0.4, idx * 0.1, name, transform=map_ax_lg.transAxes
                 )
@@ -446,21 +448,16 @@ class BioSim:
             plt.grid()
             plt.legend(loc=1, prop={'size': 13})
 
-        #if self.year > 0:
         if num_years > 10:
             self.ani_ax.set_xticks(range(0, num_years, 10))
-            self.ani_ax.set_xticklabels(range(self.year, num_years+self.year + 1, 10))
+            self.ani_ax.set_xticklabels(
+                range(self.year, num_years+self.year + 1, 10)
+            )
         else:
             self.ani_ax.set_xticks(range(0, num_years))
-            self.ani_ax.set_xticklabels(range(self.year, num_years+self.year + 1))
-
-        #else:
-        #    if num_years > 10:
-        #        self.ani_ax.set_xticks(range(0, num_years, 10))
-        #        self.ani_ax.set_xticklabels(range(self.year, num_years+self.year + 1, 10))
-        #    else:
-        #        self.ani_ax.set_xticks(range(0, num_years))
-        #        self.ani_ax.set_xticklabels(range(1, num_years + 1))
+            self.ani_ax.set_xticklabels(
+                range(self.year, num_years+self.year + 1)
+            )
 
     def _herb_heat_map_setup(self):
         """

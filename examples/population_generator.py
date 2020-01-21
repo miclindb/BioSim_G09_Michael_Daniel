@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 :mod:`biosim.population_generator` generates several populations of animals
 with age and weight randomly distributed and returns a list of dictionaries

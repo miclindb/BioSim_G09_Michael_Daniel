@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+
+__author__ = "Michael Lindberg, Daniel Milliam Müller"
+__email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
+
 import matplotlib.pyplot as plt
 import textwrap
 
@@ -65,9 +70,3 @@ if __name__ == '__main__':
     sim.simulate(num_years=10, vis_years=1, img_years=5)
 
     plt.savefig("check_sim.pdf")
-
-
-
-    #checksim, biosiminterface, code coverage, some visualization,
-
-    # delivery: tag 'submission' in commit
