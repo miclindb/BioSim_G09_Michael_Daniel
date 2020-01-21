@@ -225,8 +225,6 @@ class Animals:
                     new_born_animal = Carnivore()
                 self.adjust_weight_after_birth(new_born_animal)
                 return new_born_animal
-            else:
-                pass
         else:
             pass
 

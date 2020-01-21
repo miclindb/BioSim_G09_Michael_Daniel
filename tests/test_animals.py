@@ -18,7 +18,7 @@ class TestAnimals:
     """
     Tests for animals.
     """
-    alpha = 0.05
+    alpha = 0.02
 
     @pytest.fixture(autouse=True)
     def create_animals(self):
@@ -29,6 +29,7 @@ class TestAnimals:
         self.carnivore = Carnivore(age=2, weight=10)
         self.new_herbivore = Herbivore()
         self.new_carnivore = Carnivore()
+        self.invalid_herbivore = Herbivore(age=2, weight=0)
 
     def test_herbivore_default_class_initializer(self):
         """
@@ -120,7 +121,14 @@ class TestAnimals:
         Tests that 'calculate_fitness' properly calculates the animal's
         fitness.
         """
-        assert self.herbivore.fitness == approx(0.4997498)
+        assert self.herbivore.calculate_fitness() == approx(0.4997498)
+
+    def test_calculate_fitness_return_for_bad_weight(self):
+        """
+        Tests that 'calculate_fitness' returns 0 whenever the weight of the
+        animal is <= 0.
+        """
+        assert self.invalid_herbivore.calculate_fitness() == 0
 
     def test_update_fitness(self):
         """
@@ -254,16 +262,27 @@ class TestBirth:
                 self.heavy_h.parameters['xi'] * self.new_herbivore.weight
         )
 
-    def test_gives_birth_returns_none(self):
+    def test_gives_birth_low_weight_returns_none(self):
         """
-        Tests that gives_birth passes if a baby is not successfully born.
-        In the test, the mother's weight is manually set too low to birth a
-        baby animal.
+        Tests that 'gives_birth' returns 'None' if the animal's weight is too
+        low to pass the weight check.
         """
-
         assert self.new_herbivore.gives_birth(n=2) is None
 
-    def test_gives_birth_returns_newborn(self):
+    def test_gives_birth_no_birth_returns_none(self):
+        """
+        Tests that 'gives_birth' returns 'None' if a baby is not born. The
+        animal passes the weight check in this test, but parameter 'gamma' is
+        changed so that probability of birth is low.
+        """
+        self.heavy_h.parameters['gamma'] = 0.0001
+        assert self.heavy_h.weight >= self.heavy_h.weight_check_for_pregnancy()
+        assert self.heavy_h.gives_birth(n=2) is None
+
+        # Reset parameters
+        self.heavy_h.parameters['gamma'] = 0.2
+
+    def test_gives_birth_returns_newborn_herbivore(self):
         """
         Tests that gives_birth returns a new object of correct species when a
         baby is successfully born.
@@ -272,6 +291,16 @@ class TestBirth:
         assert herbivore.weight >= herbivore.weight_check_for_pregnancy()
         new_born = herbivore.gives_birth(n=500)
         assert isinstance(new_born, Herbivore)
+
+    def test_gives_birth_returns_newborn_carnivore(self):
+        """
+        Tests that gives_birth returns a new object of correct species when a
+        baby is successfully born.
+        """
+        carnivore = Carnivore(weight=25)
+        assert carnivore.weight >= carnivore.weight_check_for_pregnancy()
+        new_born = carnivore.gives_birth(n=500)
+        assert isinstance(new_born, Carnivore)
 
 
 class TestMigrate:
@@ -294,13 +323,6 @@ class TestMigrate:
         Tests that 'check_move' returns a bool.
         """
         assert isinstance(self.herbivore.check_move(), bool)
-
-    def test_statistical_test_check_move(self):
-        """
-        Tests that a dataset of multiple tests on 'check_move' is a binomial
-        distribution.
-        """
-        pass
 
     def test_migrate_returns_none_for_invalid_cells(self):
         """
@@ -358,6 +380,11 @@ class TestFeedingKilling:
         low_fit_herbivore = Herbivore(weight=10)
         low_fit_herbivore.get_fitness = 0.001
         self.low_fit_herbivore = low_fit_herbivore
+
+        low_fit_carnivore = Carnivore(weight=10)
+        low_fit_carnivore.get_fitness = 0.001
+        self.low_fit_carnivore = low_fit_carnivore
+
         self.limited_low_fit_herbivores = [low_fit_herbivore for _ in range(3)]
         self.nearby_low_fit_herbivores = [low_fit_herbivore for _ in range(10)]
 
@@ -417,6 +444,14 @@ class TestFeedingKilling:
         assert len(killed) == 1
         assert self.carnivore.weight > 8
         assert 0 < self.carnivore.fitness < 1
+
+    def test_unsuccessful_kill_returns_empty_list(self):
+        """
+        Tests that 'kill' returns an empty list if carnivore does not kill any
+        herbivores.
+        """
+        killed = self.low_fit_carnivore.kill(self.nearby_herbivore)
+        assert len(killed) == 0
 
     def test_attempt_all_herbivore_kill(self):
         """

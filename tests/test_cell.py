@@ -35,10 +35,10 @@ class TestCellOperations:
                          Herbivore(age=2, weight=40),
                          Herbivore(age=2, weight=10)]
 
-        self.herb_pop = [Herbivore(age=2, weight=20),
-                         Herbivore(age=2, weight=20),
+        self.herb_pop = [Herbivore(age=2, weight=40),
                          Herbivore(age=2, weight=40),
-                         Herbivore(age=2, weight=10)]
+                         Herbivore(age=2, weight=40),
+                         Herbivore(age=2, weight=40)]
 
         self.carn_pop = [Carnivore(age=2, weight=20),
                          Carnivore(age=2, weight=20),
@@ -183,6 +183,20 @@ class TestCellOperations:
         self.jungle_cell.population = self.herb_pop
         self.jungle_cell.procreate()
         assert self.mock_procreate.call_count == 4
+
+    def test_procreate_increases_pop_in_cell(self):
+        """
+        Tests that whenever an animal is born with by calling 'procreate', the
+        newborn is added to the cell's population.
+        """
+        Herbivore().parameters['gamma'] = 20.0
+        self.jungle_cell.population = self.herb_pop
+        ini_cell_pop = len(self.jungle_cell.population)
+        self.jungle_cell.procreate()
+        assert len(self.jungle_cell.population) == ini_cell_pop + 4
+
+        # Reset parameters
+        Herbivore().parameters['gamma'] = 0.2
 
     def test_migration(self):
         """
