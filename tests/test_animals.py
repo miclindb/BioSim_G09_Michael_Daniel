@@ -18,7 +18,7 @@ class TestAnimals:
     """
     Tests for animals.
     """
-    alpha = 0.02
+    alpha = 0.05
 
     @pytest.fixture(autouse=True)
     def create_animals(self):
@@ -85,9 +85,12 @@ class TestAnimals:
         The Shapiro-Wilks test is used for this. The significance level 'alpha'
         is set to 0.05. The 'p_value' is compared to the significance in order
         to determine whether the data is normally distributed.
+
+        Note: This does not directly prove that the sample is normally
+        distributed, it proves that it is not significantly different from it.
         """
         weights = []
-        for _ in range(5000):
+        for _ in range(500):
             ani = Herbivore()
             weight_calculation = ani.calculate_weight()
             weights.append(weight_calculation)
@@ -448,22 +451,28 @@ class TestFeedingKilling:
     def test_unsuccessful_kill_returns_empty_list(self):
         """
         Tests that 'kill' returns an empty list if carnivore does not kill any
-        herbivores.
+        herbivores. Tests that weight remains the same.
         """
+        old_weight = self.low_fit_carnivore.weight
         killed = self.low_fit_carnivore.kill(self.nearby_herbivore)
         assert len(killed) == 0
+        assert self.low_fit_carnivore.weight == old_weight
 
     def test_attempt_all_herbivore_kill(self):
         """
         Tests that the Carnivore kills all nearby herbivores. 'DeltaPhiMax' is
         set low so that the herbivore will successfully kill all herbivores.
+        Tests that weight is updated.
         """
         self.carnivore.parameters['DeltaPhiMax'] = 0.001
+        old_weight = self.carnivore.weight
         killed = self.carnivore.kill(self.limited_low_fit_herbivores)
         assert len(killed) == 3
+        assert self.carnivore.weight > old_weight
 
         # Reset parameters
         self.carnivore.parameters['DeltaPhiMax'] = 10.0
+        assert self.carnivore.parameters['DeltaPhiMax'] == 10.0
 
     def test_kill_stops_at_eaten_is_f(self):
         """
@@ -477,3 +486,4 @@ class TestFeedingKilling:
 
         # Reset parameters
         self.carnivore.parameters['DeltaPhiMax'] = 10.0
+        assert self.carnivore.parameters['DeltaPhiMax'] == 10.0
