@@ -82,11 +82,11 @@ class TestAnimals:
         calculating an animal's weight.
 
         The Shapiro-Wilks test is used for this. The significance level 'alpha'
-        is set to 0.01. The 'p_value' is compared to the significance in order
+        is set to 0.05. The 'p_value' is compared to the significance in order
         to determine whether the data is normally distributed.
         """
         weights = []
-        for _ in range(500):
+        for _ in range(5000):
             ani = Herbivore()
             weight_calculation = ani.calculate_weight()
             weights.append(weight_calculation)
@@ -187,7 +187,7 @@ class TestDeath:
         used to determine whether the number of dead herbivores coincides with
         the probability of death.
         """
-        herbs = [Herbivore(weight=10) for _ in range(1000)]
+        herbs = [Herbivore(weight=10) for _ in range(5000)]
         dead = 0
         for herb in herbs:
             if herb.death() is True:
@@ -351,7 +351,7 @@ class TestFeedingKilling:
         self.cell_full_fodder = 50.0
         self.cell_limited_fodder = 2.0
 
-        self.nearby_herbivore = [Herbivore(), Herbivore()]
+        self.nearby_herbivore = [Herbivore()]
         self.carnivore = Carnivore(weight=10)
 
         # Setup for low fitness animals
@@ -420,17 +420,19 @@ class TestFeedingKilling:
 
     def test_attempt_all_herbivore_kill(self):
         """
-        Tests that the Carnivore attempts to kill all nearby herbivores.
+        Tests that the Carnivore kills all nearby herbivores. 'DeltaPhiMax' is
+        set low so that the herbivore will successfully kill all herbivores.
         """
-        self.carnivore.get_fitness = 11
+        self.carnivore.parameters['DeltaPhiMax'] = 0.001
         killed = self.carnivore.kill(self.limited_low_fit_herbivores)
         assert len(killed) == 3
 
     def test_kill_stops_at_eaten_is_f(self):
         """
-        Tests that the carnivore stops eating.
-        How can this be done?
+        Tests that the carnivore stops eating when it has eaten enough.
+        'DeltaPhiMax' is set low so that the herbivore will be successfully
+        whenever it attempts to kill a herbivores.
         """
-        self.carnivore.get_fitness = 11
+        self.carnivore.parameters['DeltaPhiMax'] = 0.001
         killed = self.carnivore.kill(self.nearby_low_fit_herbivores)
-        assert len(killed) == 4
+        assert len(killed) == 5

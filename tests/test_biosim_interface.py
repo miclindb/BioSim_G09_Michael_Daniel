@@ -2,8 +2,10 @@
 
 """
 Test set for BioSim class interface for INF200 January 2019.
+
 This set of tests checks the interface of the BioSim class to be provided by
 the simulation module of the biosim package.
+
 Notes:
      - The BioSim class should pass all tests in this set.
      - The tests check only that the class interface can be used, not that
@@ -23,6 +25,44 @@ import os
 import os.path
 
 from biosim.simulation import BioSim
+
+DEFAULT_HERBIVORE_PARAMS = {
+    'w_birth': 8.0, 'sigma_birth': 1.5, 'beta': 0.9, 'eta': 0.05,
+    'a_half': 40.0, 'phi_age': 0.2, 'w_half': 10.0, 'phi_weight': 0.1,
+    'mu': 0.25, 'lambda': 1.0, 'gamma': 0.2, 'zeta': 3.5, 'xi': 1.2,
+    'omega': 0.4, 'F': 10.0
+}
+
+DEFAULT_CARNIVORE_PARAMS = {
+    'w_birth': 6.0, 'sigma_birth': 1.0, 'beta': 0.75, 'eta': 0.125,
+    'a_half': 60.0, 'phi_age': 0.4, 'w_half': 4.0, 'phi_weight': 0.4,
+    'mu': 0.4, 'lambda': 1.0, 'gamma': 0.8, 'zeta': 3.5, 'xi': 1.1,
+    'omega': 0.9, 'F': 50.0, 'DeltaPhiMax': 10.0
+}
+
+DEFAULT_JUNGLE_PARAMS = {
+    'f_max': 800
+}
+
+DEFAULT_SAVANNAH_PARAMS = {
+    'f_max': 300.0, 'alpha': 0.3
+}
+
+
+@pytest.fixture(autouse=True)
+def reset_all_params():
+    """
+    Sets all parameters to default values after each test in this suite
+    so that changes will not remain for other test-modules.
+
+    Note: might throw an error if set_animal_parameters() and set_landscape_parameters()
+          are not implemented
+    """
+    yield
+    BioSim.set_animal_parameters("Herbivore", DEFAULT_HERBIVORE_PARAMS)
+    BioSim.set_animal_parameters("Carnivore", DEFAULT_CARNIVORE_PARAMS)
+    BioSim.set_landscape_parameters("J", DEFAULT_JUNGLE_PARAMS)
+    BioSim.set_landscape_parameters("S", DEFAULT_SAVANNAH_PARAMS)
 
 
 def test_empty_island():
@@ -111,14 +151,14 @@ def test_initial_population():
         island_map="OOOO\nOJSO\nOOOO",
         ini_pop=[
             {
-                "loc": (1, 1),
+                "loc": (2, 2),
                 "pop": [
                     {"species": "Herbivore", "age": 1, "weight": 10.0},
                     {"species": "Carnivore", "age": 1, "weight": 10.0},
                 ],
             },
             {
-                "loc": (1, 2),
+                "loc": (2, 3),
                 "pop": [
                     {"species": "Herbivore", "age": 1, "weight": 10.0},
                     {"species": "Carnivore", "age": 1, "weight": 10.0},
@@ -141,14 +181,14 @@ def test_add_population(plain_sim):
     plain_sim.add_population(
         [
             {
-                "loc": (1, 1),
+                "loc": (2, 2),
                 "pop": [
                     {"species": "Herbivore", "age": 1, "weight": 10.0},
                     {"species": "Carnivore", "age": 1, "weight": 10.0},
                 ],
             },
             {
-                "loc": (1, 2),
+                "loc": (2, 3),
                 "pop": [
                     {"species": "Herbivore", "age": 1, "weight": 10.0},
                     {"species": "Carnivore", "age": 1, "weight": 10.0},
@@ -201,14 +241,14 @@ def test_get_animal_distribution(plain_sim):
     plain_sim.add_population(
         [
             {
-                "loc": (1, 1),
+                "loc": (2, 2),
                 "pop": [
                     {"species": "Herbivore", "age": 1, "weight": 10.0},
                     {"species": "Carnivore", "age": 1, "weight": 10.0},
                 ],
             },
             {
-                "loc": (1, 2),
+                "loc": (2, 3),
                 "pop": [
                     {"species": "Herbivore", "age": 1, "weight": 10.0},
                     {"species": "Herbivore", "age": 1, "weight": 10.0},
@@ -223,10 +263,10 @@ def test_get_animal_distribution(plain_sim):
     assert set(data.columns) == {"Row", "Col", "Herbivore", "Carnivore"}
 
     data.set_index(["Row", "Col"], inplace=True)
-    assert data.loc[(1, 1)].Herbivore == 1
-    assert data.loc[(1, 1)].Carnivore == 1
-    assert data.loc[(1, 2)].Herbivore == 2
-    assert data.loc[(1, 2)].Carnivore == 0
+    assert data.loc[(2, 2)].Herbivore == 1
+    assert data.loc[(2, 2)].Carnivore == 1
+    assert data.loc[(2, 3)].Herbivore == 2
+    assert data.loc[(2, 3)].Carnivore == 0
 
     assert data.Herbivore.sum() == 3
     assert data.Carnivore.sum() == 1

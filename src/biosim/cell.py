@@ -121,7 +121,7 @@ class Cell:
     @property
     def herbivores_in_cell(self):
         """
-        Gets number of herbivores in cell.
+        Returns number of herbivores in cell.
         """
         herbivores = [animal for animal in self.population if
                       isinstance(animal, Herbivore)]
@@ -130,7 +130,7 @@ class Cell:
     @property
     def carnivores_in_cell(self):
         """
-        Gets number of carnivores in cell.
+        Returns number of carnivores in cell.
         """
         carnivores = [animal for animal in self.population if
                       isinstance(animal, Carnivore)]

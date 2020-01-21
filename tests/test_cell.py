@@ -83,7 +83,9 @@ class TestCellOperations:
         returns the correct value for relative fodder.
         """
         relative_fodder = self.jungle_cell.calculate_relative_fodder(
-            700, Herbivore, 100
+            700,
+            Herbivore,
+            100
         )
         assert relative_fodder == (70 / 101)
 
@@ -234,7 +236,7 @@ class TestCellOperations:
         Tests that 'fodder_growth' successfully replenishes the fodder in the
         cell as expected.
         """
-        cells = [self.jungle_cell, self.savannah_cell, self.desert_cell]
+        cells = [Jungle(), Savannah(), Desert()]
 
         assert cells[0].fodder == 800.0
         assert cells[1].fodder == 300.0

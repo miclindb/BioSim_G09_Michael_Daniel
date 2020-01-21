@@ -447,7 +447,8 @@ class Carnivore(Animals):
 
         """
         return 0 < self.fitness - prey.fitness <= self.parameters[
-            'DeltaPhiMax']
+            'DeltaPhiMax'
+        ]
 
     def chance_of_kill(self, prey):
         """
@@ -484,7 +485,7 @@ class Carnivore(Animals):
         killed_herbivore: list
             List containing all herbivores that was killed by the carnivore.
         """
-        kill_attempts = 0
+        kill_attempts = 1
         eaten = 0
         killed_herbivores = []
         number_of_nearby_herbivores = len(nearby_herbivores)
@@ -501,8 +502,8 @@ class Carnivore(Animals):
 
                 if bool(np.random.binomial(1, chance)) is True:
                     self.weight += self.weight_gain(herbivore.weight)
-                    self.update_fitness()
                     eaten += herbivore.weight
+                    self.update_fitness()
                     killed_herbivores.append(herbivore)
 
                 kill_attempts += 1
