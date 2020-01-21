@@ -193,114 +193,6 @@ class TestSimulation:
         herbivore_map = self.sim.herbivore_island_map()
         assert isinstance(herbivore_map, list)
 
-    def test_simulate(self):
-        """
-        Tests that a simple simulation works as expected
-        """
-        pass
-
-    def test_setup_graphics(self):
-        """
-
-        """
-        pass
-
-    def test_herb_count_setup(self):
-        """
-
-        """
-        pass
-
-    def test_carn_count_setup(self):
-        """
-
-        """
-        pass
-
-    def test_map_setup(self):
-        """
-
-        """
-        pass
-
-    def test_graph_setup(self):
-        """
-
-        """
-        pass
-
-    def test_herb_heat_map_setup(self):
-        """
-
-        """
-        pass
-
-    def test_carn_heat_map_setup(self):
-        """
-
-        """
-        pass
-
-    def test_herb_map_setup(self):
-        """
-
-        """
-        pass
-
-    def test_can_map_setup(self):
-        """
-
-        """
-        pass
-
-    def test_herb_count_setup(self):
-        """
-
-        """
-        pass
-
-    def test_carn_count_setup(self):
-        """
-
-        """
-        pass
-
-    def test_update_graphics(self):
-        """
-
-        """
-        pass
-
-    def test_update_heat_map(self):
-        """
-
-        """
-        pass
-
-    def test_update_graphs(self):
-        """
-
-        """
-        pass
-
-    def test_herb_count_update(self):
-        """
-
-        """
-        pass
-
-    def test_carn_count_update(self):
-        """
-
-        """
-        pass
-
-    def test_save_graphics(self):
-        """
-
-        """
-        pass
-
     def test_add_population(self):
         """
         Tests that a population is successfully added to the island.
@@ -362,7 +254,12 @@ class TestSimulation:
 
     def test_make_movie(self):
         """
+        Testing if a movie actually can be made.
         """
+        self.sim._img_base = '../'
+        self.sim.simulate(num_years=10, vis_years=1, img_years=5)
+        _DEFAULT_MOVIE_FORMAT = 'mp4'
+        self.sim.make_movie()
 
     def test_make_movies_raises_error(self):
         """
