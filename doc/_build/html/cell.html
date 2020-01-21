@@ -1,1228 +1,195 @@
 
+
 <!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Cell &mdash; BioSim Project 1.0.0 documentation</title>
+  
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="utf-8" />
-    <title>Cell &#8212; BioSim_Project 0.0.1 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Animals" href="animals.html" />
-    <link rel="prev" title="Island" href="island.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="index.html" class="icon icon-home"> BioSim Project
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">BioSim project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BioSim Project</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Cell</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/cell.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="cell">
 <h1>Cell<a class="headerlink" href="#cell" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="biosim.cell.Ocean">
-<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Ocean</code><a class="reference internal" href="_modules/biosim/cell.html#Ocean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Ocean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cell subclass for all ocean landscape types.
-Ocean landscape cannot be traversed and contains no food.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#biosim.cell.Ocean.carnivores_in_cell" title="biosim.cell.Ocean.carnivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">carnivores_in_cell</span></code></a></dt><dd><p>Gets number of carnivores in cell.</p>
-</dd>
-<dt><a class="reference internal" href="#biosim.cell.Ocean.herbivores_in_cell" title="biosim.cell.Ocean.herbivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">herbivores_in_cell</span></code></a></dt><dd><p>Gets number of herbivores in cell.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Ocean.aging" title="biosim.cell.Ocean.aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aging</span></code></a>(self)</p></td>
-<td><p>Updates animal age for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Ocean.calculate_relative_fodder" title="biosim.cell.Ocean.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
-<td><p>Calculates amount of relative fodder in a cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Ocean.deaths" title="biosim.cell.Ocean.deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deaths</span></code></a>(self)</p></td>
-<td><p>Checks whether an animal dies for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Ocean.feeding" title="biosim.cell.Ocean.feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feeding</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to feed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Ocean.fodder_growth" title="biosim.cell.Ocean.fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fodder_growth</span></code></a>(self)</p></td>
-<td><p>Replenishes fodder for current cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Ocean.loss_of_weight" title="biosim.cell.Ocean.loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Reduces animal weight for all animals in cell</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Ocean.migration" title="biosim.cell.Ocean.migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migration</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to migrate if they haven’t already migrated.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Ocean.nearby_relative_fodder" title="biosim.cell.Ocean.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
-<td><p>Calculates the amount of fodder in nearby cells.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Ocean.procreate" title="biosim.cell.Ocean.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to procreate.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Ocean.sort_population" title="biosim.cell.Ocean.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
-<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
-</tr>
-</tbody>
-</table>
-<p>Ocean initializer.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#biosim.cell.Ocean.carnivores_in_cell" title="biosim.cell.Ocean.carnivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">carnivores_in_cell</span></code></a></dt><dd><p>Gets number of carnivores in cell.</p>
-</dd>
-<dt><a class="reference internal" href="#biosim.cell.Ocean.herbivores_in_cell" title="biosim.cell.Ocean.herbivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">herbivores_in_cell</span></code></a></dt><dd><p>Gets number of herbivores in cell.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Ocean.aging" title="biosim.cell.Ocean.aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aging</span></code></a>(self)</p></td>
-<td><p>Updates animal age for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Ocean.calculate_relative_fodder" title="biosim.cell.Ocean.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
-<td><p>Calculates amount of relative fodder in a cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Ocean.deaths" title="biosim.cell.Ocean.deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deaths</span></code></a>(self)</p></td>
-<td><p>Checks whether an animal dies for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Ocean.feeding" title="biosim.cell.Ocean.feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feeding</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to feed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Ocean.fodder_growth" title="biosim.cell.Ocean.fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fodder_growth</span></code></a>(self)</p></td>
-<td><p>Replenishes fodder for current cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Ocean.loss_of_weight" title="biosim.cell.Ocean.loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Reduces animal weight for all animals in cell</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Ocean.migration" title="biosim.cell.Ocean.migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migration</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to migrate if they haven’t already migrated.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Ocean.nearby_relative_fodder" title="biosim.cell.Ocean.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
-<td><p>Calculates the amount of fodder in nearby cells.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Ocean.procreate" title="biosim.cell.Ocean.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to procreate.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Ocean.sort_population" title="biosim.cell.Ocean.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
-<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="biosim.cell.Ocean.aging">
-<code class="sig-name descname">aging</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Ocean.aging" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates animal age for all animals in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Ocean.calculate_relative_fodder">
-<em class="property">static </em><code class="sig-name descname">calculate_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">fodder</em>, <em class="sig-param">animal_species</em>, <em class="sig-param">same_species</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Ocean.calculate_relative_fodder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates amount of relative fodder in a cell.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fodder</strong> (<em>float</em>) – fodder in cell</p></li>
-<li><p><strong>animal_species</strong> (<em>Animal</em>) – Type of animal</p></li>
-<li><p><strong>same_species</strong> (<em>int</em>) – Number of same species animals in cell</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Amount of relative fodder in cell.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Ocean.carnivores_in_cell">
-<em class="property">property </em><code class="sig-name descname">carnivores_in_cell</code><a class="headerlink" href="#biosim.cell.Ocean.carnivores_in_cell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets number of carnivores in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Ocean.deaths">
-<code class="sig-name descname">deaths</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Ocean.deaths" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks whether an animal dies for all animals in cell. Dead animals are
-removed from the cell’s population.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Ocean.feeding">
-<code class="sig-name descname">feeding</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Ocean.feeding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to feed.</p>
-<p>Each animal eats in order of their fitness. The most fit animal eats
-first.</p>
-<p>Feeding is different for herbivores and carnivores.
-Herbivores eat plant fodder and carnivores eat herbivores.</p>
-<p>Whenever a herbivore feeds, the amount of available fodder in the cell
-is reduced accordingly.
-Whenever a carnivore kills, the number of herbivores in the cell’s
-population is reduced.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Ocean.fodder_growth">
-<code class="sig-name descname">fodder_growth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Ocean.fodder_growth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replenishes fodder for current cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Ocean.herbivores_in_cell">
-<em class="property">property </em><code class="sig-name descname">herbivores_in_cell</code><a class="headerlink" href="#biosim.cell.Ocean.herbivores_in_cell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets number of herbivores in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Ocean.loss_of_weight">
-<code class="sig-name descname">loss_of_weight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Ocean.loss_of_weight" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduces animal weight for all animals in cell</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Ocean.migration">
-<code class="sig-name descname">migration</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Ocean.migration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to migrate if they haven’t already
-migrated.</p>
-<p>Migration is decided by amount of relative fodder in nearby cells.
-For herbivores, relative fodder is plant fodder.
-For carnivores, relative fodder is herbivores.</p>
-<p>After an animal has migrated, its instance is removed from the cell’s
-population list.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Ocean.nearby_relative_fodder">
-<code class="sig-name descname">nearby_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">animal</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Ocean.nearby_relative_fodder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the amount of fodder in nearby cells.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>animal</strong> (<em>Animal</em>) – Either a class instance of Herbivore or Carnivore</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>relative_fodder_list</strong> – List containing relative fodder in nearby cells and cell type of
-nearby cells.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Ocean.procreate">
-<code class="sig-name descname">procreate</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Ocean.procreate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to procreate.</p>
-<p>Each animal can only mate with another animal that is of same
-species and currently in the same cell as itself.</p>
-<p>Each new born animal is added to the cell’s population.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Ocean.sort_population">
-<em class="property">static </em><code class="sig-name descname">sort_population</code><span class="sig-paren">(</span><em class="sig-param">population</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Ocean.sort_population" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sorts a list of animals by their fitness in descending order.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="biosim.cell.Mountain">
-<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Mountain</code><a class="reference internal" href="_modules/biosim/cell.html#Mountain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Mountain" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cell subclass for all mountain landscape types.
-Mountain landscape cannot be traversed and contains no food.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#biosim.cell.Mountain.carnivores_in_cell" title="biosim.cell.Mountain.carnivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">carnivores_in_cell</span></code></a></dt><dd><p>Gets number of carnivores in cell.</p>
-</dd>
-<dt><a class="reference internal" href="#biosim.cell.Mountain.herbivores_in_cell" title="biosim.cell.Mountain.herbivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">herbivores_in_cell</span></code></a></dt><dd><p>Gets number of herbivores in cell.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Mountain.aging" title="biosim.cell.Mountain.aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aging</span></code></a>(self)</p></td>
-<td><p>Updates animal age for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Mountain.calculate_relative_fodder" title="biosim.cell.Mountain.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
-<td><p>Calculates amount of relative fodder in a cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Mountain.deaths" title="biosim.cell.Mountain.deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deaths</span></code></a>(self)</p></td>
-<td><p>Checks whether an animal dies for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Mountain.feeding" title="biosim.cell.Mountain.feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feeding</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to feed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Mountain.fodder_growth" title="biosim.cell.Mountain.fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fodder_growth</span></code></a>(self)</p></td>
-<td><p>Replenishes fodder for current cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Mountain.loss_of_weight" title="biosim.cell.Mountain.loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Reduces animal weight for all animals in cell</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Mountain.migration" title="biosim.cell.Mountain.migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migration</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to migrate if they haven’t already migrated.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Mountain.nearby_relative_fodder" title="biosim.cell.Mountain.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
-<td><p>Calculates the amount of fodder in nearby cells.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Mountain.procreate" title="biosim.cell.Mountain.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to procreate.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Mountain.sort_population" title="biosim.cell.Mountain.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
-<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
-</tr>
-</tbody>
-</table>
-<p>Mountain initializer.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#biosim.cell.Mountain.carnivores_in_cell" title="biosim.cell.Mountain.carnivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">carnivores_in_cell</span></code></a></dt><dd><p>Gets number of carnivores in cell.</p>
-</dd>
-<dt><a class="reference internal" href="#biosim.cell.Mountain.herbivores_in_cell" title="biosim.cell.Mountain.herbivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">herbivores_in_cell</span></code></a></dt><dd><p>Gets number of herbivores in cell.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Mountain.aging" title="biosim.cell.Mountain.aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aging</span></code></a>(self)</p></td>
-<td><p>Updates animal age for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Mountain.calculate_relative_fodder" title="biosim.cell.Mountain.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
-<td><p>Calculates amount of relative fodder in a cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Mountain.deaths" title="biosim.cell.Mountain.deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deaths</span></code></a>(self)</p></td>
-<td><p>Checks whether an animal dies for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Mountain.feeding" title="biosim.cell.Mountain.feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feeding</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to feed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Mountain.fodder_growth" title="biosim.cell.Mountain.fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fodder_growth</span></code></a>(self)</p></td>
-<td><p>Replenishes fodder for current cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Mountain.loss_of_weight" title="biosim.cell.Mountain.loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Reduces animal weight for all animals in cell</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Mountain.migration" title="biosim.cell.Mountain.migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migration</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to migrate if they haven’t already migrated.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Mountain.nearby_relative_fodder" title="biosim.cell.Mountain.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
-<td><p>Calculates the amount of fodder in nearby cells.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Mountain.procreate" title="biosim.cell.Mountain.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to procreate.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Mountain.sort_population" title="biosim.cell.Mountain.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
-<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="biosim.cell.Mountain.aging">
-<code class="sig-name descname">aging</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Mountain.aging" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates animal age for all animals in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Mountain.calculate_relative_fodder">
-<em class="property">static </em><code class="sig-name descname">calculate_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">fodder</em>, <em class="sig-param">animal_species</em>, <em class="sig-param">same_species</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Mountain.calculate_relative_fodder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates amount of relative fodder in a cell.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fodder</strong> (<em>float</em>) – fodder in cell</p></li>
-<li><p><strong>animal_species</strong> (<em>Animal</em>) – Type of animal</p></li>
-<li><p><strong>same_species</strong> (<em>int</em>) – Number of same species animals in cell</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Amount of relative fodder in cell.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Mountain.carnivores_in_cell">
-<em class="property">property </em><code class="sig-name descname">carnivores_in_cell</code><a class="headerlink" href="#biosim.cell.Mountain.carnivores_in_cell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets number of carnivores in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Mountain.deaths">
-<code class="sig-name descname">deaths</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Mountain.deaths" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks whether an animal dies for all animals in cell. Dead animals are
-removed from the cell’s population.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Mountain.feeding">
-<code class="sig-name descname">feeding</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Mountain.feeding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to feed.</p>
-<p>Each animal eats in order of their fitness. The most fit animal eats
-first.</p>
-<p>Feeding is different for herbivores and carnivores.
-Herbivores eat plant fodder and carnivores eat herbivores.</p>
-<p>Whenever a herbivore feeds, the amount of available fodder in the cell
-is reduced accordingly.
-Whenever a carnivore kills, the number of herbivores in the cell’s
-population is reduced.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Mountain.fodder_growth">
-<code class="sig-name descname">fodder_growth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Mountain.fodder_growth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replenishes fodder for current cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Mountain.herbivores_in_cell">
-<em class="property">property </em><code class="sig-name descname">herbivores_in_cell</code><a class="headerlink" href="#biosim.cell.Mountain.herbivores_in_cell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets number of herbivores in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Mountain.loss_of_weight">
-<code class="sig-name descname">loss_of_weight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Mountain.loss_of_weight" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduces animal weight for all animals in cell</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Mountain.migration">
-<code class="sig-name descname">migration</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Mountain.migration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to migrate if they haven’t already
-migrated.</p>
-<p>Migration is decided by amount of relative fodder in nearby cells.
-For herbivores, relative fodder is plant fodder.
-For carnivores, relative fodder is herbivores.</p>
-<p>After an animal has migrated, its instance is removed from the cell’s
-population list.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Mountain.nearby_relative_fodder">
-<code class="sig-name descname">nearby_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">animal</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Mountain.nearby_relative_fodder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the amount of fodder in nearby cells.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>animal</strong> (<em>Animal</em>) – Either a class instance of Herbivore or Carnivore</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>relative_fodder_list</strong> – List containing relative fodder in nearby cells and cell type of
-nearby cells.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Mountain.procreate">
-<code class="sig-name descname">procreate</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Mountain.procreate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to procreate.</p>
-<p>Each animal can only mate with another animal that is of same
-species and currently in the same cell as itself.</p>
-<p>Each new born animal is added to the cell’s population.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Mountain.sort_population">
-<em class="property">static </em><code class="sig-name descname">sort_population</code><span class="sig-paren">(</span><em class="sig-param">population</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Mountain.sort_population" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sorts a list of animals by their fitness in descending order.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="biosim.cell.Jungle">
-<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Jungle</code><a class="reference internal" href="_modules/biosim/cell.html#Jungle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Jungle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cell subclass for all jungle landscape types.
-Jungle landscape can be traversed and available food is fully replenished
-every year.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#biosim.cell.Jungle.carnivores_in_cell" title="biosim.cell.Jungle.carnivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">carnivores_in_cell</span></code></a></dt><dd><p>Gets number of carnivores in cell.</p>
-</dd>
-<dt><a class="reference internal" href="#biosim.cell.Jungle.herbivores_in_cell" title="biosim.cell.Jungle.herbivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">herbivores_in_cell</span></code></a></dt><dd><p>Gets number of herbivores in cell.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Jungle.aging" title="biosim.cell.Jungle.aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aging</span></code></a>(self)</p></td>
-<td><p>Updates animal age for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Jungle.calculate_relative_fodder" title="biosim.cell.Jungle.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
-<td><p>Calculates amount of relative fodder in a cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Jungle.deaths" title="biosim.cell.Jungle.deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deaths</span></code></a>(self)</p></td>
-<td><p>Checks whether an animal dies for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Jungle.feeding" title="biosim.cell.Jungle.feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feeding</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to feed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Jungle.fodder_growth" title="biosim.cell.Jungle.fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fodder_growth</span></code></a>(self)</p></td>
-<td><p>Replenishes fodder for current cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Jungle.loss_of_weight" title="biosim.cell.Jungle.loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Reduces animal weight for all animals in cell</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Jungle.migration" title="biosim.cell.Jungle.migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migration</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to migrate if they haven’t already migrated.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Jungle.nearby_relative_fodder" title="biosim.cell.Jungle.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
-<td><p>Calculates the amount of fodder in nearby cells.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Jungle.procreate" title="biosim.cell.Jungle.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to procreate.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Jungle.sort_population" title="biosim.cell.Jungle.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
-<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
-</tr>
-</tbody>
-</table>
-<p>Jungle initializer.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#biosim.cell.Jungle.carnivores_in_cell" title="biosim.cell.Jungle.carnivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">carnivores_in_cell</span></code></a></dt><dd><p>Gets number of carnivores in cell.</p>
-</dd>
-<dt><a class="reference internal" href="#biosim.cell.Jungle.herbivores_in_cell" title="biosim.cell.Jungle.herbivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">herbivores_in_cell</span></code></a></dt><dd><p>Gets number of herbivores in cell.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Jungle.aging" title="biosim.cell.Jungle.aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aging</span></code></a>(self)</p></td>
-<td><p>Updates animal age for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Jungle.calculate_relative_fodder" title="biosim.cell.Jungle.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
-<td><p>Calculates amount of relative fodder in a cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Jungle.deaths" title="biosim.cell.Jungle.deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deaths</span></code></a>(self)</p></td>
-<td><p>Checks whether an animal dies for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Jungle.feeding" title="biosim.cell.Jungle.feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feeding</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to feed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Jungle.fodder_growth" title="biosim.cell.Jungle.fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fodder_growth</span></code></a>(self)</p></td>
-<td><p>Replenishes fodder for current cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Jungle.loss_of_weight" title="biosim.cell.Jungle.loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Reduces animal weight for all animals in cell</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Jungle.migration" title="biosim.cell.Jungle.migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migration</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to migrate if they haven’t already migrated.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Jungle.nearby_relative_fodder" title="biosim.cell.Jungle.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
-<td><p>Calculates the amount of fodder in nearby cells.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Jungle.procreate" title="biosim.cell.Jungle.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to procreate.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Jungle.sort_population" title="biosim.cell.Jungle.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
-<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="biosim.cell.Jungle.aging">
-<code class="sig-name descname">aging</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Jungle.aging" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates animal age for all animals in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Jungle.calculate_relative_fodder">
-<em class="property">static </em><code class="sig-name descname">calculate_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">fodder</em>, <em class="sig-param">animal_species</em>, <em class="sig-param">same_species</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Jungle.calculate_relative_fodder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates amount of relative fodder in a cell.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fodder</strong> (<em>float</em>) – fodder in cell</p></li>
-<li><p><strong>animal_species</strong> (<em>Animal</em>) – Type of animal</p></li>
-<li><p><strong>same_species</strong> (<em>int</em>) – Number of same species animals in cell</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Amount of relative fodder in cell.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Jungle.carnivores_in_cell">
-<em class="property">property </em><code class="sig-name descname">carnivores_in_cell</code><a class="headerlink" href="#biosim.cell.Jungle.carnivores_in_cell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets number of carnivores in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Jungle.deaths">
-<code class="sig-name descname">deaths</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Jungle.deaths" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks whether an animal dies for all animals in cell. Dead animals are
-removed from the cell’s population.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Jungle.feeding">
-<code class="sig-name descname">feeding</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Jungle.feeding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to feed.</p>
-<p>Each animal eats in order of their fitness. The most fit animal eats
-first.</p>
-<p>Feeding is different for herbivores and carnivores.
-Herbivores eat plant fodder and carnivores eat herbivores.</p>
-<p>Whenever a herbivore feeds, the amount of available fodder in the cell
-is reduced accordingly.
-Whenever a carnivore kills, the number of herbivores in the cell’s
-population is reduced.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Jungle.fodder_growth">
-<code class="sig-name descname">fodder_growth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Jungle.fodder_growth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replenishes fodder for current cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Jungle.herbivores_in_cell">
-<em class="property">property </em><code class="sig-name descname">herbivores_in_cell</code><a class="headerlink" href="#biosim.cell.Jungle.herbivores_in_cell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets number of herbivores in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Jungle.loss_of_weight">
-<code class="sig-name descname">loss_of_weight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Jungle.loss_of_weight" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduces animal weight for all animals in cell</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Jungle.migration">
-<code class="sig-name descname">migration</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Jungle.migration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to migrate if they haven’t already
-migrated.</p>
-<p>Migration is decided by amount of relative fodder in nearby cells.
-For herbivores, relative fodder is plant fodder.
-For carnivores, relative fodder is herbivores.</p>
-<p>After an animal has migrated, its instance is removed from the cell’s
-population list.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Jungle.nearby_relative_fodder">
-<code class="sig-name descname">nearby_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">animal</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Jungle.nearby_relative_fodder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the amount of fodder in nearby cells.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>animal</strong> (<em>Animal</em>) – Either a class instance of Herbivore or Carnivore</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>relative_fodder_list</strong> – List containing relative fodder in nearby cells and cell type of
-nearby cells.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Jungle.procreate">
-<code class="sig-name descname">procreate</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Jungle.procreate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to procreate.</p>
-<p>Each animal can only mate with another animal that is of same
-species and currently in the same cell as itself.</p>
-<p>Each new born animal is added to the cell’s population.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Jungle.sort_population">
-<em class="property">static </em><code class="sig-name descname">sort_population</code><span class="sig-paren">(</span><em class="sig-param">population</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Jungle.sort_population" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sorts a list of animals by their fitness in descending order.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="biosim.cell.Savannah">
-<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Savannah</code><a class="reference internal" href="_modules/biosim/cell.html#Savannah"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Savannah" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cell subclass for all savannah landscape types.
-Savannah landscape can be traversed and a portion of maximum available food
-is replenished every year.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#biosim.cell.Savannah.carnivores_in_cell" title="biosim.cell.Savannah.carnivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">carnivores_in_cell</span></code></a></dt><dd><p>Gets number of carnivores in cell.</p>
-</dd>
-<dt><a class="reference internal" href="#biosim.cell.Savannah.herbivores_in_cell" title="biosim.cell.Savannah.herbivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">herbivores_in_cell</span></code></a></dt><dd><p>Gets number of herbivores in cell.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Savannah.aging" title="biosim.cell.Savannah.aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aging</span></code></a>(self)</p></td>
-<td><p>Updates animal age for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Savannah.calculate_relative_fodder" title="biosim.cell.Savannah.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
-<td><p>Calculates amount of relative fodder in a cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Savannah.deaths" title="biosim.cell.Savannah.deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deaths</span></code></a>(self)</p></td>
-<td><p>Checks whether an animal dies for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Savannah.feeding" title="biosim.cell.Savannah.feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feeding</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to feed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Savannah.fodder_growth" title="biosim.cell.Savannah.fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fodder_growth</span></code></a>(self)</p></td>
-<td><p>Replenishes fodder for current cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Savannah.loss_of_weight" title="biosim.cell.Savannah.loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Reduces animal weight for all animals in cell</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Savannah.migration" title="biosim.cell.Savannah.migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migration</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to migrate if they haven’t already migrated.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Savannah.nearby_relative_fodder" title="biosim.cell.Savannah.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
-<td><p>Calculates the amount of fodder in nearby cells.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Savannah.procreate" title="biosim.cell.Savannah.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to procreate.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Savannah.sort_population" title="biosim.cell.Savannah.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
-<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
-</tr>
-</tbody>
-</table>
-<p>Savannah initializer.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#biosim.cell.Savannah.carnivores_in_cell" title="biosim.cell.Savannah.carnivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">carnivores_in_cell</span></code></a></dt><dd><p>Gets number of carnivores in cell.</p>
-</dd>
-<dt><a class="reference internal" href="#biosim.cell.Savannah.herbivores_in_cell" title="biosim.cell.Savannah.herbivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">herbivores_in_cell</span></code></a></dt><dd><p>Gets number of herbivores in cell.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Savannah.aging" title="biosim.cell.Savannah.aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aging</span></code></a>(self)</p></td>
-<td><p>Updates animal age for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Savannah.calculate_relative_fodder" title="biosim.cell.Savannah.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
-<td><p>Calculates amount of relative fodder in a cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Savannah.deaths" title="biosim.cell.Savannah.deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deaths</span></code></a>(self)</p></td>
-<td><p>Checks whether an animal dies for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Savannah.feeding" title="biosim.cell.Savannah.feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feeding</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to feed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Savannah.fodder_growth" title="biosim.cell.Savannah.fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fodder_growth</span></code></a>(self)</p></td>
-<td><p>Replenishes fodder for current cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Savannah.loss_of_weight" title="biosim.cell.Savannah.loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Reduces animal weight for all animals in cell</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Savannah.migration" title="biosim.cell.Savannah.migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migration</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to migrate if they haven’t already migrated.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Savannah.nearby_relative_fodder" title="biosim.cell.Savannah.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
-<td><p>Calculates the amount of fodder in nearby cells.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Savannah.procreate" title="biosim.cell.Savannah.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to procreate.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Savannah.sort_population" title="biosim.cell.Savannah.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
-<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="biosim.cell.Savannah.aging">
-<code class="sig-name descname">aging</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Savannah.aging" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates animal age for all animals in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Savannah.calculate_relative_fodder">
-<em class="property">static </em><code class="sig-name descname">calculate_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">fodder</em>, <em class="sig-param">animal_species</em>, <em class="sig-param">same_species</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Savannah.calculate_relative_fodder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates amount of relative fodder in a cell.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fodder</strong> (<em>float</em>) – fodder in cell</p></li>
-<li><p><strong>animal_species</strong> (<em>Animal</em>) – Type of animal</p></li>
-<li><p><strong>same_species</strong> (<em>int</em>) – Number of same species animals in cell</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Amount of relative fodder in cell.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Savannah.carnivores_in_cell">
-<em class="property">property </em><code class="sig-name descname">carnivores_in_cell</code><a class="headerlink" href="#biosim.cell.Savannah.carnivores_in_cell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets number of carnivores in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Savannah.deaths">
-<code class="sig-name descname">deaths</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Savannah.deaths" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks whether an animal dies for all animals in cell. Dead animals are
-removed from the cell’s population.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Savannah.feeding">
-<code class="sig-name descname">feeding</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Savannah.feeding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to feed.</p>
-<p>Each animal eats in order of their fitness. The most fit animal eats
-first.</p>
-<p>Feeding is different for herbivores and carnivores.
-Herbivores eat plant fodder and carnivores eat herbivores.</p>
-<p>Whenever a herbivore feeds, the amount of available fodder in the cell
-is reduced accordingly.
-Whenever a carnivore kills, the number of herbivores in the cell’s
-population is reduced.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Savannah.fodder_growth">
-<code class="sig-name descname">fodder_growth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Savannah.fodder_growth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replenishes fodder for current cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Savannah.herbivores_in_cell">
-<em class="property">property </em><code class="sig-name descname">herbivores_in_cell</code><a class="headerlink" href="#biosim.cell.Savannah.herbivores_in_cell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets number of herbivores in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Savannah.loss_of_weight">
-<code class="sig-name descname">loss_of_weight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Savannah.loss_of_weight" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduces animal weight for all animals in cell</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Savannah.migration">
-<code class="sig-name descname">migration</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Savannah.migration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to migrate if they haven’t already
-migrated.</p>
-<p>Migration is decided by amount of relative fodder in nearby cells.
-For herbivores, relative fodder is plant fodder.
-For carnivores, relative fodder is herbivores.</p>
-<p>After an animal has migrated, its instance is removed from the cell’s
-population list.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Savannah.nearby_relative_fodder">
-<code class="sig-name descname">nearby_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">animal</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Savannah.nearby_relative_fodder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the amount of fodder in nearby cells.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>animal</strong> (<em>Animal</em>) – Either a class instance of Herbivore or Carnivore</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>relative_fodder_list</strong> – List containing relative fodder in nearby cells and cell type of
-nearby cells.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Savannah.procreate">
-<code class="sig-name descname">procreate</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Savannah.procreate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to procreate.</p>
-<p>Each animal can only mate with another animal that is of same
-species and currently in the same cell as itself.</p>
-<p>Each new born animal is added to the cell’s population.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Savannah.sort_population">
-<em class="property">static </em><code class="sig-name descname">sort_population</code><span class="sig-paren">(</span><em class="sig-param">population</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Savannah.sort_population" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sorts a list of animals by their fitness in descending order.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="biosim.cell.Desert">
-<em class="property">class </em><code class="sig-prename descclassname">biosim.cell.</code><code class="sig-name descname">Desert</code><a class="reference internal" href="_modules/biosim/cell.html#Desert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.cell.Desert" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cell subclass for all desert landscape types.
-Desert landscape can be traversed and contains no fodder.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#biosim.cell.Desert.carnivores_in_cell" title="biosim.cell.Desert.carnivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">carnivores_in_cell</span></code></a></dt><dd><p>Gets number of carnivores in cell.</p>
-</dd>
-<dt><a class="reference internal" href="#biosim.cell.Desert.herbivores_in_cell" title="biosim.cell.Desert.herbivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">herbivores_in_cell</span></code></a></dt><dd><p>Gets number of herbivores in cell.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Desert.aging" title="biosim.cell.Desert.aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aging</span></code></a>(self)</p></td>
-<td><p>Updates animal age for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Desert.calculate_relative_fodder" title="biosim.cell.Desert.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
-<td><p>Calculates amount of relative fodder in a cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Desert.deaths" title="biosim.cell.Desert.deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deaths</span></code></a>(self)</p></td>
-<td><p>Checks whether an animal dies for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Desert.feeding" title="biosim.cell.Desert.feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feeding</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to feed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Desert.fodder_growth" title="biosim.cell.Desert.fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fodder_growth</span></code></a>(self)</p></td>
-<td><p>Replenishes fodder for current cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Desert.loss_of_weight" title="biosim.cell.Desert.loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Reduces animal weight for all animals in cell</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Desert.migration" title="biosim.cell.Desert.migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migration</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to migrate if they haven’t already migrated.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Desert.nearby_relative_fodder" title="biosim.cell.Desert.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
-<td><p>Calculates the amount of fodder in nearby cells.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Desert.procreate" title="biosim.cell.Desert.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to procreate.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Desert.sort_population" title="biosim.cell.Desert.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
-<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
-</tr>
-</tbody>
-</table>
-<p>Desert initializer.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#biosim.cell.Desert.carnivores_in_cell" title="biosim.cell.Desert.carnivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">carnivores_in_cell</span></code></a></dt><dd><p>Gets number of carnivores in cell.</p>
-</dd>
-<dt><a class="reference internal" href="#biosim.cell.Desert.herbivores_in_cell" title="biosim.cell.Desert.herbivores_in_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">herbivores_in_cell</span></code></a></dt><dd><p>Gets number of herbivores in cell.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Desert.aging" title="biosim.cell.Desert.aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aging</span></code></a>(self)</p></td>
-<td><p>Updates animal age for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Desert.calculate_relative_fodder" title="biosim.cell.Desert.calculate_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_relative_fodder</span></code></a>(fodder, …)</p></td>
-<td><p>Calculates amount of relative fodder in a cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Desert.deaths" title="biosim.cell.Desert.deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deaths</span></code></a>(self)</p></td>
-<td><p>Checks whether an animal dies for all animals in cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Desert.feeding" title="biosim.cell.Desert.feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feeding</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to feed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Desert.fodder_growth" title="biosim.cell.Desert.fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fodder_growth</span></code></a>(self)</p></td>
-<td><p>Replenishes fodder for current cell.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Desert.loss_of_weight" title="biosim.cell.Desert.loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Reduces animal weight for all animals in cell</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Desert.migration" title="biosim.cell.Desert.migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">migration</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to migrate if they haven’t already migrated.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Desert.nearby_relative_fodder" title="biosim.cell.Desert.nearby_relative_fodder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nearby_relative_fodder</span></code></a>(self, animal)</p></td>
-<td><p>Calculates the amount of fodder in nearby cells.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.cell.Desert.procreate" title="biosim.cell.Desert.procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">procreate</span></code></a>(self)</p></td>
-<td><p>Each animal in the cell attempts to procreate.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.cell.Desert.sort_population" title="biosim.cell.Desert.sort_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_population</span></code></a>(population)</p></td>
-<td><p>Sorts a list of animals by their fitness in descending order.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="biosim.cell.Desert.aging">
-<code class="sig-name descname">aging</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Desert.aging" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates animal age for all animals in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Desert.calculate_relative_fodder">
-<em class="property">static </em><code class="sig-name descname">calculate_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">fodder</em>, <em class="sig-param">animal_species</em>, <em class="sig-param">same_species</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Desert.calculate_relative_fodder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates amount of relative fodder in a cell.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fodder</strong> (<em>float</em>) – fodder in cell</p></li>
-<li><p><strong>animal_species</strong> (<em>Animal</em>) – Type of animal</p></li>
-<li><p><strong>same_species</strong> (<em>int</em>) – Number of same species animals in cell</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Amount of relative fodder in cell.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Desert.carnivores_in_cell">
-<em class="property">property </em><code class="sig-name descname">carnivores_in_cell</code><a class="headerlink" href="#biosim.cell.Desert.carnivores_in_cell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets number of carnivores in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Desert.deaths">
-<code class="sig-name descname">deaths</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Desert.deaths" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks whether an animal dies for all animals in cell. Dead animals are
-removed from the cell’s population.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Desert.feeding">
-<code class="sig-name descname">feeding</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Desert.feeding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to feed.</p>
-<p>Each animal eats in order of their fitness. The most fit animal eats
-first.</p>
-<p>Feeding is different for herbivores and carnivores.
-Herbivores eat plant fodder and carnivores eat herbivores.</p>
-<p>Whenever a herbivore feeds, the amount of available fodder in the cell
-is reduced accordingly.
-Whenever a carnivore kills, the number of herbivores in the cell’s
-population is reduced.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Desert.fodder_growth">
-<code class="sig-name descname">fodder_growth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Desert.fodder_growth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replenishes fodder for current cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Desert.herbivores_in_cell">
-<em class="property">property </em><code class="sig-name descname">herbivores_in_cell</code><a class="headerlink" href="#biosim.cell.Desert.herbivores_in_cell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets number of herbivores in cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Desert.loss_of_weight">
-<code class="sig-name descname">loss_of_weight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Desert.loss_of_weight" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduces animal weight for all animals in cell</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Desert.migration">
-<code class="sig-name descname">migration</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Desert.migration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to migrate if they haven’t already
-migrated.</p>
-<p>Migration is decided by amount of relative fodder in nearby cells.
-For herbivores, relative fodder is plant fodder.
-For carnivores, relative fodder is herbivores.</p>
-<p>After an animal has migrated, its instance is removed from the cell’s
-population list.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Desert.nearby_relative_fodder">
-<code class="sig-name descname">nearby_relative_fodder</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">animal</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Desert.nearby_relative_fodder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the amount of fodder in nearby cells.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>animal</strong> (<em>Animal</em>) – Either a class instance of Herbivore or Carnivore</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>relative_fodder_list</strong> – List containing relative fodder in nearby cells and cell type of
-nearby cells.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Desert.procreate">
-<code class="sig-name descname">procreate</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Desert.procreate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each animal in the cell attempts to procreate.</p>
-<p>Each animal can only mate with another animal that is of same
-species and currently in the same cell as itself.</p>
-<p>Each new born animal is added to the cell’s population.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.cell.Desert.sort_population">
-<em class="property">static </em><code class="sig-name descname">sort_population</code><span class="sig-paren">(</span><em class="sig-param">population</em><span class="sig-paren">)</span><a class="headerlink" href="#biosim.cell.Desert.sort_population" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sorts a list of animals by their fitness in descending order.</p>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">BioSim_Project</a></h1>
+          <footer>
+  
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Lindberg and Daniel Milliam Müller
 
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="island.html">Island</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Cell</a></li>
-<li class="toctree-l1"><a class="reference internal" href="animals.html">Animals</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="island.html" title="previous chapter">Island</a></li>
-      <li>Next: <a href="animals.html" title="next chapter">Animals</a></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
+</footer>
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2020, Michael Lindberg and Daniel Milliam Müller.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/cell.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
+    </section>
 
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
     
-  </body>
+   
+
+</body>
 </html>

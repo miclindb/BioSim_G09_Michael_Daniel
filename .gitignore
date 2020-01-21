@@ -7542,3 +7542,6 @@ tests/__pycache__/test_island.cpython-37-pytest-5.3.3.pyc
 .tox/py37/lib/python3.7/site-packages/pandas/core/computation/align.py
 
 .tox/py37/lib/python3.7/site-packages/pandas/core/computation/
+/UNKNOWN.egg-info/
+/project documents/
+/pip-wheel-metadata/

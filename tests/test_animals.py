@@ -462,6 +462,9 @@ class TestFeedingKilling:
         killed = self.carnivore.kill(self.limited_low_fit_herbivores)
         assert len(killed) == 3
 
+        # Reset parameters
+        self.carnivore.parameters['DeltaPhiMax'] = 10.0
+
     def test_kill_stops_at_eaten_is_f(self):
         """
         Tests that the carnivore stops eating when it has eaten enough.
@@ -471,3 +474,6 @@ class TestFeedingKilling:
         self.carnivore.parameters['DeltaPhiMax'] = 0.001
         killed = self.carnivore.kill(self.nearby_low_fit_herbivores)
         assert len(killed) == 5
+
+        # Reset parameters
+        self.carnivore.parameters['DeltaPhiMax'] = 10.0

@@ -489,7 +489,7 @@ class Carnivore(Animals):
         number_of_nearby_herbivores = len(nearby_herbivores)
 
         for herbivore in nearby_herbivores:
-            while eaten < self.parameters['F'] and \
+            if eaten < self.parameters['F'] and \
                     kill_attempts <= number_of_nearby_herbivores:
                 if self.fitness <= herbivore.fitness:
                     chance = 0

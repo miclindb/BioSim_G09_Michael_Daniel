@@ -1,359 +1,195 @@
 
+
 <!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Island &mdash; BioSim Project 1.0.0 documentation</title>
+  
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="utf-8" />
-    <title>Island &#8212; BioSim_Project 0.0.1 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Cell" href="cell.html" />
-    <link rel="prev" title="Simulation" href="simulation.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="index.html" class="icon icon-home"> BioSim Project
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">BioSim project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BioSim Project</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Island</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/island.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="island">
 <h1>Island<a class="headerlink" href="#island" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="biosim.island.Island">
-<em class="property">class </em><code class="sig-prename descclassname">biosim.island.</code><code class="sig-name descname">Island</code><span class="sig-paren">(</span><em class="sig-param">island_map</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island" title="Permalink to this definition">¶</a></dt>
-<dd><p>Island class. Superclass for all landscape types.</p>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.add_carnivores" title="biosim.island.Island.add_carnivores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_carnivores</span></code></a>(self, animal, animals)</p></td>
-<td><p>Adds carnivores to the island population.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.add_herbivores" title="biosim.island.Island.add_herbivores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_herbivores</span></code></a>(self, animal, animals)</p></td>
-<td><p>Adds herbivores to the island population.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.adding_population" title="biosim.island.Island.adding_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adding_population</span></code></a>(self, population)</p></td>
-<td><p>Adds population to the island.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.generate_nearby_cells" title="biosim.island.Island.generate_nearby_cells"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_nearby_cells</span></code></a>(self)</p></td>
-<td><p>Generates a list of cells near current cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.island_aging" title="biosim.island.Island.island_aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_aging</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for aging.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.island_cycle" title="biosim.island.Island.island_cycle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_cycle</span></code></a>(self)</p></td>
-<td><p>Performs operations related to the annual cycle for one cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.island_deaths" title="biosim.island.Island.island_deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_deaths</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for death.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.island_feeding" title="biosim.island.Island.island_feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_feeding</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for feeding.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.island_fodder_growth" title="biosim.island.Island.island_fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_fodder_growth</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for fodder growth.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.island_loss_of_weight" title="biosim.island.Island.island_loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for loss of weight.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.island_migration" title="biosim.island.Island.island_migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_migration</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for migration.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.island_procreate" title="biosim.island.Island.island_procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_procreate</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for procreation.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.map_constructor" title="biosim.island.Island.map_constructor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">map_constructor</span></code></a>(self)</p></td>
-<td><p>Constructs the map of the island.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.total_population" title="biosim.island.Island.total_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_population</span></code></a>(self)</p></td>
-<td><p>Constructs a list containing all the animals on the island.</p></td>
-</tr>
-</tbody>
-</table>
-<p>Class constructor for island.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>island_map</strong> (<em>str</em>) – String containing information about the island such as shape and
-landscape type.</p>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.add_carnivores" title="biosim.island.Island.add_carnivores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_carnivores</span></code></a>(self, animal, animals)</p></td>
-<td><p>Adds carnivores to the island population.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.add_herbivores" title="biosim.island.Island.add_herbivores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_herbivores</span></code></a>(self, animal, animals)</p></td>
-<td><p>Adds herbivores to the island population.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.adding_population" title="biosim.island.Island.adding_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adding_population</span></code></a>(self, population)</p></td>
-<td><p>Adds population to the island.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.generate_nearby_cells" title="biosim.island.Island.generate_nearby_cells"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_nearby_cells</span></code></a>(self)</p></td>
-<td><p>Generates a list of cells near current cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.island_aging" title="biosim.island.Island.island_aging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_aging</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for aging.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.island_cycle" title="biosim.island.Island.island_cycle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_cycle</span></code></a>(self)</p></td>
-<td><p>Performs operations related to the annual cycle for one cell.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.island_deaths" title="biosim.island.Island.island_deaths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_deaths</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for death.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.island_feeding" title="biosim.island.Island.island_feeding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_feeding</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for feeding.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.island_fodder_growth" title="biosim.island.Island.island_fodder_growth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_fodder_growth</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for fodder growth.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.island_loss_of_weight" title="biosim.island.Island.island_loss_of_weight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_loss_of_weight</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for loss of weight.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.island_migration" title="biosim.island.Island.island_migration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_migration</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for migration.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.island_procreate" title="biosim.island.Island.island_procreate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">island_procreate</span></code></a>(self)</p></td>
-<td><p>Yearly cycle for procreation.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#biosim.island.Island.map_constructor" title="biosim.island.Island.map_constructor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">map_constructor</span></code></a>(self)</p></td>
-<td><p>Constructs the map of the island.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#biosim.island.Island.total_population" title="biosim.island.Island.total_population"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_population</span></code></a>(self)</p></td>
-<td><p>Constructs a list containing all the animals on the island.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="biosim.island.Island.add_carnivores">
-<code class="sig-name descname">add_carnivores</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">animal</em>, <em class="sig-param">animals</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.add_carnivores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.add_carnivores" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds carnivores to the island population. Used for ‘adding_population’
-method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>animal</strong> (<em>class object</em>) – Carnivore object to be added to the population.</p></li>
-<li><p><strong>animals</strong> (<em>list</em>) – List of animals to be added to the population.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.add_herbivores">
-<code class="sig-name descname">add_herbivores</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">animal</em>, <em class="sig-param">animals</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.add_herbivores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.add_herbivores" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds herbivores to the island population. Used for ‘adding_population’
-method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>animal</strong> (<em>class object</em>) – Herbivore object to be added to the population.</p></li>
-<li><p><strong>animals</strong> (<em>list</em>) – List of animals to be added to the population.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.adding_population">
-<code class="sig-name descname">adding_population</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">population</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.adding_population"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.adding_population" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds population to the island.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>population</strong> (<em>List</em>) – <p>List containing dictionaries describing the population’s location
-and population type.</p>
-<p>Required format:
-ini_animals = [{
-“loc”: (coordinate_x, coordinate_y),
-“pop”: [</p>
-<blockquote>
-<div><p>{“species”: str(animal_species), “age”: age, “weight”: weight}
-for _ in range(number_of_animals)
-],</p>
-</div></blockquote>
-<p>}]</p>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.generate_nearby_cells">
-<code class="sig-name descname">generate_nearby_cells</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.generate_nearby_cells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.generate_nearby_cells" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a list of cells near current cell. These cells are used for
-animal migration.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.island_aging">
-<code class="sig-name descname">island_aging</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.island_aging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.island_aging" title="Permalink to this definition">¶</a></dt>
-<dd><p>Yearly cycle for aging. All animals on the island turn one year older.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.island_cycle">
-<code class="sig-name descname">island_cycle</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.island_cycle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.island_cycle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs operations related to the annual cycle for one cell.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.island_deaths">
-<code class="sig-name descname">island_deaths</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.island_deaths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.island_deaths" title="Permalink to this definition">¶</a></dt>
-<dd><p>Yearly cycle for death. Checks for all animals on the island if the
-die.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.island_feeding">
-<code class="sig-name descname">island_feeding</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.island_feeding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.island_feeding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Yearly cycle for feeding. All animals on the island attempts to feed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.island_fodder_growth">
-<code class="sig-name descname">island_fodder_growth</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.island_fodder_growth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.island_fodder_growth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Yearly cycle for fodder growth. Fodder grows for all cells on the
-island.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.island_loss_of_weight">
-<code class="sig-name descname">island_loss_of_weight</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.island_loss_of_weight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.island_loss_of_weight" title="Permalink to this definition">¶</a></dt>
-<dd><p>Yearly cycle for loss of weight. All animals on the island loses
-weight.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.island_migration">
-<code class="sig-name descname">island_migration</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.island_migration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.island_migration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Yearly cycle for migration. All animals on the island cell attempts to
-migrate. Resets the ‘has_moved’ status of the animals afterwards.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.island_procreate">
-<code class="sig-name descname">island_procreate</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.island_procreate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.island_procreate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Yearly cycle for procreation. All animals on the island attempts to
-procreate.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.map_constructor">
-<code class="sig-name descname">map_constructor</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.map_constructor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.map_constructor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructs the map of the island.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="biosim.island.Island.total_population">
-<code class="sig-name descname">total_population</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/biosim/island.html#Island.total_population"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#biosim.island.Island.total_population" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructs a list containing all the animals on the island.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>total_population_list</strong> – List containing the total population on the island.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">BioSim_Project</a></h1>
+          <footer>
+  
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Michael Lindberg and Daniel Milliam Müller
 
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Island</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cell.html">Cell</a></li>
-<li class="toctree-l1"><a class="reference internal" href="animals.html">Animals</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="simulation.html" title="previous chapter">Simulation</a></li>
-      <li>Next: <a href="cell.html" title="next chapter">Cell</a></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
+</footer>
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2020, Michael Lindberg and Daniel Milliam Müller.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/island.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
+    </section>
 
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
     
-  </body>
+   
+
+</body>
 </html>
