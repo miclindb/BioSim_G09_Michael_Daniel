@@ -1,20 +1,97 @@
 Examples
 ========
 
-BioSim simulation for something, ex 1
+BioSim simulation
 -------------------------------------
-Some example description.
+Runs a standard simulation for 20 years.
 
 .. code-block:: python
 
-    from biosim.simulation import BioSim
-    import matplotlib.pyplot as plt
-    import textwrap
+    """
+    Runs a simulation for 20 years. The initial population on the island is 150
+    herbivores and 200 carnivores.
+    """
 
-    if __name__ == '__main__':
+    __author__ = "Michael Lindberg, Daniel Milliam Müller"
+    __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
+
+    if __name__ == "__main__":
+
+        geogr = """\
+                   OOOOOOOOOOOOOOOOOOOOO
+                   OOOOOOOOSMMMMJJJJJJJO
+                   OSSSSSJJJJMMJJJJJJJOO
+                   OSSSSSSSSSMMJJJJJJOOO
+                   OSSSSSJJJJJJJJJJJJOOO
+                   OSSSSSJJJDDJJJSJJJOOO
+                   OSSJJJJJDDDJJJSSSSOOO
+                   OOSSSSJJJDDJJJSOOOOOO
+                   OSSSJJJJJDDJJJJJJJOOO
+                   OOOOOOOOOOOOOOOOOOOOO"""
+
+        geogr = textwrap.dedent(geogr)
+
+        ini_herbs = [
+            {
+                "loc": (10, 10),
+                "pop": [
+                    {"species": "Herbivore", "age": 10, "weight": 60}
+                    for _ in range(150)
+                ],
+            }
+        ]
+        ini_carns = [
+            {
+                "loc": (10, 10),
+                "pop": [
+                    {"species": "Carnivore", "age": 6, "weight": 10}
+                    for _ in range(200)
+                ],
+            }
+        ]
+
+        sim = BioSim(island_map=geogr, ini_pop=ini_herbs, seed=123456)
+        sim.add_population(population=ini_carns)
+
+        sim.simulate(num_years=20, vis_years=1, img_years=2000)
+
+
+**Simulation results**
+
+.. image:: island_map.jpg
+   :width: 700px
+   :height: 500px
+   :scale: 50 %
+   :alt: alternate text
+   :align: center
+
+BioSim simulation with movie creation
+-------------------------------------
+This simulation creates a MPEG4 movie that shows how the island updates over
+the course of the simulation. The simulation runs for a total of 300 years.
+
+.. code-block:: python
+
+    """
+    Runs a simulation for a total of 300 years. The initial population on the
+    island is 150 herbivores and 40 carnivores.
+
+    The parameters for the herbivores and carnivores are tweaked, which affects
+    behaviour such as feeding, migration and birth.
+    """
+
+     __author__ = "Michael Lindberg, Daniel Milliam Müller"
+    __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
+
+    import textwrap
+    import matplotlib.pyplot as plt
+
+    from biosim.simulation import BioSim
+
+    if __name__ == "__main__":
         plt.ion()
 
-        base = '..'
+        base = '../biosim_graphics/'
 
         geogr = """\
                    OOOOOOOOOOOOOOOOOOOOO
@@ -51,7 +128,7 @@ Some example description.
             }
         ]
 
-        sim = BioSim(island_map=geogr, ini_pop=ini_herbs, seed=123456, img_base=base)
+        sim = BioSim(island_map=geogr, ini_pop=ini_herbs, seed=123456)
 
         sim.set_animal_parameters("Herbivore", {"zeta": 3.2, "xi": 1.8})
         sim.set_animal_parameters(
@@ -66,109 +143,14 @@ Some example description.
         )
         sim.set_landscape_parameters("J", {"f_max": 700})
 
-        sim.simulate(num_years=10, vis_years=1, img_years=5)
+        sim.simulate(num_years=100, vis_years=1, img_years=1)
 
         sim.add_population(population=ini_carns)
 
-        sim.simulate(num_years=10, vis_years=1, img_years=5)
+        sim.simulate(num_years=200, vis_years=1, img_years=1)
 
-        plt.savefig("check_sim.pdf")
+        sim.make_movie()
 
+**Simulation results**
 
-BioSim simulation for something, ex 2
--------------------------------------
-Some example description.
-
-.. code-block:: python
-
-    """
-    :mod:`biosim.population_generator` generates several populations of animals
-    with age and weight randomly distributed and returns a list of dictionaries
-    with the animals and the coordinates they are to be put.
-
-    The user can define:
-    #. The number of each species that are put on every defined coordinate
-    #. The coordinates that the animals in that species should occupy
-
-    If different sizes of the population within an species is preferable,
-    the user can simply make another population and add it to the island
-
-    Example of list returned:
-    -------------------------
-    ::
-
-        [{'loc': (3,4),
-          'pop': [{'species': 'Herbivore', 'age': 10, 'weight': 15},
-                  {'species': 'Herbivore', 'age': 5, 'weight': 40},
-                  {'species': 'Herbivore', 'age': 15, 'weight': 25}]},
-         {'loc': (4,4),
-          'pop': [{'species': 'Herbivore', 'age': 2, 'weight': 60},
-                  {'species': 'Herbivore', 'age': 9, 'weight': 30},
-                  {'species': 'Herbivore', 'age': 16, 'weight': 14}]},
-         {'loc': (4,4),
-          'pop': [{'species': 'Carnivore', 'age': 3, 'weight': 35},
-                  {'species': 'Carnivore', 'age': 5, 'weight': 20},
-                  {'species': 'Carnivore', 'age': 8, 'weight': 5}]}]
-
-    """
-    __author__ = "Ragnhild Smistad, UMB and Toril Fjeldaas Rygg, UMB"
-
-    import random
-
-
-    class Population(object):
-        """
-        The population on the island
-        """
-
-        def __init__(
-            self,
-            n_herbivores=None,
-            coord_herb=None,
-            n_carnivores=None,
-            coord_carn=None,
-        ):
-            """
-            ==============    ==============================================
-            *n_herbivores*    The number of herbivores in each coordinate
-            *coord_herb*      A list of the different coordinates(tuple)
-            *n_carnivores*    The number of carnivores in each coordinate
-            *coord_carn*      A list of the different coordinates as tuple
-            ==============    ==============================================
-            """
-            self.animals = []
-            self.n_herb = n_herbivores
-            self.n_carn = n_carnivores
-            self.coord_herb = coord_herb
-            self.coord_carn = coord_carn
-
-        def get_animals(self):
-            """
-            Returns a complete list of dictionaries with a population for
-            every coordinate defined.
-            """
-            if self.n_herb:
-                for coord in self.coord_herb:
-                    self.animals.append({"loc": coord, "pop": []})
-
-                    for _ in range(self.n_herb):
-                        self.animals[-1]["pop"].append(
-                            {
-                                "species": "Herbivore",
-                                "age": random.randint(0, 20),
-                                "weight": random.randint(5, 80),
-                            }
-                        )
-
-            if self.n_carn:
-                for coord in self.coord_carn:
-                    self.animals.append({"loc": coord, "pop": []})
-                    for _ in range(self.n_carn):
-                        self.animals[-1]["pop"].append(
-                            {
-                                "species": "Carnivore",
-                                "age": random.randint(0, 10),
-                                "weight": random.randint(3, 50),
-                            }
-                        )
-            return self.animals
+#.. image:: ../images/your_image.gif

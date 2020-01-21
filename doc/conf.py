@@ -10,14 +10,14 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
-
+import os
+import sys
+sys.path.insert(0, os.path.abspath('/Users/danielmilliammuller/Desktop/NMBU/Semester 3/INF200/Exam/BioSim_G09_Michael_Daniel/src/biosim'))
+autoclass_content = 'both'
 
 # -- Project information -----------------------------------------------------
 
-project = 'BioSim Project'
+project = 'BioSim Project Group 09'
 copyright = '2020, Michael Lindberg and Daniel Milliam Müller'
 author = 'Michael Lindberg and Daniel Milliam Müller'
 

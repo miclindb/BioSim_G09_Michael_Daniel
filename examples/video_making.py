@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
+"""
+Runs a simulation for a total of 300 years. The initial population on the
+island is 150 herbivores and 40 carnivores.
+
+The parameters for the herbivores and carnivores are tweaked, which affects
+behaviour such as feeding, migration and birth.
+"""
+
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 

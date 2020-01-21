@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>biosim.animals &mdash; BioSim Project 1.0.0 documentation</title>
+  <title>biosim.animals &mdash; BioSim Project Group 09 1.0.0 documentation</title>
   
 
   
@@ -49,7 +49,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> BioSim Project
+            <a href="../../index.html" class="icon icon-home"> BioSim Project Group 09
           
 
           
@@ -81,9 +81,10 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../about.html">BioSim project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">BioSim Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../assignment.html">Project Assignment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules</a></li>
 </ul>
 
             
@@ -98,7 +99,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">BioSim Project</a>
+          <a href="../../index.html">BioSim Project Group 09</a>
         
       </nav>
 
@@ -489,7 +490,7 @@
             <span class="k">return</span> <span class="kc">None</span>
 
 
-<div class="viewcode-block" id="Herbivore"><a class="viewcode-back" href="../../api_reference.html#biosim.animals.Herbivore">[docs]</a><span class="k">class</span> <span class="nc">Herbivore</span><span class="p">(</span><span class="n">Animals</span><span class="p">):</span>
+<div class="viewcode-block" id="Herbivore"><a class="viewcode-back" href="../../animals.html#biosim.animals.Herbivore">[docs]</a><span class="k">class</span> <span class="nc">Herbivore</span><span class="p">(</span><span class="n">Animals</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Subclass of Animals.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -518,7 +519,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Herbivore</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Herbivore.feed"><a class="viewcode-back" href="../../api_reference.html#biosim.animals.Herbivore.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell_fodder_info</span><span class="p">):</span>
+<div class="viewcode-block" id="Herbivore.feed"><a class="viewcode-back" href="../../animals.html#biosim.animals.Herbivore.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell_fodder_info</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Herbivore feeding. Each year, the herbivore attempts to eat an amount</span>
 <span class="sd">        of fodder. How much the herbivore actually eats depends on the</span>
@@ -547,7 +548,7 @@
             <span class="k">return</span> <span class="n">eaten</span></div></div>
 
 
-<div class="viewcode-block" id="Carnivore"><a class="viewcode-back" href="../../api_reference.html#biosim.animals.Carnivore">[docs]</a><span class="k">class</span> <span class="nc">Carnivore</span><span class="p">(</span><span class="n">Animals</span><span class="p">):</span>
+<div class="viewcode-block" id="Carnivore"><a class="viewcode-back" href="../../animals.html#biosim.animals.Carnivore">[docs]</a><span class="k">class</span> <span class="nc">Carnivore</span><span class="p">(</span><span class="n">Animals</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Subclass of Animals.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -576,7 +577,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Carnivore</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Carnivore.fitness_greater_than_prey"><a class="viewcode-back" href="../../api_reference.html#biosim.animals.Carnivore.fitness_greater_than_prey">[docs]</a>    <span class="k">def</span> <span class="nf">fitness_greater_than_prey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prey</span><span class="p">):</span>
+<div class="viewcode-block" id="Carnivore.fitness_greater_than_prey"><a class="viewcode-back" href="../../animals.html#biosim.animals.Carnivore.fitness_greater_than_prey">[docs]</a>    <span class="k">def</span> <span class="nf">fitness_greater_than_prey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prey</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if carnivore&#39;s fitness is greater than the herbivore&#39;s fitness,</span>
 <span class="sd">        and not greater than a threshold.</span>
@@ -597,7 +598,7 @@
             <span class="s1">&#39;DeltaPhiMax&#39;</span>
         <span class="p">]</span></div>
 
-<div class="viewcode-block" id="Carnivore.chance_of_kill"><a class="viewcode-back" href="../../api_reference.html#biosim.animals.Carnivore.chance_of_kill">[docs]</a>    <span class="k">def</span> <span class="nf">chance_of_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prey</span><span class="p">):</span>
+<div class="viewcode-block" id="Carnivore.chance_of_kill"><a class="viewcode-back" href="../../animals.html#biosim.animals.Carnivore.chance_of_kill">[docs]</a>    <span class="k">def</span> <span class="nf">chance_of_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prey</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The chance the carnivore has to kill its prey.</span>
 
@@ -613,7 +614,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">-</span> <span class="n">prey</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;DeltaPhiMax&#39;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Carnivore.kill"><a class="viewcode-back" href="../../api_reference.html#biosim.animals.Carnivore.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nearby_herbivores</span><span class="p">):</span>
+<div class="viewcode-block" id="Carnivore.kill"><a class="viewcode-back" href="../../animals.html#biosim.animals.Carnivore.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nearby_herbivores</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Carnivore attempts to kill a nearby herbivore. If the carnivore</span>
 <span class="sd">        successfully kills the nearby herbivore, the carnivore&#39;s weight is</span>
@@ -638,7 +639,7 @@
         <span class="n">number_of_nearby_herbivores</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nearby_herbivores</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">herbivore</span> <span class="ow">in</span> <span class="n">nearby_herbivores</span><span class="p">:</span>
-            <span class="k">while</span> <span class="n">eaten</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span> <span class="ow">and</span> \
+            <span class="k">if</span> <span class="n">eaten</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span> <span class="ow">and</span> \
                     <span class="n">kill_attempts</span> <span class="o">&lt;=</span> <span class="n">number_of_nearby_herbivores</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">&lt;=</span> <span class="n">herbivore</span><span class="o">.</span><span class="n">fitness</span><span class="p">:</span>
                     <span class="n">chance</span> <span class="o">=</span> <span class="mi">0</span>

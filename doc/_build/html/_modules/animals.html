@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>animals &mdash; BioSim Project 1.0.0 documentation</title>
+  <title>animals &mdash; BioSim Project Group 09 1.0.0 documentation</title>
   
 
   
@@ -49,7 +49,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> BioSim Project
+            <a href="../index.html" class="icon icon-home"> BioSim Project Group 09
           
 
           
@@ -81,9 +81,10 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../about.html">BioSim project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">BioSim Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assignment.html">Project Assignment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Modules</a></li>
 </ul>
 
             
@@ -98,7 +99,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">BioSim Project</a>
+          <a href="../index.html">BioSim Project Group 09</a>
         
       </nav>
 
@@ -157,9 +158,10 @@
 <span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
 
 
-<div class="viewcode-block" id="Animals"><a class="viewcode-back" href="../animals.html#animals.Animals">[docs]</a><span class="k">class</span> <span class="nc">Animals</span><span class="p">:</span>
+<div class="viewcode-block" id="Animals"><a class="viewcode-back" href="../modules.html#animals.Animals">[docs]</a><span class="k">class</span> <span class="nc">Animals</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Superclass for Herbivores and Carnivores.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -186,14 +188,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_fitness</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">has_moved</span> <span class="o">=</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="Animals.aging"><a class="viewcode-back" href="../animals.html#animals.Animals.aging">[docs]</a>    <span class="k">def</span> <span class="nf">aging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.aging"><a class="viewcode-back" href="../modules.html#animals.Animals.aging">[docs]</a>    <span class="k">def</span> <span class="nf">aging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Increases the age of the animal by one year and updates its fitness.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_fitness</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Animals.calculate_weight"><a class="viewcode-back" href="../animals.html#animals.Animals.calculate_weight">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.calculate_weight"><a class="viewcode-back" href="../modules.html#animals.Animals.calculate_weight">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the weight of the animal. This is used whenever the class</span>
 <span class="sd">        initializer for the animals did not receive any specified weight input.</span>
@@ -206,7 +208,7 @@
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;w_birth&#39;</span><span class="p">],</span>
                                 <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;sigma_birth&#39;</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Animals.loss_of_weight"><a class="viewcode-back" href="../animals.html#animals.Animals.loss_of_weight">[docs]</a>    <span class="k">def</span> <span class="nf">loss_of_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.loss_of_weight"><a class="viewcode-back" href="../modules.html#animals.Animals.loss_of_weight">[docs]</a>    <span class="k">def</span> <span class="nf">loss_of_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the amount of weight an animal loses every year, and updates</span>
 <span class="sd">        the animals weight and fitness.</span>
@@ -214,7 +216,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;eta&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_fitness</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Animals.weight_gain"><a class="viewcode-back" href="../animals.html#animals.Animals.weight_gain">[docs]</a>    <span class="k">def</span> <span class="nf">weight_gain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eaten</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.weight_gain"><a class="viewcode-back" href="../modules.html#animals.Animals.weight_gain">[docs]</a>    <span class="k">def</span> <span class="nf">weight_gain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eaten</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Weight update after feeding. Currently used for herbivore feeding and</span>
 <span class="sd">        carnivore killing.</span>
@@ -231,7 +233,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">eaten</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Animals.calculate_fitness"><a class="viewcode-back" href="../animals.html#animals.Animals.calculate_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.calculate_fitness"><a class="viewcode-back" href="../modules.html#animals.Animals.calculate_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the fitness of an animal.</span>
 
@@ -242,15 +244,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
-        <span class="k">else</span><span class="p">:</span>  <span class="c1"># MATH?</span>
-            <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;phi_age&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;a_half&#39;</span><span class="p">]))))</span> <span class="o">*</span> \
-                   <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;phi_weight&#39;</span><span class="p">]</span> <span class="o">*</span>
+                   <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;phi_weight&#39;</span><span class="p">]</span> <span class="o">*</span>
                                       <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span>
                                           <span class="s1">&#39;w_half&#39;</span><span class="p">])))))</span></div>
 
-<div class="viewcode-block" id="Animals.update_fitness"><a class="viewcode-back" href="../animals.html#animals.Animals.update_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">update_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.update_fitness"><a class="viewcode-back" href="../modules.html#animals.Animals.update_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">update_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the fitness of an animal.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -280,7 +282,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">value</span>
 
-<div class="viewcode-block" id="Animals.death"><a class="viewcode-back" href="../animals.html#animals.Animals.death">[docs]</a>    <span class="k">def</span> <span class="nf">death</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.death"><a class="viewcode-back" href="../modules.html#animals.Animals.death">[docs]</a>    <span class="k">def</span> <span class="nf">death</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines whether an animal dies. The animal dies if the fitness of</span>
 <span class="sd">        the animal is 0. The animal also has a probability of dying each year.</span>
@@ -299,7 +301,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="Animals.weight_check_for_pregnancy"><a class="viewcode-back" href="../animals.html#animals.Animals.weight_check_for_pregnancy">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Animals.weight_check_for_pregnancy"><a class="viewcode-back" href="../modules.html#animals.Animals.weight_check_for_pregnancy">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">weight_check_for_pregnancy</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks whether the animal&#39;s weight is above a threshold. This is</span>
@@ -314,14 +316,14 @@
                 <span class="bp">cls</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;w_birth&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="bp">cls</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;sigma_birth&#39;</span><span class="p">]</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Animals.probability_birth"><a class="viewcode-back" href="../animals.html#animals.Animals.probability_birth">[docs]</a>    <span class="k">def</span> <span class="nf">probability_birth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.probability_birth"><a class="viewcode-back" href="../modules.html#animals.Animals.probability_birth">[docs]</a>    <span class="k">def</span> <span class="nf">probability_birth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the probability of birth.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        n: int</span>
-<span class="sd">            Nearby same species animals</span>
+<span class="sd">            Number of nearby same species animals</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -330,18 +332,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;gamma&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Animals.adjust_weight_after_birth"><a class="viewcode-back" href="../animals.html#animals.Animals.adjust_weight_after_birth">[docs]</a>    <span class="k">def</span> <span class="nf">adjust_weight_after_birth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_born_animal</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.adjust_weight_after_birth"><a class="viewcode-back" href="../modules.html#animals.Animals.adjust_weight_after_birth">[docs]</a>    <span class="k">def</span> <span class="nf">adjust_weight_after_birth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_born_animal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the weight of the mother after a baby is born.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        new_born_animal: Class object</span>
+<span class="sd">        new_born_animal: Animal</span>
 <span class="sd">            New born baby</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;xi&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">new_born_animal</span><span class="o">.</span><span class="n">weight</span></div>
 
-<div class="viewcode-block" id="Animals.gives_birth"><a class="viewcode-back" href="../animals.html#animals.Animals.gives_birth">[docs]</a>    <span class="k">def</span> <span class="nf">gives_birth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.gives_birth"><a class="viewcode-back" href="../modules.html#animals.Animals.gives_birth">[docs]</a>    <span class="k">def</span> <span class="nf">gives_birth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Animals have a chance to produce an offspring each year. This is</span>
 <span class="sd">        decided by their weight and the amount of nearby same species animals.</span>
@@ -361,7 +363,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        bool</span>
 <span class="sd">            True if a newborn is successfully born.</span>
-<span class="sd">        new_born_animal: class object</span>
+<span class="sd">        new_born_animal: Animal</span>
 <span class="sd">            Newborn animal.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -373,12 +375,10 @@
                     <span class="n">new_born_animal</span> <span class="o">=</span> <span class="n">Carnivore</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">adjust_weight_after_birth</span><span class="p">(</span><span class="n">new_born_animal</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">new_born_animal</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="Animals.check_move"><a class="viewcode-back" href="../animals.html#animals.Animals.check_move">[docs]</a>    <span class="k">def</span> <span class="nf">check_move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.check_move"><a class="viewcode-back" href="../modules.html#animals.Animals.check_move">[docs]</a>    <span class="k">def</span> <span class="nf">check_move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if an animal can move. This is checked every time an animal</span>
 <span class="sd">        attempts to migrate.</span>
@@ -392,7 +392,7 @@
             <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Animals.calculate_propensities"><a class="viewcode-back" href="../animals.html#animals.Animals.calculate_propensities">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_propensities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relative_fodder_list</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.calculate_propensities"><a class="viewcode-back" href="../modules.html#animals.Animals.calculate_propensities">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_propensities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relative_fodder_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the propensity to move for the animal.</span>
 
@@ -420,7 +420,7 @@
                     <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;lambda&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="n">cell</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">propensities</span></div>
 
-<div class="viewcode-block" id="Animals.choose_migration_destination"><a class="viewcode-back" href="../animals.html#animals.Animals.choose_migration_destination">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Animals.choose_migration_destination"><a class="viewcode-back" href="../modules.html#animals.Animals.choose_migration_destination">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">choose_migration_destination</span><span class="p">(</span><span class="n">relative_fodder_list</span><span class="p">,</span> <span class="n">propensities_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates which cell the animal decides to migrate to.</span>
@@ -436,7 +436,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        chosen_cell: Cell object</span>
+<span class="sd">        chosen_cell: Cell</span>
 <span class="sd">            The cell the animal choose to migrate to.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">probabilities</span> <span class="o">=</span> <span class="p">[]</span>
@@ -453,7 +453,7 @@
         <span class="n">chosen_cell</span> <span class="o">=</span> <span class="n">relative_fodder_list</span><span class="p">[</span><span class="n">chosen_cell_index</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">chosen_cell</span></div>
 
-<div class="viewcode-block" id="Animals.migrate"><a class="viewcode-back" href="../animals.html#animals.Animals.migrate">[docs]</a>    <span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relative_fodder_list</span><span class="p">):</span>
+<div class="viewcode-block" id="Animals.migrate"><a class="viewcode-back" href="../modules.html#animals.Animals.migrate">[docs]</a>    <span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">relative_fodder_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Animal attempts to migrate to one of the nearby cells.</span>
 <span class="sd">        The movement is determined by the fitness of the animal and the fodder</span>
@@ -471,7 +471,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        chosen_cell: Cell object</span>
+<span class="sd">        chosen_cell: Cell</span>
 <span class="sd">            The cell the animal choose to migrate to. Otherwise returns None if</span>
 <span class="sd">            the animal does not move.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -490,7 +490,7 @@
             <span class="k">return</span> <span class="kc">None</span></div></div>
 
 
-<div class="viewcode-block" id="Herbivore"><a class="viewcode-back" href="../animals.html#animals.Herbivore">[docs]</a><span class="k">class</span> <span class="nc">Herbivore</span><span class="p">(</span><span class="n">Animals</span><span class="p">):</span>
+<div class="viewcode-block" id="Herbivore"><a class="viewcode-back" href="../modules.html#animals.Herbivore">[docs]</a><span class="k">class</span> <span class="nc">Herbivore</span><span class="p">(</span><span class="n">Animals</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Subclass of Animals.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -519,7 +519,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Herbivore</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Herbivore.feed"><a class="viewcode-back" href="../animals.html#animals.Herbivore.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell_fodder_info</span><span class="p">):</span>
+<div class="viewcode-block" id="Herbivore.feed"><a class="viewcode-back" href="../modules.html#animals.Herbivore.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell_fodder_info</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Herbivore feeding. Each year, the herbivore attempts to eat an amount</span>
 <span class="sd">        of fodder. How much the herbivore actually eats depends on the</span>
@@ -534,7 +534,6 @@
 <span class="sd">        -------</span>
 <span class="sd">        eaten: float</span>
 <span class="sd">            Amount of actually eaten fodder.</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">eaten</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span>
@@ -549,7 +548,7 @@
             <span class="k">return</span> <span class="n">eaten</span></div></div>
 
 
-<div class="viewcode-block" id="Carnivore"><a class="viewcode-back" href="../animals.html#animals.Carnivore">[docs]</a><span class="k">class</span> <span class="nc">Carnivore</span><span class="p">(</span><span class="n">Animals</span><span class="p">):</span>
+<div class="viewcode-block" id="Carnivore"><a class="viewcode-back" href="../modules.html#animals.Carnivore">[docs]</a><span class="k">class</span> <span class="nc">Carnivore</span><span class="p">(</span><span class="n">Animals</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Subclass of Animals.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -578,14 +577,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Carnivore</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Carnivore.fitness_greater_than_prey"><a class="viewcode-back" href="../animals.html#animals.Carnivore.fitness_greater_than_prey">[docs]</a>    <span class="k">def</span> <span class="nf">fitness_greater_than_prey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prey</span><span class="p">):</span>
+<div class="viewcode-block" id="Carnivore.fitness_greater_than_prey"><a class="viewcode-back" href="../modules.html#animals.Carnivore.fitness_greater_than_prey">[docs]</a>    <span class="k">def</span> <span class="nf">fitness_greater_than_prey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prey</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if carnivore&#39;s fitness is greater than the herbivore&#39;s fitness,</span>
 <span class="sd">        and not greater than a threshold.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        prey: Class object</span>
+<span class="sd">        prey: Herbivore</span>
 <span class="sd">            The animal the carnivore is trying to kill.</span>
 
 <span class="sd">        Returns</span>
@@ -596,15 +595,16 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">-</span> <span class="n">prey</span><span class="o">.</span><span class="n">fitness</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span>
-            <span class="s1">&#39;DeltaPhiMax&#39;</span><span class="p">]</span></div>
+            <span class="s1">&#39;DeltaPhiMax&#39;</span>
+        <span class="p">]</span></div>
 
-<div class="viewcode-block" id="Carnivore.chance_of_kill"><a class="viewcode-back" href="../animals.html#animals.Carnivore.chance_of_kill">[docs]</a>    <span class="k">def</span> <span class="nf">chance_of_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prey</span><span class="p">):</span>
+<div class="viewcode-block" id="Carnivore.chance_of_kill"><a class="viewcode-back" href="../modules.html#animals.Carnivore.chance_of_kill">[docs]</a>    <span class="k">def</span> <span class="nf">chance_of_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prey</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The chance the carnivore has to kill its prey.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        prey: Class object</span>
+<span class="sd">        prey: Herbivore</span>
 <span class="sd">            The animal the carnivore is trying to kill.</span>
 
 <span class="sd">        Returns</span>
@@ -614,7 +614,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">-</span> <span class="n">prey</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;DeltaPhiMax&#39;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Carnivore.kill"><a class="viewcode-back" href="../animals.html#animals.Carnivore.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nearby_herbivores</span><span class="p">):</span>
+<div class="viewcode-block" id="Carnivore.kill"><a class="viewcode-back" href="../modules.html#animals.Carnivore.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nearby_herbivores</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Carnivore attempts to kill a nearby herbivore. If the carnivore</span>
 <span class="sd">        successfully kills the nearby herbivore, the carnivore&#39;s weight is</span>
@@ -631,10 +631,9 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        killed_herbivore: list</span>
-<span class="sd">            List containing all herbivore objects that was killed by the</span>
-<span class="sd">            carnivore.</span>
+<span class="sd">            List containing all herbivores that was killed by the carnivore.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">kill_attempts</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">kill_attempts</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">eaten</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">killed_herbivores</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">number_of_nearby_herbivores</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nearby_herbivores</span><span class="p">)</span>
@@ -651,8 +650,8 @@
 
                 <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">chance</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_gain</span><span class="p">(</span><span class="n">herbivore</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">update_fitness</span><span class="p">()</span>
                     <span class="n">eaten</span> <span class="o">+=</span> <span class="n">herbivore</span><span class="o">.</span><span class="n">weight</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">update_fitness</span><span class="p">()</span>
                     <span class="n">killed_herbivores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">herbivore</span><span class="p">)</span>
 
                 <span class="n">kill_attempts</span> <span class="o">+=</span> <span class="mi">1</span>

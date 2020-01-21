@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Examples &mdash; BioSim Project 1.0.0 documentation</title>
+  <title>Examples &mdash; BioSim Project Group 09 1.0.0 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API Reference" href="api_reference.html" />
-    <link rel="prev" title="BioSim project" href="about.html" /> 
+    <link rel="next" title="Modules" href="modules.html" />
+    <link rel="prev" title="Project Assignment" href="assignment.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -51,7 +51,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> BioSim Project
+            <a href="index.html" class="icon icon-home"> BioSim Project Group 09
           
 
           
@@ -83,13 +83,14 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="about.html">BioSim project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">BioSim Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assignment.html">Project Assignment</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#biosim-simulation-for-something-ex-1">BioSim simulation for something, ex 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#biosim-simulation-for-something-ex-2">BioSim simulation for something, ex 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#biosim-simulation">BioSim simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#biosim-simulation-with-movie-creation">BioSim simulation with movie creation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">BioSim Project</a>
+          <a href="index.html">BioSim Project Group 09</a>
         
       </nav>
 
@@ -156,17 +157,85 @@
             
   <div class="section" id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="biosim-simulation-for-something-ex-1">
-<h2>BioSim simulation for something, ex 1<a class="headerlink" href="#biosim-simulation-for-something-ex-1" title="Permalink to this headline">¶</a></h2>
-<p>Some example description.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">biosim.simulation</span> <span class="kn">import</span> <span class="n">BioSim</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">textwrap</span>
+<div class="section" id="biosim-simulation">
+<h2>BioSim simulation<a class="headerlink" href="#biosim-simulation" title="Permalink to this headline">¶</a></h2>
+<p>Runs a standard simulation for 20 years.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Runs a simulation for 20 years. The initial population on the island is 150</span>
+<span class="sd">herbivores and 200 carnivores.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Michael Lindberg, Daniel Milliam Müller&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no&quot;</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="n">geogr</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">               OOOOOOOOOOOOOOOOOOOOO</span>
+<span class="s2">               OOOOOOOOSMMMMJJJJJJJO</span>
+<span class="s2">               OSSSSSJJJJMMJJJJJJJOO</span>
+<span class="s2">               OSSSSSSSSSMMJJJJJJOOO</span>
+<span class="s2">               OSSSSSJJJJJJJJJJJJOOO</span>
+<span class="s2">               OSSSSSJJJDDJJJSJJJOOO</span>
+<span class="s2">               OSSJJJJJDDDJJJSSSSOOO</span>
+<span class="s2">               OOSSSSJJJDDJJJSOOOOOO</span>
+<span class="s2">               OSSSJJJJJDDJJJJJJJOOO</span>
+<span class="s2">               OOOOOOOOOOOOOOOOOOOOO&quot;&quot;&quot;</span>
+
+    <span class="n">geogr</span> <span class="o">=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="n">geogr</span><span class="p">)</span>
+
+    <span class="n">ini_herbs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+            <span class="s2">&quot;pop&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="s2">&quot;Herbivore&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">}</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
+            <span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+    <span class="n">ini_carns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+            <span class="s2">&quot;pop&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="s2">&quot;Carnivore&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+            <span class="p">],</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="n">sim</span> <span class="o">=</span> <span class="n">BioSim</span><span class="p">(</span><span class="n">island_map</span><span class="o">=</span><span class="n">geogr</span><span class="p">,</span> <span class="n">ini_pop</span><span class="o">=</span><span class="n">ini_herbs</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">123456</span><span class="p">)</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">add_population</span><span class="p">(</span><span class="n">population</span><span class="o">=</span><span class="n">ini_carns</span><span class="p">)</span>
+
+    <span class="n">sim</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">num_years</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">vis_years</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">img_years</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Simulation results</strong></p>
+<a class="reference internal image-reference" href="_images/island_map.jpg"><img alt="alternate text" class="align-center" src="_images/island_map.jpg" style="width: 350.0px; height: 250.0px;" /></a>
+</div>
+<div class="section" id="biosim-simulation-with-movie-creation">
+<h2>BioSim simulation with movie creation<a class="headerlink" href="#biosim-simulation-with-movie-creation" title="Permalink to this headline">¶</a></h2>
+<p>This simulation creates a MPEG4 movie that shows how the island updates over
+the course of the simulation. The simulation runs for a total of 300 years.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Runs a simulation for a total of 300 years. The initial population on the</span>
+<span class="sd">island is 150 herbivores and 40 carnivores.</span>
+
+<span class="sd">The parameters for the herbivores and carnivores are tweaked, which affects</span>
+<span class="sd">behaviour such as feeding, migration and birth.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+ <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Michael Lindberg, Daniel Milliam Müller&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no&quot;</span>
+
+<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">biosim.simulation</span> <span class="kn">import</span> <span class="n">BioSim</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 
-    <span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;..&#39;</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;../biosim_graphics/&#39;</span>
 
     <span class="n">geogr</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
 <span class="s2">               OOOOOOOOOOOOOOOOOOOOO</span>
@@ -203,7 +272,7 @@
         <span class="p">}</span>
     <span class="p">]</span>
 
-    <span class="n">sim</span> <span class="o">=</span> <span class="n">BioSim</span><span class="p">(</span><span class="n">island_map</span><span class="o">=</span><span class="n">geogr</span><span class="p">,</span> <span class="n">ini_pop</span><span class="o">=</span><span class="n">ini_herbs</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">img_base</span><span class="o">=</span><span class="n">base</span><span class="p">)</span>
+    <span class="n">sim</span> <span class="o">=</span> <span class="n">BioSim</span><span class="p">(</span><span class="n">island_map</span><span class="o">=</span><span class="n">geogr</span><span class="p">,</span> <span class="n">ini_pop</span><span class="o">=</span><span class="n">ini_herbs</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">123456</span><span class="p">)</span>
 
     <span class="n">sim</span><span class="o">.</span><span class="n">set_animal_parameters</span><span class="p">(</span><span class="s2">&quot;Herbivore&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;zeta&quot;</span><span class="p">:</span> <span class="mf">3.2</span><span class="p">,</span> <span class="s2">&quot;xi&quot;</span><span class="p">:</span> <span class="mf">1.8</span><span class="p">})</span>
     <span class="n">sim</span><span class="o">.</span><span class="n">set_animal_parameters</span><span class="p">(</span>
@@ -218,112 +287,17 @@
     <span class="p">)</span>
     <span class="n">sim</span><span class="o">.</span><span class="n">set_landscape_parameters</span><span class="p">(</span><span class="s2">&quot;J&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;f_max&quot;</span><span class="p">:</span> <span class="mi">700</span><span class="p">})</span>
 
-    <span class="n">sim</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">num_years</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">vis_years</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">img_years</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">num_years</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">vis_years</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">img_years</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="n">sim</span><span class="o">.</span><span class="n">add_population</span><span class="p">(</span><span class="n">population</span><span class="o">=</span><span class="n">ini_carns</span><span class="p">)</span>
 
-    <span class="n">sim</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">num_years</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">vis_years</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">img_years</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">num_years</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">vis_years</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">img_years</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;check_sim.pdf&quot;</span><span class="p">)</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">make_movie</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="biosim-simulation-for-something-ex-2">
-<h2>BioSim simulation for something, ex 2<a class="headerlink" href="#biosim-simulation-for-something-ex-2" title="Permalink to this headline">¶</a></h2>
-<p>Some example description.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">:mod:`biosim.population_generator` generates several populations of animals</span>
-<span class="sd">with age and weight randomly distributed and returns a list of dictionaries</span>
-<span class="sd">with the animals and the coordinates they are to be put.</span>
-
-<span class="sd">The user can define:</span>
-<span class="sd">#. The number of each species that are put on every defined coordinate</span>
-<span class="sd">#. The coordinates that the animals in that species should occupy</span>
-
-<span class="sd">If different sizes of the population within an species is preferable,</span>
-<span class="sd">the user can simply make another population and add it to the island</span>
-
-<span class="sd">Example of list returned:</span>
-<span class="sd">-------------------------</span>
-<span class="sd">::</span>
-
-<span class="sd">    [{&#39;loc&#39;: (3,4),</span>
-<span class="sd">      &#39;pop&#39;: [{&#39;species&#39;: &#39;Herbivore&#39;, &#39;age&#39;: 10, &#39;weight&#39;: 15},</span>
-<span class="sd">              {&#39;species&#39;: &#39;Herbivore&#39;, &#39;age&#39;: 5, &#39;weight&#39;: 40},</span>
-<span class="sd">              {&#39;species&#39;: &#39;Herbivore&#39;, &#39;age&#39;: 15, &#39;weight&#39;: 25}]},</span>
-<span class="sd">     {&#39;loc&#39;: (4,4),</span>
-<span class="sd">      &#39;pop&#39;: [{&#39;species&#39;: &#39;Herbivore&#39;, &#39;age&#39;: 2, &#39;weight&#39;: 60},</span>
-<span class="sd">              {&#39;species&#39;: &#39;Herbivore&#39;, &#39;age&#39;: 9, &#39;weight&#39;: 30},</span>
-<span class="sd">              {&#39;species&#39;: &#39;Herbivore&#39;, &#39;age&#39;: 16, &#39;weight&#39;: 14}]},</span>
-<span class="sd">     {&#39;loc&#39;: (4,4),</span>
-<span class="sd">      &#39;pop&#39;: [{&#39;species&#39;: &#39;Carnivore&#39;, &#39;age&#39;: 3, &#39;weight&#39;: 35},</span>
-<span class="sd">              {&#39;species&#39;: &#39;Carnivore&#39;, &#39;age&#39;: 5, &#39;weight&#39;: 20},</span>
-<span class="sd">              {&#39;species&#39;: &#39;Carnivore&#39;, &#39;age&#39;: 8, &#39;weight&#39;: 5}]}]</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Ragnhild Smistad, UMB and Toril Fjeldaas Rygg, UMB&quot;</span>
-
-<span class="kn">import</span> <span class="nn">random</span>
-
-
-<span class="k">class</span> <span class="nc">Population</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    The population on the island</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">n_herbivores</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">coord_herb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">n_carnivores</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">coord_carn</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        ==============    ==============================================</span>
-<span class="sd">        *n_herbivores*    The number of herbivores in each coordinate</span>
-<span class="sd">        *coord_herb*      A list of the different coordinates(tuple)</span>
-<span class="sd">        *n_carnivores*    The number of carnivores in each coordinate</span>
-<span class="sd">        *coord_carn*      A list of the different coordinates as tuple</span>
-<span class="sd">        ==============    ==============================================</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">animals</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_herb</span> <span class="o">=</span> <span class="n">n_herbivores</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_carn</span> <span class="o">=</span> <span class="n">n_carnivores</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">coord_herb</span> <span class="o">=</span> <span class="n">coord_herb</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">coord_carn</span> <span class="o">=</span> <span class="n">coord_carn</span>
-
-    <span class="k">def</span> <span class="nf">get_animals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a complete list of dictionaries with a population for</span>
-<span class="sd">        every coordinate defined.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_herb</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coord_herb</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="n">coord</span><span class="p">,</span> <span class="s2">&quot;pop&quot;</span><span class="p">:</span> <span class="p">[]})</span>
-
-                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_herb</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;pop&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                        <span class="p">{</span>
-                            <span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="s2">&quot;Herbivore&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
-                            <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">80</span><span class="p">),</span>
-                        <span class="p">}</span>
-                    <span class="p">)</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_carn</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coord_carn</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="n">coord</span><span class="p">,</span> <span class="s2">&quot;pop&quot;</span><span class="p">:</span> <span class="p">[]})</span>
-                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_carn</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">animals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;pop&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                        <span class="p">{</span>
-                            <span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="s2">&quot;Carnivore&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-                            <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
-                        <span class="p">}</span>
-                    <span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">animals</span>
-</pre></div>
-</div>
+<p><strong>Simulation results</strong></p>
+<p>#.. image:: ../images/your_image.gif</p>
 </div>
 </div>
 
@@ -335,10 +309,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="api_reference.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="Modules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="about.html" class="btn btn-neutral float-left" title="BioSim project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="assignment.html" class="btn btn-neutral float-left" title="Project Assignment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

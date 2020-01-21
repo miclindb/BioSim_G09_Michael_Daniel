@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>biosim.simulation &mdash; BioSim Project 1.0.0 documentation</title>
+  <title>biosim.simulation &mdash; BioSim Project Group 09 1.0.0 documentation</title>
   
 
   
@@ -49,7 +49,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> BioSim Project
+            <a href="../../index.html" class="icon icon-home"> BioSim Project Group 09
           
 
           
@@ -81,9 +81,10 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../about.html">BioSim project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">BioSim Project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../assignment.html">Project Assignment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules</a></li>
 </ul>
 
             
@@ -98,7 +99,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">BioSim Project</a>
+          <a href="../../index.html">BioSim Project Group 09</a>
         
       </nav>
 
@@ -408,7 +409,10 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">carnivore_map</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">)</span>
-        <span class="n">carnivore_map</span> <span class="o">=</span> <span class="p">[[</span><span class="n">cell</span><span class="o">.</span><span class="n">carnivores_in_cell</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">carnivore_map</span><span class="p">]</span>
+        <span class="n">carnivore_map</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="n">cell</span><span class="o">.</span><span class="n">carnivores_in_cell</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">carnivore_map</span>
+        <span class="p">]</span>
         <span class="k">return</span> <span class="n">carnivore_map</span></div>
 
 <div class="viewcode-block" id="BioSim.herbivore_island_map"><a class="viewcode-back" href="../../simulation.html#biosim.simulation.BioSim.herbivore_island_map">[docs]</a>    <span class="k">def</span> <span class="nf">herbivore_island_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -423,7 +427,10 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">herbivore_map</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">)</span>
-        <span class="n">herbivore_map</span> <span class="o">=</span> <span class="p">[[</span><span class="n">cell</span><span class="o">.</span><span class="n">herbivores_in_cell</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">herbivore_map</span><span class="p">]</span>
+        <span class="n">herbivore_map</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="n">cell</span><span class="o">.</span><span class="n">herbivores_in_cell</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">herbivore_map</span>
+        <span class="p">]</span>
         <span class="k">return</span> <span class="n">herbivore_map</span></div>
 
 <div class="viewcode-block" id="BioSim.simulate"><a class="viewcode-back" href="../../simulation.html#biosim.simulation.BioSim.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_years</span><span class="p">,</span> <span class="n">vis_years</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">img_years</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -441,6 +448,7 @@
 
 <span class="sd">        Image files will be numbered consecutively.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">img_years</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">img_years</span> <span class="o">=</span> <span class="n">vis_years</span>
@@ -448,6 +456,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_setup_graphics</span><span class="p">(</span><span class="n">num_years</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_years</span><span class="p">):</span>
+
 
             <span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_cycle</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">years_simulated</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -478,6 +487,9 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ymax_animals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ymax_animals</span> <span class="o">=</span> <span class="mi">20000</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cmax_animals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cmax_animals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Herbivore&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;Carnivore&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
 
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 
@@ -517,7 +529,7 @@
 
             <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span><span class="s1">&#39;Ocean&#39;</span><span class="p">,</span> <span class="s1">&#39;Mountain&#39;</span><span class="p">,</span> <span class="s1">&#39;Jungle&#39;</span><span class="p">,</span>
                                         <span class="s1">&#39;Savannah&#39;</span><span class="p">,</span> <span class="s1">&#39;Desert&#39;</span><span class="p">)):</span>
-                <span class="n">map_ax_lg</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">idx</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">),</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span>
+                <span class="n">map_ax_lg</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">idx</span> <span class="o">*</span> <span class="mf">0.09</span><span class="p">),</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span>
                                              <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
                                              <span class="n">facecolor</span><span class="o">=</span><span class="n">rgb_values</span><span class="p">[</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]]))</span>
                 <span class="n">map_ax_lg</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
@@ -529,13 +541,13 @@
                 <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rgb_island_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">map_ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span>
-                <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">rgb_island_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
+                <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rgb_island_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">map_ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span>
                 <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rgb_island_map</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">map_ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span>
-                <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">rgb_island_map</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+                <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rgb_island_map</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_graph_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_years</span><span class="p">):</span>
@@ -603,19 +615,20 @@
                 <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">herb_heat</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span>
-                <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">herb_heat</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span>
                 <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">herb_heat</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span>
-                <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">herb_heat_bar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
                 <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">21</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">13</span><span class="p">)],</span>
                 <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span>
+                <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="n">vmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cmax_animals</span><span class="p">[</span><span class="s1">&#39;Herbivore&#39;</span><span class="p">]</span>
             <span class="p">)</span>
 
             <span class="n">cbaxes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.59</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
@@ -639,19 +652,20 @@
                 <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">carn_heat</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span>
-                <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">carn_heat</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span>
                 <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">carn_heat</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span>
-                <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulated_island</span><span class="o">.</span><span class="n">island_map</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">carn_heat_bar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
                 <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">21</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">13</span><span class="p">)],</span>
                 <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span>
+                <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="n">vmax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cmax_animals</span><span class="p">[</span><span class="s1">&#39;Carnivore&#39;</span><span class="p">]</span>
             <span class="p">)</span>
 
             <span class="n">cbaxes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.59</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
@@ -688,7 +702,7 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">map_herb</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rgb_island_map</span><span class="p">,</span>
                                  <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span>
-                                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+                                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_carn_map_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -710,9 +724,9 @@
                 <span class="p">[</span><span class="n">rgb_values</span><span class="p">[</span><span class="n">cell</span><span class="o">.</span><span class="n">landscape_type</span><span class="p">]</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
                 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rgb_island_map</span><span class="p">]</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">map_carn</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
-                <span class="n">rgb_island_map</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">map_carn</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rgb_island_map</span><span class="p">,</span>
+                                 <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span>
+                                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_herb_count_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

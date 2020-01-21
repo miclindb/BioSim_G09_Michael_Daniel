@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+"""
+Runs a simulation for 20 years. The initial population on the island is 150
+herbivores and 200 carnivores.
+"""
+
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
