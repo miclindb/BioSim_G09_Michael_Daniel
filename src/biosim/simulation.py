@@ -62,10 +62,9 @@ class BioSim:
             String with beginning of file name for figures, including path
         img_fmt: str
             String with file type for figures, e.g. 'png'
-        """
-        """
 
-        If ymax_animals is None, the y-axis limit should be adjusted automatically.
+        If ymax_animals is None, the y-axis limit should be adjusted
+        automatically.
 
         If cmax_animals is None, sensible, fixed default values should be used.
         cmax_animals is a dict mapping species names to numbers, e.g.,
@@ -200,15 +199,15 @@ class BioSim:
 
         for _ in range(num_years):
 
+            self.simulated_island.island_cycle()
+            self.years_simulated += 1
+
             if self.year % vis_years == 0:
                 self._update_graphics()
 
             if self.year % img_years == 0:
                 self._save_graphics()
 
-            self.simulated_island.island_cycle()
-
-            self.years_simulated += 1
             self.idx += 1
             plt.pause(1e-6)
 
@@ -224,7 +223,7 @@ class BioSim:
             The number of years to be simulated.
         """
 
-        self._img_base = '/users/michaellindberg/desktop/bspics/'
+        self._img_base = '../BioSim_G09_Michael_Daniel/graphics/'
 
         if self._fig is None:
             self._fig = plt.figure(figsize=(20, 10))
@@ -296,18 +295,18 @@ class BioSim:
         if self.ani_ax is None or self.idx == 0:
             self.ani_ax = self._fig.add_axes([0.07, 0.07, 0.45, 0.4])
 
-            plt.axis([0, num_years, 0, self._ymax_animals])
+            plt.axis([0, num_years-1, 0, self._ymax_animals])
 
             self.title = plt.title('', weight='bold')
 
-            self.xdata_herbs = np.arange(num_years + 1)
-            self.ydata_herbs = np.nan * np.ones(num_years + 1)
+            self.xdata_herbs = np.arange(num_years)
+            self.ydata_herbs = np.nan * np.ones(num_years)
 
             self.line_herbs = self.ani_ax.plot(self.xdata_herbs, self.ydata_herbs,
                                                'b-', label="Herbivores", linewidth=3.0)[0]
 
-            self.xdata_carns = np.arange(num_years + 1)
-            self.ydata_carns = np.nan * np.ones(num_years + 1)
+            self.xdata_carns = np.arange(num_years)
+            self.ydata_carns = np.nan * np.ones(num_years)
 
             self.line_carns = self.ani_ax.plot(self.xdata_carns, self.ydata_carns,
                                                'r-', label='Carnivores', linewidth=3.0)[0]
@@ -316,13 +315,13 @@ class BioSim:
             plt.legend(loc=1, prop={'size': 13})
 
         if self.year > 0:
-            self.ani_ax.set_xticks(np.arange(num_years+1))
+            self.ani_ax.set_xticks(np.arange(num_years))
             self.ani_ax.set_xticklabels(
-                np.arange(self.year, num_years + self.year+1))
+                np.arange(self.year + 1, num_years + self.year + 1))
 
         else:
-            self.ani_ax.set_xticks(np.arange(num_years+1))
-            self.ani_ax.set_xticklabels(np.arange(num_years+1))
+            self.ani_ax.set_xticks(np.arange(0, num_years))
+            self.ani_ax.set_xticklabels(np.arange(1, num_years + 1))
 
     def _herb_heat_map_setup(self):
         """
