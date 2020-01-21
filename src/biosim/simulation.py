@@ -446,14 +446,21 @@ class BioSim:
             plt.grid()
             plt.legend(loc=1, prop={'size': 13})
 
-        if self.year > 0:
-            self.ani_ax.set_xticks(np.arange(num_years))
-            self.ani_ax.set_xticklabels(
-                np.arange(self.year + 1, num_years + self.year + 1))
-
+        #if self.year > 0:
+        if num_years > 10:
+            self.ani_ax.set_xticks(range(0, num_years, 10))
+            self.ani_ax.set_xticklabels(range(self.year, num_years+self.year + 1, 10))
         else:
-            self.ani_ax.set_xticks(np.arange(0, num_years))
-            self.ani_ax.set_xticklabels(np.arange(1, num_years + 1))
+            self.ani_ax.set_xticks(range(0, num_years))
+            self.ani_ax.set_xticklabels(range(self.year, num_years+self.year + 1))
+
+        #else:
+        #    if num_years > 10:
+        #        self.ani_ax.set_xticks(range(0, num_years, 10))
+        #        self.ani_ax.set_xticklabels(range(self.year, num_years+self.year + 1, 10))
+        #    else:
+        #        self.ani_ax.set_xticks(range(0, num_years))
+        #        self.ani_ax.set_xticklabels(range(1, num_years + 1))
 
     def _herb_heat_map_setup(self):
         """

@@ -1,9 +1,11 @@
-import matplotlib.pyplot as plt
+# -*- coding: utf-8 -*-
+
 import textwrap
+import matplotlib.pyplot as plt
 
 from biosim.simulation import BioSim
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     plt.ion()
 
     base = '../biosim_graphics/'
@@ -43,7 +45,7 @@ if __name__ == '__main__':
         }
     ]
 
-    sim = BioSim(island_map=geogr, ini_pop=ini_herbs, seed=123456, img_base=base)
+    sim = BioSim(island_map=geogr, ini_pop=ini_herbs, seed=123456)
 
     sim.set_animal_parameters("Herbivore", {"zeta": 3.2, "xi": 1.8})
     sim.set_animal_parameters(
@@ -58,16 +60,11 @@ if __name__ == '__main__':
     )
     sim.set_landscape_parameters("J", {"f_max": 700})
 
-    sim.simulate(num_years=10, vis_years=1, img_years=5)
+    sim.simulate(num_years=100, vis_years=1, img_years=1)
 
     sim.add_population(population=ini_carns)
 
-    sim.simulate(num_years=10, vis_years=1, img_years=5)
+    sim.simulate(num_years=200, vis_years=1, img_years=1)
 
-    plt.savefig("check_sim.pdf")
+    sim.make_movie()
 
-
-
-    #checksim, biosiminterface, code coverage, some visualization,
-
-    # delivery: tag 'submission' in commit
