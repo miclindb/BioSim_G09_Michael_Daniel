@@ -1,8 +1,11 @@
 from biosim.simulation import BioSim
+import matplotlib.pyplot as plt
+import textwrap
 
 if __name__ == '__main__':
-
     plt.ion()
+
+    base = '..'
 
     geogr = """\
                OOOOOOOOOOOOOOOOOOOOO
@@ -39,7 +42,7 @@ if __name__ == '__main__':
         }
     ]
 
-    sim = BioSim(island_map=geogr, ini_pop=ini_herbs, seed=123456)
+    sim = BioSim(island_map=geogr, ini_pop=ini_herbs, seed=123456, img_base=base)
 
     sim.set_animal_parameters("Herbivore", {"zeta": 3.2, "xi": 1.8})
     sim.set_animal_parameters(
@@ -62,7 +65,6 @@ if __name__ == '__main__':
 
     plt.savefig("check_sim.pdf")
 
-    img_base = '../BioSim_G09_Michael_Daniel/graphics/'
 
     #input("Press ENTER")
 

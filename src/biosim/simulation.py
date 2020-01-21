@@ -96,13 +96,6 @@ class BioSim:
 
         # For graphical setup
 
-        self._img_dir = None
-
-        if self._img_dir is not None:
-            self._img_base = os.path.join(self._img_dir, img_name)
-        else:
-            self._img_base = None
-
         self._final_year = None
         self._img_ctr = 0
 
@@ -179,6 +172,82 @@ class BioSim:
         else:
             raise ValueError
 
+    @property
+    def year(self):
+        """
+        Last year simulated.
+        """
+        return self.years_simulated
+
+    @property
+    def num_animals(self):
+        """
+        Total number of animals on island.
+        """
+        return len(self.simulated_island.total_population())
+
+    @property
+    def num_animals_per_species(self):
+        """
+        Number of animals per species in island, as dictionary.
+        """
+
+        animals = self.simulated_island.total_population()
+        number_of_herbivores = sum(
+            isinstance(animal, Herbivore) for animal in animals
+        )
+        number_of_carnivores = sum(
+            isinstance(animal, Carnivore) for animal in animals
+        )
+
+        return {"Herbivore": number_of_herbivores,
+                "Carnivore": number_of_carnivores}
+
+    @property
+    def animal_distribution(self):
+        """
+        Creating a pandas DataFrame with animal count per species for each
+        cell on island.
+
+        Returns
+        -------
+        df: pandas DataFrame
+            The dataframe with animal counts per species for cell
+            coordinates.
+        """
+
+        island = self.simulated_island.island_map
+
+        data = []
+
+        for row in island:
+            for cell in row:
+                n_herbivores = cell.herbivores_in_cell
+                n_carnivores = cell.carnivores_in_cell
+
+                data.append(
+                    [cell.coordinate[0],
+                     cell.coordinate[1],
+                     n_herbivores,
+                     n_carnivores])
+
+        df = pd.DataFrame(data)
+        df.columns = (["Row", "Col", "Herbivore", "Carnivore"])
+
+        return df
+
+    def add_population(self, population):
+        """
+        Adding a population to the island.
+
+        Parameters
+        ----------
+        population: list
+            List of dictionaries specifying population
+        """
+
+        self.simulated_island.adding_population(population)
+
     def carnivore_island_map(self):
         """
         Generates a nested list of carnivore population within each cell in
@@ -224,8 +293,6 @@ class BioSim:
 
         Image files will be numbered consecutively.
         """
-
-        plt.ion()
 
         if img_years is None:
             img_years = vis_years
@@ -610,82 +677,6 @@ class BioSim:
                 type=self._img_fmt)
         )
         self._img_ctr += 1
-
-    def add_population(self, population):
-        """
-        Adding a population to the island.
-
-        Parameters
-        ----------
-        population: list
-            List of dictionaries specifying population
-        """
-
-        self.simulated_island.adding_population(population)
-
-    @property
-    def year(self):
-        """
-        Last year simulated.
-        """
-        return self.years_simulated
-
-    @property
-    def num_animals(self):
-        """
-        Total number of animals on island.
-        """
-        return len(self.simulated_island.total_population())
-
-    @property
-    def num_animals_per_species(self):
-        """
-        Number of animals per species in island, as dictionary.
-        """
-
-        animals = self.simulated_island.total_population()
-        number_of_herbivores = sum(
-            isinstance(animal, Herbivore) for animal in animals
-        )
-        number_of_carnivores = sum(
-            isinstance(animal, Carnivore) for animal in animals
-        )
-
-        return {"Herbivore": number_of_herbivores,
-                "Carnivore": number_of_carnivores}
-
-    @property
-    def animal_distribution(self):
-        """
-        Creating a pandas DataFrame with animal count per species for each
-        cell on island.
-
-        Returns
-        -------
-        df: pandas DataFrame
-            The dataframe with animal counts per species for cell
-            coordinates.
-        """
-
-        island = self.simulated_island.island_map
-
-        data = []
-
-        for row in island:
-            for cell in row:
-                n_herbivores = cell.herbivores_in_cell
-                n_carnivores = cell.carnivores_in_cell
-
-                data.append(
-                    [cell.coordinate[0],
-                     cell.coordinate[1],
-                     n_herbivores,
-                     n_carnivores])
-
-        df = pd.DataFrame(data)
-        df.columns = (["Row", "Col", "Herbivore", "Carnivore"])
-
-        return df
 
     def make_movie(self):
         """
