@@ -260,7 +260,10 @@ class BioSim:
 
         """
         carnivore_map = copy.deepcopy(self.simulated_island.island_map)
-        carnivore_map = [[cell.carnivores_in_cell for cell in row] for row in carnivore_map]
+        carnivore_map = [
+            [cell.carnivores_in_cell for cell in row]
+            for row in carnivore_map
+        ]
         return carnivore_map
 
     def herbivore_island_map(self):
@@ -275,7 +278,10 @@ class BioSim:
 
         """
         herbivore_map = copy.deepcopy(self.simulated_island.island_map)
-        herbivore_map = [[cell.herbivores_in_cell for cell in row] for row in herbivore_map]
+        herbivore_map = [
+            [cell.herbivores_in_cell for cell in row]
+            for row in herbivore_map
+        ]
         return herbivore_map
 
     def simulate(self, num_years, vis_years=1, img_years=None):
@@ -293,6 +299,7 @@ class BioSim:
 
         Image files will be numbered consecutively.
         """
+        plt.ion()
 
         if img_years is None:
             img_years = vis_years
@@ -300,6 +307,7 @@ class BioSim:
         self._setup_graphics(num_years)
 
         for _ in range(num_years):
+
 
             self.simulated_island.island_cycle()
             self.years_simulated += 1
@@ -330,6 +338,9 @@ class BioSim:
 
         if self._ymax_animals is None:
             self._ymax_animals = 20000
+
+        if self._cmax_animals is None:
+            self._cmax_animals = {'Herbivore': 50, 'Carnivore': 20}
 
         plt.title('')
 
@@ -369,7 +380,7 @@ class BioSim:
 
             for idx, name in enumerate(('Ocean', 'Mountain', 'Jungle',
                                         'Savannah', 'Desert')):
-                map_ax_lg.add_patch(plt.Rectangle((0.02, idx * 0.1), 0.3, 0.1,
+                map_ax_lg.add_patch(plt.Rectangle((0.02, idx * 0.09), 0.3, 0.1,
                                              edgecolor='black',
                                              facecolor=rgb_values[name[0]]))
                 map_ax_lg.text(
@@ -381,13 +392,13 @@ class BioSim:
                 range(0, len(rgb_island_map[0]), 4)
             )
             self.map_ax.set_xticklabels(
-                range(1, 1 + len(rgb_island_map[0]), 4)
+                range(0, len(rgb_island_map[0]), 4)
             )
             self.map_ax.set_yticks(
                 range(0, len(rgb_island_map), 4)
             )
             self.map_ax.set_yticklabels(
-                range(1, 1 + len(rgb_island_map), 4)
+                range(0, len(rgb_island_map), 4)
             )
 
     def _graph_setup(self, num_years):
@@ -455,19 +466,20 @@ class BioSim:
                 range(0, len(self.simulated_island.island_map[0]), 2)
             )
             self.herb_heat.set_xticklabels(
-                range(1, 1 + len(self.simulated_island.island_map[0]), 2)
+                range(0, len(self.simulated_island.island_map[0]), 2)
             )
             self.herb_heat.set_yticks(
                 range(0, len(self.simulated_island.island_map), 2)
             )
             self.herb_heat.set_yticklabels(
-                range(1, 1 + len(self.simulated_island.island_map), 2)
+                range(0, len(self.simulated_island.island_map), 2)
             )
             self.herb_heat_bar = plt.imshow(
                 [[0 for _ in range(21)] for _ in range(13)],
                 cmap='jet',
                 alpha=0.5,
-                zorder=2
+                zorder=2,
+                vmax=self._cmax_animals['Herbivore']
             )
 
             cbaxes = self._fig.add_axes([0.59, 0.65, 0.01, 0.3])
@@ -491,19 +503,20 @@ class BioSim:
                 range(0, len(self.simulated_island.island_map[0]), 2)
             )
             self.carn_heat.set_xticklabels(
-                range(1, (1 + len(self.simulated_island.island_map[0])), 2)
+                range(0, len(self.simulated_island.island_map[0]), 2)
             )
             self.carn_heat.set_yticks(
                 range(0, len(self.simulated_island.island_map), 2)
             )
             self.carn_heat.set_yticklabels(
-                range(1, (1 + len(self.simulated_island.island_map)), 2)
+                range(0, len(self.simulated_island.island_map), 2)
             )
             self.carn_heat_bar = plt.imshow(
                 [[0 for _ in range(21)] for _ in range(13)],
                 cmap='jet',
                 alpha=0.5,
-                zorder=2
+                zorder=2,
+                vmax=self._cmax_animals['Carnivore']
             )
 
             cbaxes = self._fig.add_axes([0.59, 0.10, 0.01, 0.3])
@@ -540,7 +553,7 @@ class BioSim:
 
             self.map_herb.imshow(rgb_island_map,
                                  interpolation='nearest',
-                                 alpha=0.2, zorder=3)
+                                 alpha=0.3, zorder=3)
 
     def _carn_map_setup(self):
         """
@@ -562,9 +575,9 @@ class BioSim:
                 [rgb_values[cell.landscape_type] for cell in row]
                 for row in rgb_island_map]
 
-            self.map_carn.imshow(
-                rgb_island_map, interpolation='nearest', alpha=0.2, zorder=3
-            )
+            self.map_carn.imshow(rgb_island_map,
+                                 interpolation='nearest',
+                                 alpha=0.3, zorder=3)
 
     def _herb_count_setup(self):
         """

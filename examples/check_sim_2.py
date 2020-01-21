@@ -5,7 +5,7 @@ import textwrap
 if __name__ == '__main__':
     plt.ion()
 
-    base = '..'
+    base = '../biosim_graphics/'
 
     geogr = """\
                OOOOOOOOOOOOOOOOOOOOO
@@ -65,8 +65,6 @@ if __name__ == '__main__':
 
     plt.savefig("check_sim.pdf")
 
-
-    #input("Press ENTER")
 
     # randvis_project for plotting
 
