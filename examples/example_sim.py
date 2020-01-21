@@ -44,6 +44,7 @@ if __name__ == "__main__":
     ]
 
     sim = BioSim(island_map=geogr, ini_pop=ini_herbs, seed=123456)
+
     sim.add_population(population=ini_carns)
 
     sim.simulate(num_years=20, vis_years=1, img_years=2000)
