@@ -16,7 +16,7 @@ Island
 Cell
 ----------
 
-.. automodule:: cell.Cell
+.. automodule:: cell.Ocean
     :inherited-members:
 
 .. automodule:: cell.Mountain

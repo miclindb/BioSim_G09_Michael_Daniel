@@ -28,7 +28,7 @@ Examples and code documentation can be found in the next content pages.
 
 Acknowledgements
 ----------------
-We are grateful to: *Yngve Mardal Moe*, director of EPAP, and special advisors
+We are grateful to *Yngve Mardal Moe*, director of EPAP, and special advisors
 *Daniel Prince*, *Ngoc Bao* and *Ahmed Albuni* for their advice and helpful guidance
 with this project.
 

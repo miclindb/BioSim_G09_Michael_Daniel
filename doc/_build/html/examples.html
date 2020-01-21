@@ -160,7 +160,10 @@
 <div class="section" id="biosim-simulation">
 <h2>BioSim simulation<a class="headerlink" href="#biosim-simulation" title="Permalink to this headline">¶</a></h2>
 <p>Runs a standard simulation for 20 years.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">from</span> <span class="nn">biosim.simulation</span> <span class="kn">import</span> <span class="n">BioSim</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Runs a simulation for 20 years. The initial population on the island is 150</span>
 <span class="sd">herbivores and 200 carnivores.</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -209,14 +212,21 @@
     <span class="n">sim</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">num_years</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">vis_years</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">img_years</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>Simulation results</strong></p>
-<a class="reference internal image-reference" href="_images/island_map.jpg"><img alt="alternate text" class="align-center" src="_images/island_map.jpg" style="width: 350.0px; height: 250.0px;" /></a>
+<div class="line-block">
+<div class="line"><strong>Simulation results</strong></div>
+<div class="line">Map of Rossumøya after 20 years.</div>
+</div>
+<a class="reference internal image-reference" href="_images/simulation_results_20_years.jpg"><img alt="alternate text" class="align-center" src="_images/simulation_results_20_years.jpg" style="width: 750.0px; height: 500.0px;" /></a>
 </div>
 <div class="section" id="biosim-simulation-with-movie-creation">
 <h2>BioSim simulation with movie creation<a class="headerlink" href="#biosim-simulation-with-movie-creation" title="Permalink to this headline">¶</a></h2>
 <p>This simulation creates a MPEG4 movie that shows how the island updates over
 the course of the simulation. The simulation runs for a total of 300 years.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">biosim.simulation</span> <span class="kn">import</span> <span class="n">BioSim</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Runs a simulation for a total of 300 years. The initial population on the</span>
 <span class="sd">island is 150 herbivores and 40 carnivores.</span>
 
@@ -296,8 +306,11 @@ the course of the simulation. The simulation runs for a total of 300 years.</p>
     <span class="n">sim</span><span class="o">.</span><span class="n">make_movie</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><strong>Simulation results</strong></p>
-<p>#.. image:: ../images/your_image.gif</p>
+<div class="line-block">
+<div class="line"><strong>Simulation results</strong></div>
+<div class="line">Map of Rossumøya after 300 years.</div>
+</div>
+<a class="reference internal image-reference" href="_images/simulation_results_300_years.jpg"><img alt="alternate text" class="align-center" src="_images/simulation_results_300_years.jpg" style="width: 750.0px; height: 500.0px;" /></a>
 </div>
 </div>
 

@@ -7,6 +7,9 @@ Runs a standard simulation for 20 years.
 
 .. code-block:: python
 
+    import textwrap
+    from biosim.simulation import BioSim
+
     """
     Runs a simulation for 20 years. The initial population on the island is 150
     herbivores and 200 carnivores.
@@ -56,11 +59,12 @@ Runs a standard simulation for 20 years.
         sim.simulate(num_years=20, vis_years=1, img_years=2000)
 
 
-**Simulation results**
+| **Simulation results**
+| Map of Rossumøya after 20 years.
 
-.. image:: island_map.jpg
-   :width: 700px
-   :height: 500px
+.. image:: simulation_results_20_years.jpg
+   :width: 1500px
+   :height: 1000px
    :scale: 50 %
    :alt: alternate text
    :align: center
@@ -71,6 +75,10 @@ This simulation creates a MPEG4 movie that shows how the island updates over
 the course of the simulation. The simulation runs for a total of 300 years.
 
 .. code-block:: python
+
+    import textwrap
+    import matplotlib.pyplot as plt
+    from biosim.simulation import BioSim
 
     """
     Runs a simulation for a total of 300 years. The initial population on the
@@ -151,6 +159,12 @@ the course of the simulation. The simulation runs for a total of 300 years.
 
         sim.make_movie()
 
-**Simulation results**
+| **Simulation results**
+| Map of Rossumøya after 300 years.
 
-#.. image:: ../images/your_image.gif
+.. image:: simulation_results_300_years.jpg
+   :width: 1500px
+   :height: 1000px
+   :scale: 50 %
+   :alt: alternate text
+   :align: center

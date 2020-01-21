@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import textwrap
+from biosim.simulation import BioSim
+
 """
 Runs a simulation for 20 years. The initial population on the island is 150
 herbivores and 200 carnivores.

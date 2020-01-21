@@ -10,7 +10,6 @@ __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-import textwrap
 import pandas as pd
 import numpy as np
 import subprocess
