@@ -45,13 +45,25 @@ class BioSim:
             img_fmt="png",
     ):
         """
-        :param island_map: Multi-line string specifying island geography
-        :param ini_pop: List of dictionaries specifying initial population
-        :param seed: Integer used as random number seed
-        :param ymax_animals: Number specifying y-axis limit for graph showing animal numbers
-        :param cmax_animals: Dict specifying color-code limits for animal densities
-        :param img_base: String with beginning of file name for figures, including path
-        :param img_fmt: String with file type for figures, e.g. 'png'
+
+        Parameters
+        ----------
+        island_map: str
+            Multi-line string specifying island geography
+        ini_pop: list
+            List of dictionaries specifying initial population
+        seed: int
+            Integer used as random number seed
+        ymax_animals: int
+            Number specifying y-axis limit for graph showing animal numbers
+        cmax_animals: dict
+            Dict specifying color-code limits for animal densities
+        img_base: str
+            String with beginning of file name for figures, including path
+        img_fmt: str
+            String with file type for figures, e.g. 'png'
+        """
+        """
 
         If ymax_animals is None, the y-axis limit should be adjusted automatically.
 
@@ -189,7 +201,7 @@ class BioSim:
         for _ in range(num_years):
 
             if self.year % vis_years == 0:
-                self._update_graphics(num_years)
+                self._update_graphics()
 
             if self.year % img_years == 0:
                 self._save_graphics()
@@ -226,37 +238,10 @@ class BioSim:
 
         self._map_setup()
         self._graph_setup(num_years)
-        self._heat_map_setup()
+        self._carn_heat_map_setup()
+        self._herb_heat_map_setup()
         self._herb_count_setup()
         self._carn_count_setup()
-
-    def _herb_count_setup(self):
-        if self.herb_count is None:
-            self.herb_count = self._fig.add_axes([0.70, 0.48, 0.2, 0.2])
-            self.herb_count.axis('off')
-            self.herb_template = 'Total number of herbivores: {:8}'
-            self.herb_txt = self.herb_count.text(0.5, 0.5, self.herb_template.format(0),
-                                       horizontalalignment='center',
-                                       verticalalignment='center',
-                                       transform=self.herb_count.transAxes)
-            self.herb_txt.set_text(self.herb_template.format(self.num_animals_per_species['Herbivore']))
-
-    def _carn_count_setup(self):
-        if self.carn_count is None:
-            self.carn_count = self._fig.add_axes([0.70, 0.38, 0.2, 0.2])
-            self.carn_count.axis('off')
-            self.carn_template = 'Total number of carnivores: {:8}'
-            self.carn_txt = self.carn_count.text(0.5, 0.5, self.carn_template.format(0),
-                                       horizontalalignment='center',
-                                       verticalalignment='center',
-                                       transform=self.carn_count.transAxes)
-            self.carn_txt.set_text(self.carn_template.format(self.num_animals_per_species['Carnivore']))
-
-    def _herb_count_update(self):
-        self.herb_txt.set_text(self.herb_template.format(self.num_animals_per_species['Herbivore']))
-
-    def _carn_count_update(self):
-        self.carn_txt.set_text(self.carn_template.format(self.num_animals_per_species['Carnivore']))
 
     def _map_setup(self):
 
@@ -339,9 +324,9 @@ class BioSim:
             self.ani_ax.set_xticks(np.arange(num_years+1))
             self.ani_ax.set_xticklabels(np.arange(num_years+1))
 
-    def _heat_map_setup(self):
+    def _herb_heat_map_setup(self):
         """
-        Setup for the heat maps for herbivore and carnivore distribution.
+        Heat map setup for the herbivores.
         """
         if self.herb_heat is None:
             self.herb_heat = self._fig.add_axes([0.55, 0.65, 0.5, 0.3])
@@ -357,6 +342,10 @@ class BioSim:
 
             self._herb_map_setup()
 
+    def _carn_heat_map_setup(self):
+        """
+        Heat map setup for the carnivores.
+        """
         if self.carn_heat is None:
             self.carn_heat = self._fig.add_axes([0.55, 0.10, 0.5, 0.3])
             plt.title("Carnivore distribution", weight='bold', fontsize=15)
@@ -371,22 +360,10 @@ class BioSim:
 
             self._carn_map_setup()
 
-    def _carn_map_setup(self):
-        if self.map_carn is None:
-            self.map_carn = self._fig.add_axes([0.55, 0.10, 0.5, 0.3])
-            rgb_values = {
-                "O": mcolors.to_rgba("cornflowerblue"),
-                "J": mcolors.to_rgba("lightgreen"),
-                "S": mcolors.to_rgba("linen"),
-                "D": mcolors.to_rgba("lightyellow"),
-                "M": mcolors.to_rgba("gainsboro"),
-            }
-            rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
-            rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
-                              for row in rgb_island_map]
-            self.map_carn.imshow(rgb_island_map, interpolation='nearest', alpha=0.2, zorder=3)
-
     def _herb_map_setup(self):
+        """
+        Setup for the island map in the background of the herbivore heat map.
+        """
         if self.map_herb is None:
 
             self.map_herb = self._fig.add_axes([0.55, 0.65, 0.5, 0.3])
@@ -400,31 +377,92 @@ class BioSim:
             rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
             rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
                               for row in rgb_island_map]
-            self.map_herb.imshow(rgb_island_map, interpolation='nearest', alpha=0.2, zorder=3)
+            self.map_herb.imshow(rgb_island_map,
+                                 interpolation='nearest',
+                                 alpha=0.2,
+                zorder=3
+            )
 
-    def _update_graphics(self, num_years):
+    def _carn_map_setup(self):
+        """
+        Setup for the island map in the background of the carnivore heat map.
+        """
+        if self.map_carn is None:
+            self.map_carn = self._fig.add_axes([0.55, 0.10, 0.5, 0.3])
+            rgb_values = {
+                "O": mcolors.to_rgba("cornflowerblue"),
+                "J": mcolors.to_rgba("lightgreen"),
+                "S": mcolors.to_rgba("linen"),
+                "D": mcolors.to_rgba("lightyellow"),
+                "M": mcolors.to_rgba("gainsboro"),
+            }
+            rgb_island_map = copy.deepcopy(self.simulated_island.island_map)
+            rgb_island_map = [[rgb_values[cell.landscape_type] for cell in row]
+                              for row in rgb_island_map]
+            self.map_carn.imshow(
+                rgb_island_map, interpolation='nearest', alpha=0.2, zorder=3
+            )
+
+    def _herb_count_setup(self):
+        """
+        Setup for the herbivore counter.
+        """
+        if self.herb_count is None:
+            self.herb_count = self._fig.add_axes([0.70, 0.48, 0.2, 0.2])
+            self.herb_count.axis('off')
+            self.herb_template = 'Total number of herbivores: {:8}'
+            self.herb_txt = self.herb_count.text(
+                0.5, 0.5, self.herb_template.format(0),
+                horizontalalignment='center',
+                verticalalignment='center',
+                transform=self.herb_count.transAxes)
+            self.herb_txt.set_text(self.herb_template.format(
+                self.num_animals_per_species['Herbivore']))
+
+    def _carn_count_setup(self):
+        """
+        Setup for the carnivore counter.
+        """
+        if self.carn_count is None:
+            self.carn_count = self._fig.add_axes([0.70, 0.38, 0.2, 0.2])
+            self.carn_count.axis('off')
+            self.carn_template = 'Total number of carnivores: {:8}'
+            self.carn_txt = self.carn_count.text(
+                0.5, 0.5, self.carn_template.format(0),
+                horizontalalignment='center',
+                verticalalignment='center',
+                transform=self.carn_count.transAxes)
+            self.carn_txt.set_text(self.carn_template.format(
+                self.num_animals_per_species['Carnivore']))
+
+    def _update_graphics(self):
         """
         Updating graphics in the figure (self._fig). This is run for each
         iteration in the simulation loop.
         """
 
         self._update_heat_map()
-        self._update_graph(num_years)
+        self._update_graph()
         self._herb_count_update()
         self._carn_count_update()
-        # self._update_counter()
 
     def _update_heat_map(self):
         """
         Updating the heat maps for herbivore and carnivore distribution.
         """
-        self.herb_heat.imshow(self.herbivore_island_map(), interpolation='nearest',
-                   cmap='jet')
+        self.herb_heat.imshow(
+            self.herbivore_island_map(),
+            interpolation='nearest',
+            cmap='jet'
+        )
 
-        self.carn_heat.imshow(self.carnivore_island_map(), interpolation='nearest',
-                   cmap='jet')
+        self.carn_heat.imshow(
+            self.carnivore_island_map(),
+            interpolation='nearest',
+            cmap='jet'
+        )
 
-    def _update_graph(self, num_years):
+    def _update_graph(self):
         """
         Updating the graphs showing the number of carnivores and herbivores
         for each year in the simulation.
@@ -436,56 +474,94 @@ class BioSim:
         ydata_herbs[self.idx] = self.num_animals_per_species['Herbivore']
         ydata_carns[self.idx] = self.num_animals_per_species['Carnivore']
 
-        #if self.year == 0:
-        #    ydata_herbs = np.full(num_years+1, np.nan)
-        #    ydata_carns = np.full(num_years+1, np.nan)
-
         self.line_herbs.set_ydata(ydata_herbs)
         self.line_carns.set_ydata(ydata_carns)
 
-        self.title.set_text('Year: {:5}'.format(self.years_simulated))
+        self.title.set_text(
+            'Year: {:5}'.format(self.years_simulated)
+        )
+
+    def _herb_count_update(self):
+        """
+        Updating the herbivore counter.
+        """
+        self.herb_txt.set_text(self.herb_template.format(
+            self.num_animals_per_species['Herbivore']))
+
+    def _carn_count_update(self):
+        """
+        Updating the carnivore counter.
+        """
+        self.carn_txt.set_text(self.carn_template.format(
+            self.num_animals_per_species['Carnivore']))
 
     def _save_graphics(self):
+        """
+        Saving graphics.
+        """
 
         if self._img_base is None:
             return
 
-        plt.savefig('{base}_{num:05d}.{type}'.format(base=self._img_base,
-                                                     num=self._img_ctr,
-                                                     type=self._img_fmt))
+        plt.savefig(
+            '{base}_{num:05d}.{type}'.format(
+                base=self._img_base,
+                num=self._img_ctr,
+                type=self._img_fmt)
+        )
         self._img_ctr += 1
 
     def add_population(self, population):
         """
-        Add a population to the island
+        Adding a population to the island.
 
-        :param population: List of dictionaries specifying population
+        Parameters
+        ----------
+        population: list
+            List of dictionaries specifying population
         """
 
         self.simulated_island.adding_population(population)
 
     @property
     def year(self):
-        """Last year simulated."""
+        """
+        Last year simulated.
+        """
         return self.years_simulated
 
     @property
     def num_animals(self):
-        """Total number of animals on island."""
+        """
+        Total number of animals on island.
+        """
         return len(self.simulated_island.total_population())
 
     @property
     def num_animals_per_species(self):
-        """Number of animals per species in island, as dictionary."""
+        """
+        Number of animals per species in island, as dictionary.
+        """
+
         animals = self.simulated_island.total_population()
         number_of_herbivores = sum(isinstance(animal, Herbivore) for animal in animals)
         number_of_carnivores = sum(isinstance(animal, Carnivore) for animal in animals)
+
         return {"Herbivore": number_of_herbivores,
                 "Carnivore": number_of_carnivores}
 
     @property
     def animal_distribution(self):
-        """Pandas DataFrame with animal count per species for each cell on island."""
+        """
+        Creating a pandas DataFrame with animal count per species for each
+        cell on island.
+
+        Returns
+        -------
+        df: pandas DataFrame
+            The dataframe with animal counts per species for cell
+            coordinates.
+        """
 
         island = self.simulated_island.island_map
 
@@ -496,7 +572,11 @@ class BioSim:
                 n_herbivores = cell.herbivores_in_cell
                 n_carnivores = cell.carnivores_in_cell
 
-                data.append([cell.coordinate[0], cell.coordinate[1], n_herbivores, n_carnivores])
+                data.append(
+                    [cell.coordinate[0],
+                     cell.coordinate[1],
+                     n_herbivores,
+                     n_carnivores])
 
         df = pd.DataFrame(data)
         df.columns = (["Row", "Col", "Herbivore", "Carnivore"])
@@ -504,13 +584,8 @@ class BioSim:
         return df
 
     def make_movie(self):
-        """Create MPEG4 movie from visualization images saved."""
-
         """
-        Creates MPEG4 movie from visualization images saved.
-        .. :note:
-            Requires ffmpeg
-        The movie is stored as img_base + movie_fmt
+        Create MPEG4 movie from visualization images saved.
         """
 
         movie_fmt = _DEFAULT_MOVIE_FORMAT
@@ -530,7 +605,9 @@ class BioSim:
                                        '{}.{}'.format(self._img_base,
                                                       movie_fmt)])
             except subprocess.CalledProcessError as err:
-                raise RuntimeError('ERROR: ffmpeg failed with: {}'.format(err))
+                raise RuntimeError(
+                    'ERROR: ffmpeg failed with: {}'.format(err)
+                )
 
 
 if __name__ == '__main__':
@@ -608,3 +685,5 @@ if __name__ == '__main__':
     # profiling: %% prun
 
     #checksim, biosiminterface, code coverage, some visualization,
+
+    # delivery: tag 'submission' in commit
