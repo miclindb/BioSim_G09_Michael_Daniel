@@ -7,8 +7,8 @@ Island Module
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
-from biosim.cell import Ocean, Mountain, Jungle, Savannah, Desert
-from biosim.animals import Herbivore, Carnivore
+from .cell import Ocean, Mountain, Jungle, Savannah, Desert
+from .animals import Herbivore, Carnivore
 
 
 class Island:

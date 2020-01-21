@@ -7,7 +7,7 @@ Cell Module
 __author__ = "Michael Lindberg, Daniel Milliam Müller"
 __email__ = "michael.lindberg@nmbu.no, daniel.milliam.muller@nmbu.no"
 
-from biosim.animals import Herbivore, Carnivore
+from .animals import Herbivore, Carnivore
 
 
 class Cell:
