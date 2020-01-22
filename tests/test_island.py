@@ -12,12 +12,50 @@ import pytest
 from biosim.island import Island
 from biosim.cell import Cell, Desert
 from biosim.animals import Herbivore, Carnivore
+from biosim.simulation import BioSim
 
 
 class TestIsland:
     """
     Tests for island operations.
     """
+
+    DEFAULT_HERBIVORE_PARAMS = {
+        'w_birth': 8.0, 'sigma_birth': 1.5, 'beta': 0.9, 'eta': 0.05,
+        'a_half': 40.0, 'phi_age': 0.2, 'w_half': 10.0, 'phi_weight': 0.1,
+        'mu': 0.25, 'lambda': 1.0, 'gamma': 0.2, 'zeta': 3.5, 'xi': 1.2,
+        'omega': 0.4, 'F': 10.0
+    }
+
+    DEFAULT_CARNIVORE_PARAMS = {
+        'w_birth': 6.0, 'sigma_birth': 1.0, 'beta': 0.75, 'eta': 0.125,
+        'a_half': 60.0, 'phi_age': 0.4, 'w_half': 4.0, 'phi_weight': 0.4,
+        'mu': 0.4, 'lambda': 1.0, 'gamma': 0.8, 'zeta': 3.5, 'xi': 1.1,
+        'omega': 0.9, 'F': 50.0, 'DeltaPhiMax': 10.0
+    }
+
+    DEFAULT_JUNGLE_PARAMS = {
+        'f_max': 800
+    }
+
+    DEFAULT_SAVANNAH_PARAMS = {
+        'f_max': 300.0, 'alpha': 0.3
+    }
+
+    @pytest.fixture(autouse=True)
+    def reset_all_params(self):
+        """
+        Sets all parameters to default values after each test in this suite
+        so that changes will not remain for other test-modules.
+
+        Note: might throw an error if set_animal_parameters() and set_landscape_parameters()
+              are not implemented
+        """
+        yield
+        BioSim.set_animal_parameters("Herbivore", self.DEFAULT_HERBIVORE_PARAMS)
+        BioSim.set_animal_parameters("Carnivore", self.DEFAULT_CARNIVORE_PARAMS)
+        BioSim.set_landscape_parameters("J", self.DEFAULT_JUNGLE_PARAMS)
+        BioSim.set_landscape_parameters("S", self.DEFAULT_SAVANNAH_PARAMS)
 
     @pytest.fixture(autouse=True)
     def setup_island(self):
@@ -224,6 +262,43 @@ class TestIslandCycles:
     """
     Tests for island cycles.
     """
+
+    DEFAULT_HERBIVORE_PARAMS = {
+        'w_birth': 8.0, 'sigma_birth': 1.5, 'beta': 0.9, 'eta': 0.05,
+        'a_half': 40.0, 'phi_age': 0.2, 'w_half': 10.0, 'phi_weight': 0.1,
+        'mu': 0.25, 'lambda': 1.0, 'gamma': 0.2, 'zeta': 3.5, 'xi': 1.2,
+        'omega': 0.4, 'F': 10.0
+    }
+
+    DEFAULT_CARNIVORE_PARAMS = {
+        'w_birth': 6.0, 'sigma_birth': 1.0, 'beta': 0.75, 'eta': 0.125,
+        'a_half': 60.0, 'phi_age': 0.4, 'w_half': 4.0, 'phi_weight': 0.4,
+        'mu': 0.4, 'lambda': 1.0, 'gamma': 0.8, 'zeta': 3.5, 'xi': 1.1,
+        'omega': 0.9, 'F': 50.0, 'DeltaPhiMax': 10.0
+    }
+
+    DEFAULT_JUNGLE_PARAMS = {
+        'f_max': 800
+    }
+
+    DEFAULT_SAVANNAH_PARAMS = {
+        'f_max': 300.0, 'alpha': 0.3
+    }
+
+    @pytest.fixture(autouse=True)
+    def reset_all_params(self):
+        """
+        Sets all parameters to default values after each test in this suite
+        so that changes will not remain for other test-modules.
+
+        Note: might throw an error if set_animal_parameters() and set_landscape_parameters()
+              are not implemented
+        """
+        yield
+        BioSim.set_animal_parameters("Herbivore", self.DEFAULT_HERBIVORE_PARAMS)
+        BioSim.set_animal_parameters("Carnivore", self.DEFAULT_CARNIVORE_PARAMS)
+        BioSim.set_landscape_parameters("J", self.DEFAULT_JUNGLE_PARAMS)
+        BioSim.set_landscape_parameters("S", self.DEFAULT_SAVANNAH_PARAMS)
 
     @pytest.fixture(autouse=True)
     def setup_island(self, mocker):
