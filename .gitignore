@@ -7551,3 +7551,5 @@ tests/__pycache__/test_island.cpython-37-pytest-5.3.3.pyc
 /src/biosim.egg-info/
 /pip-wheel-metadata/
 /project documents/
+
+.DS_Store
