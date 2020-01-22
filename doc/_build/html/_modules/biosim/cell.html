@@ -85,6 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../assignment.html">Project Assignment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../further.html">Further Development</a></li>
 </ul>
 
             
@@ -419,7 +420,7 @@
             <span class="p">)</span>
 
 
-<div class="viewcode-block" id="Ocean"><a class="viewcode-back" href="../../cell.html#biosim.cell.Ocean">[docs]</a><span class="k">class</span> <span class="nc">Ocean</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
+<div class="viewcode-block" id="Ocean"><a class="viewcode-back" href="../../modules.html#biosim.cell.Ocean">[docs]</a><span class="k">class</span> <span class="nc">Ocean</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cell subclass for all ocean landscape types.</span>
 <span class="sd">    Ocean landscape cannot be traversed and contains no food.</span>
@@ -433,7 +434,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">landscape_type</span> <span class="o">=</span> <span class="s2">&quot;O&quot;</span></div>
 
 
-<div class="viewcode-block" id="Mountain"><a class="viewcode-back" href="../../cell.html#biosim.cell.Mountain">[docs]</a><span class="k">class</span> <span class="nc">Mountain</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
+<div class="viewcode-block" id="Mountain"><a class="viewcode-back" href="../../modules.html#biosim.cell.Mountain">[docs]</a><span class="k">class</span> <span class="nc">Mountain</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cell subclass for all mountain landscape types.</span>
 <span class="sd">    Mountain landscape cannot be traversed and contains no food.</span>
@@ -447,7 +448,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">landscape_type</span> <span class="o">=</span> <span class="s2">&quot;M&quot;</span></div>
 
 
-<div class="viewcode-block" id="Jungle"><a class="viewcode-back" href="../../cell.html#biosim.cell.Jungle">[docs]</a><span class="k">class</span> <span class="nc">Jungle</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
+<div class="viewcode-block" id="Jungle"><a class="viewcode-back" href="../../modules.html#biosim.cell.Jungle">[docs]</a><span class="k">class</span> <span class="nc">Jungle</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cell subclass for all jungle landscape types.</span>
 <span class="sd">    Jungle landscape can be traversed and available food is fully replenished</span>
@@ -465,7 +466,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fodder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;f_max&#39;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="Savannah"><a class="viewcode-back" href="../../cell.html#biosim.cell.Savannah">[docs]</a><span class="k">class</span> <span class="nc">Savannah</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
+<div class="viewcode-block" id="Savannah"><a class="viewcode-back" href="../../modules.html#biosim.cell.Savannah">[docs]</a><span class="k">class</span> <span class="nc">Savannah</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cell subclass for all savannah landscape types.</span>
 <span class="sd">    Savannah landscape can be traversed and a portion of maximum available food</span>
@@ -483,7 +484,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fodder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;f_max&#39;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="Desert"><a class="viewcode-back" href="../../cell.html#biosim.cell.Desert">[docs]</a><span class="k">class</span> <span class="nc">Desert</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
+<div class="viewcode-block" id="Desert"><a class="viewcode-back" href="../../modules.html#biosim.cell.Desert">[docs]</a><span class="k">class</span> <span class="nc">Desert</span><span class="p">(</span><span class="n">Cell</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cell subclass for all desert landscape types.</span>
 <span class="sd">    Desert landscape can be traversed and contains no fodder.</span>

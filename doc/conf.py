@@ -12,7 +12,10 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('/Users/danielmilliammuller/Desktop/NMBU/Semester 3/INF200/Exam/BioSim_G09_Michael_Daniel/src/biosim'))
+from pathlib import Path
+
+_curr_dir = Path(__file__).parent
+#sys.path.insert(0, os.path.abspath(_curr_dir/"../src"))
 autoclass_content = 'both'
 
 # -- Project information -----------------------------------------------------
@@ -35,7 +38,8 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
-    'numpydoc'
+    'numpydoc',
+    "sphinx_rtd_theme",
 ]
 
 # Add any paths that contain templates here, relative to this directory.

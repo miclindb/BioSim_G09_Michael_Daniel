@@ -4,39 +4,39 @@ Modules
 Simulation
 ----------
 
-.. autoclass:: simulation.BioSim
+.. autoclass:: biosim.simulation.BioSim
     :inherited-members:
 
 Island
 ----------
 
-.. automodule:: island.Island
+.. automodule:: biosim.island
     :inherited-members:
 
 Cell
 ----------
 
-.. automodule:: cell.Ocean
+.. autoclass:: biosim.cell.Ocean
     :inherited-members:
 
-.. automodule:: cell.Mountain
+.. autoclass:: biosim.cell.Mountain
     :inherited-members:
 
-.. automodule:: cell.Jungle
+.. autoclass:: biosim.cell.Jungle
     :inherited-members:
 
-.. automodule:: cell.Savannah
+.. autoclass:: biosim.cell.Savannah
     :inherited-members:
 
-.. automodule:: cell.Desert
+.. autoclass:: biosim.cell.Desert
     :inherited-members:
 
 Animals
 ----------
 
-.. autoclass:: animals.Herbivore
+.. autoclass:: biosim.animals.Herbivore
     :inherited-members:
 
-.. autoclass:: animals.Carnivore
+.. autoclass:: biosim.animals.Carnivore
     :inherited-members:
 

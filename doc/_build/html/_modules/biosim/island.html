@@ -85,6 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../assignment.html">Project Assignment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../further.html">Further Development</a></li>
 </ul>
 
             
@@ -161,7 +162,7 @@
 <span class="kn">from</span> <span class="nn">.animals</span> <span class="k">import</span> <span class="n">Herbivore</span><span class="p">,</span> <span class="n">Carnivore</span>
 
 
-<div class="viewcode-block" id="Island"><a class="viewcode-back" href="../../island.html#biosim.island.Island">[docs]</a><span class="k">class</span> <span class="nc">Island</span><span class="p">:</span>
+<div class="viewcode-block" id="Island"><a class="viewcode-back" href="../../modules.html#biosim.island.Island">[docs]</a><span class="k">class</span> <span class="nc">Island</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Island class. Superclass for all landscape types.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -183,7 +184,7 @@
                                <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="n">Savannah</span><span class="p">,</span>
                                <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">Desert</span><span class="p">}</span>
 
-<div class="viewcode-block" id="Island.construct_vertical_coordinates"><a class="viewcode-back" href="../../island.html#biosim.island.Island.construct_vertical_coordinates">[docs]</a>    <span class="k">def</span> <span class="nf">construct_vertical_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h_axis</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.construct_vertical_coordinates"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.construct_vertical_coordinates">[docs]</a>    <span class="k">def</span> <span class="nf">construct_vertical_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h_axis</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs the vertical coordinates for the island map.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -196,7 +197,7 @@
                 <span class="p">]()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">h_axis</span><span class="p">][</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">coordinate</span> <span class="o">=</span> <span class="p">(</span><span class="n">h_axis</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Island.construct_map_coordinates"><a class="viewcode-back" href="../../island.html#biosim.island.Island.construct_map_coordinates">[docs]</a>    <span class="k">def</span> <span class="nf">construct_map_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.construct_map_coordinates"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.construct_map_coordinates">[docs]</a>    <span class="k">def</span> <span class="nf">construct_map_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct the coordinates of the island map.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -211,7 +212,7 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">construct_vertical_coordinates</span><span class="p">(</span><span class="n">h_axis</span><span class="o">=</span><span class="n">y</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Island.map_constructor"><a class="viewcode-back" href="../../island.html#biosim.island.Island.map_constructor">[docs]</a>    <span class="k">def</span> <span class="nf">map_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.map_constructor"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.map_constructor">[docs]</a>    <span class="k">def</span> <span class="nf">map_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs the entire map of the island.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -223,35 +224,35 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">construct_map_coordinates</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Island.generate_cell_above"><a class="viewcode-back" href="../../island.html#biosim.island.Island.generate_cell_above">[docs]</a>    <span class="k">def</span> <span class="nf">generate_cell_above</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">list_of_nearby_cells</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.generate_cell_above"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.generate_cell_above">[docs]</a>    <span class="k">def</span> <span class="nf">generate_cell_above</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">list_of_nearby_cells</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates cell above current cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cell_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
         <span class="n">list_of_nearby_cells</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cell_1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Island.generate_cell_left"><a class="viewcode-back" href="../../island.html#biosim.island.Island.generate_cell_left">[docs]</a>    <span class="k">def</span> <span class="nf">generate_cell_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">list_of_nearby_cells</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.generate_cell_left"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.generate_cell_left">[docs]</a>    <span class="k">def</span> <span class="nf">generate_cell_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">list_of_nearby_cells</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates cell to the left of current cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cell_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
         <span class="n">list_of_nearby_cells</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cell_2</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Island.generate_cell_below"><a class="viewcode-back" href="../../island.html#biosim.island.Island.generate_cell_below">[docs]</a>    <span class="k">def</span> <span class="nf">generate_cell_below</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">list_of_nearby_cells</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.generate_cell_below"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.generate_cell_below">[docs]</a>    <span class="k">def</span> <span class="nf">generate_cell_below</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">list_of_nearby_cells</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates cell below current cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cell_3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
         <span class="n">list_of_nearby_cells</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cell_3</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Island.generate_cell_right"><a class="viewcode-back" href="../../island.html#biosim.island.Island.generate_cell_right">[docs]</a>    <span class="k">def</span> <span class="nf">generate_cell_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">list_of_nearby_cells</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.generate_cell_right"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.generate_cell_right">[docs]</a>    <span class="k">def</span> <span class="nf">generate_cell_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">list_of_nearby_cells</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates cell to the right of current cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cell_4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
         <span class="n">list_of_nearby_cells</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cell_4</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Island.generate_nearby_cells"><a class="viewcode-back" href="../../island.html#biosim.island.Island.generate_nearby_cells">[docs]</a>    <span class="k">def</span> <span class="nf">generate_nearby_cells</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.generate_nearby_cells"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.generate_nearby_cells">[docs]</a>    <span class="k">def</span> <span class="nf">generate_nearby_cells</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a list of cells near current cell. These cells are used for</span>
 <span class="sd">        animal migration.</span>
@@ -274,7 +275,7 @@
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">island_map</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">nearby_cells</span> <span class="o">=</span> <span class="n">list_of_nearby_cells</span></div>
 
-<div class="viewcode-block" id="Island.add_herbivores"><a class="viewcode-back" href="../../island.html#biosim.island.Island.add_herbivores">[docs]</a>    <span class="k">def</span> <span class="nf">add_herbivores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">animal</span><span class="p">,</span> <span class="n">animal_list</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.add_herbivores"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.add_herbivores">[docs]</a>    <span class="k">def</span> <span class="nf">add_herbivores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">animal</span><span class="p">,</span> <span class="n">animal_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds herbivores to the island population. Used for &#39;adding_population&#39;</span>
 <span class="sd">        method.</span>
@@ -290,7 +291,7 @@
             <span class="n">animal_list</span><span class="p">[</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">population</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
             <span class="n">Herbivore</span><span class="p">(</span><span class="n">age</span><span class="o">=</span><span class="n">animal</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="n">animal</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]))</span></div>
 
-<div class="viewcode-block" id="Island.add_carnivores"><a class="viewcode-back" href="../../island.html#biosim.island.Island.add_carnivores">[docs]</a>    <span class="k">def</span> <span class="nf">add_carnivores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">animal</span><span class="p">,</span> <span class="n">animal_list</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.add_carnivores"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.add_carnivores">[docs]</a>    <span class="k">def</span> <span class="nf">add_carnivores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">animal</span><span class="p">,</span> <span class="n">animal_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds carnivores to the island population. Used for &#39;adding_population&#39;</span>
 <span class="sd">        method.</span>
@@ -306,7 +307,7 @@
             <span class="n">animal_list</span><span class="p">[</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">population</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
             <span class="n">Carnivore</span><span class="p">(</span><span class="n">age</span><span class="o">=</span><span class="n">animal</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">],</span> <span class="n">weight</span><span class="o">=</span><span class="n">animal</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]))</span></div>
 
-<div class="viewcode-block" id="Island.adding_population"><a class="viewcode-back" href="../../island.html#biosim.island.Island.adding_population">[docs]</a>    <span class="k">def</span> <span class="nf">adding_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.adding_population"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.adding_population">[docs]</a>    <span class="k">def</span> <span class="nf">adding_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds population to the island.</span>
 
@@ -337,7 +338,7 @@
                 <span class="s1">&#39;Invalid input for population, see documentation.&#39;</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Island.total_population"><a class="viewcode-back" href="../../island.html#biosim.island.Island.total_population">[docs]</a>    <span class="k">def</span> <span class="nf">total_population</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.total_population"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.total_population">[docs]</a>    <span class="k">def</span> <span class="nf">total_population</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a list containing all the animals on the island.</span>
 
@@ -352,7 +353,7 @@
                 <span class="n">total_population_list</span> <span class="o">+=</span> <span class="n">cell</span><span class="o">.</span><span class="n">population</span>
         <span class="k">return</span> <span class="n">total_population_list</span></div>
 
-<div class="viewcode-block" id="Island.island_fodder_growth"><a class="viewcode-back" href="../../island.html#biosim.island.Island.island_fodder_growth">[docs]</a>    <span class="k">def</span> <span class="nf">island_fodder_growth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.island_fodder_growth"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.island_fodder_growth">[docs]</a>    <span class="k">def</span> <span class="nf">island_fodder_growth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Yearly cycle for fodder growth. Fodder grows for all cells on the</span>
 <span class="sd">        island.</span>
@@ -361,7 +362,7 @@
             <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
                 <span class="n">cell</span><span class="o">.</span><span class="n">fodder_growth</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Island.island_feeding"><a class="viewcode-back" href="../../island.html#biosim.island.Island.island_feeding">[docs]</a>    <span class="k">def</span> <span class="nf">island_feeding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.island_feeding"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.island_feeding">[docs]</a>    <span class="k">def</span> <span class="nf">island_feeding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Yearly cycle for feeding. All animals on the island attempts to feed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -369,7 +370,7 @@
             <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
                 <span class="n">cell</span><span class="o">.</span><span class="n">feeding</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Island.island_procreate"><a class="viewcode-back" href="../../island.html#biosim.island.Island.island_procreate">[docs]</a>    <span class="k">def</span> <span class="nf">island_procreate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.island_procreate"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.island_procreate">[docs]</a>    <span class="k">def</span> <span class="nf">island_procreate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Yearly cycle for procreation. All animals on the island attempts to</span>
 <span class="sd">        procreate.</span>
@@ -378,7 +379,7 @@
             <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
                 <span class="n">cell</span><span class="o">.</span><span class="n">procreate</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Island.island_migration"><a class="viewcode-back" href="../../island.html#biosim.island.Island.island_migration">[docs]</a>    <span class="k">def</span> <span class="nf">island_migration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.island_migration"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.island_migration">[docs]</a>    <span class="k">def</span> <span class="nf">island_migration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Yearly cycle for migration. All animals on the island cell attempts to</span>
 <span class="sd">        migrate. Resets the &#39;has_moved&#39; status of the animals afterwards.</span>
@@ -392,7 +393,7 @@
                 <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="n">cell</span><span class="o">.</span><span class="n">population</span><span class="p">:</span>
                     <span class="n">animal</span><span class="o">.</span><span class="n">has_moved</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="Island.island_aging"><a class="viewcode-back" href="../../island.html#biosim.island.Island.island_aging">[docs]</a>    <span class="k">def</span> <span class="nf">island_aging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.island_aging"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.island_aging">[docs]</a>    <span class="k">def</span> <span class="nf">island_aging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Yearly cycle for aging. All animals on the island turn one year older.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -400,7 +401,7 @@
             <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
                 <span class="n">cell</span><span class="o">.</span><span class="n">aging</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Island.island_loss_of_weight"><a class="viewcode-back" href="../../island.html#biosim.island.Island.island_loss_of_weight">[docs]</a>    <span class="k">def</span> <span class="nf">island_loss_of_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.island_loss_of_weight"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.island_loss_of_weight">[docs]</a>    <span class="k">def</span> <span class="nf">island_loss_of_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Yearly cycle for loss of weight. All animals on the island loses</span>
 <span class="sd">        weight.</span>
@@ -409,7 +410,7 @@
             <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
                 <span class="n">cell</span><span class="o">.</span><span class="n">loss_of_weight</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Island.island_deaths"><a class="viewcode-back" href="../../island.html#biosim.island.Island.island_deaths">[docs]</a>    <span class="k">def</span> <span class="nf">island_deaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.island_deaths"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.island_deaths">[docs]</a>    <span class="k">def</span> <span class="nf">island_deaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Yearly cycle for death. Checks for all animals on the island if the</span>
 <span class="sd">        die.</span>
@@ -418,7 +419,7 @@
             <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
                 <span class="n">cell</span><span class="o">.</span><span class="n">deaths</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Island.island_cycle"><a class="viewcode-back" href="../../island.html#biosim.island.Island.island_cycle">[docs]</a>    <span class="k">def</span> <span class="nf">island_cycle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Island.island_cycle"><a class="viewcode-back" href="../../modules.html#biosim.island.Island.island_cycle">[docs]</a>    <span class="k">def</span> <span class="nf">island_cycle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs operations related to the annual cycle for one cell.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

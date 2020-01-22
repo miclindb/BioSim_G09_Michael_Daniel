@@ -104,8 +104,6 @@ class TestSimulation:
         Test that the parameters of the animals are correct after they are
         changed.
         """
-        assert self.herbivore.parameters['omega'] == 0.4
-        assert self.carnivore.parameters['omega'] == 0.9
         params = {
             'omega': 0.4
         }
