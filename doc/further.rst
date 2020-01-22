@@ -8,7 +8,7 @@ added. We have discussed some ideas for additional features such as:
 Climate features
 ----------------
 
-- Sea level raise. The sea level could raise in certain intervals, transforming island cells to ocean cells.
+- Sea level rise. The sea level could increase in certain intervals, transforming island cells to ocean cells.
 - Temperature increase and decrease. This could affect the animal's fitness and thus their ability to migrate, procreate and feed.
 
 Animal features
