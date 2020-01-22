@@ -34,7 +34,9 @@ if __name__ == "__main__":
                OSSSSJJJJDDJJJJOOOOOO
                OOSSSSJJJJJJJJOOOOOOO
                OOOSSSSJJJJJJJOOOOOOO
+               OOOOOOOOOOOOOOOOOOOOO
                OOOOOOOOOOOOOOOOOOOOO"""
+
     geogr = textwrap.dedent(geogr)
 
     ini_herbs = [
@@ -65,11 +67,11 @@ if __name__ == "__main__":
     sim.set_animal_parameters(
         "Carnivore",
         {
-            "a_half": 70,
+            "a_half": 60,
             "phi_age": 0.5,
             "omega": 0.3,
             "F": 65,
-            "DeltaPhiMax": 9.0,
+            "DeltaPhiMax": 8.0,
         },
     )
     sim.set_landscape_parameters("J", {"f_max": 700})
@@ -83,4 +85,3 @@ if __name__ == "__main__":
     sim.simulate(num_years=100, vis_years=1, img_years=1)
 
     sim.make_movie()
-
