@@ -3,7 +3,7 @@ Further Development
 
 With this project we have created an simple simulation for the island. The
 project opens up for further development where additional variables can be
-added. We have discussed the options for features such as:
+added. We have discussed some ideas for additional features such as:
 
 Climate features
 ----------------
