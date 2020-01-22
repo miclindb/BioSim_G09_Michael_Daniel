@@ -9,6 +9,7 @@ import textwrap
 from biosim.simulation import BioSim
 
 if __name__ == '__main__':
+
     plt.ion()
 
     base = '../biosim_graphics/'
@@ -48,7 +49,8 @@ if __name__ == '__main__':
         }
     ]
 
-    sim = BioSim(island_map=geogr, ini_pop=ini_herbs, seed=123456, img_base=base)
+    sim = BioSim(island_map=geogr, ini_pop=ini_herbs,
+                 seed=123456, img_base=base)
 
     sim.set_animal_parameters("Herbivore", {"zeta": 3.2, "xi": 1.8})
     sim.set_animal_parameters(
@@ -70,4 +72,3 @@ if __name__ == '__main__':
     sim.simulate(num_years=10, vis_years=1, img_years=1000)
 
     plt.savefig('example.pdf')
-
