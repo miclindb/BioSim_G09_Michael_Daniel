@@ -71,4 +71,6 @@ if __name__ == '__main__':
 
     sim.simulate(num_years=10, vis_years=1, img_years=1000)
 
-    plt.savefig('example.pdf')
+    #plt.savefig('example.pdf')
+
+    # /users/michaellindberg/downloads/ffmpeg -i _%05d.png -y -profile:v baseline -level 3.0 -pix_fmt yuv420p biosim.mp4

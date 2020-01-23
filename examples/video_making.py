@@ -19,7 +19,7 @@ from biosim.simulation import BioSim
 if __name__ == "__main__":
     plt.ion()
 
-    base = '../biosim_graphics/'
+    base = '../biosim_video/'
 
     geogr = """\
                OOOOOOOOOOOOOOOOOOOOO
@@ -84,4 +84,4 @@ if __name__ == "__main__":
 
     sim.simulate(num_years=100, vis_years=1, img_years=1)
 
-    sim.make_movie()
+    #sim.make_movie()
